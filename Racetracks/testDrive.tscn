@@ -1,14 +1,14 @@
 [gd_scene load_steps=18 format=3 uid="uid://dq731ts5mb6ri"]
 
-[ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="1_4epg7"]
-[ext_resource type="PackedScene" uid="uid://vg0ts2oyhyr6" path="res://Karts/car.tscn" id="1_08lf0"]
-[ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="1_p5e3n"]
-[ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_rkyhk"]
-[ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="4_dedrg"]
-[ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scenes/finish_line.gd" id="5_qgo1d"]
+[ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
+[ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="2_rwgo1"]
+[ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_6mdqg"]
+[ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="4_3yda7"]
+[ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="5_fn2mn"]
+[ext_resource type="PackedScene" uid="uid://vg0ts2oyhyr6" path="res://Karts/car.tscn" id="6_1nnrc"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_f7uto"]
-panorama = ExtResource("1_p5e3n")
+panorama = ExtResource("2_rwgo1")
 energy_multiplier = 0.6
 
 [sub_resource type="Sky" id="Sky_4warc"]
@@ -23,7 +23,7 @@ sky = SubResource("Sky_4warc")
 [sub_resource type="Compositor" id="Compositor_f7uto"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_p5e3n"]
-albedo_texture = ExtResource("1_4epg7")
+albedo_texture = ExtResource("3_6mdqg")
 
 [sub_resource type="Curve3D" id="Curve3D_p5e3n"]
 closed = true
@@ -36,7 +36,7 @@ point_count = 22
 up_vector_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgo1d"]
-albedo_texture = ExtResource("4_dedrg")
+albedo_texture = ExtResource("4_3yda7")
 uv1_scale = Vector3(0.5, 7.038, 0)
 uv1_offset = Vector3(0, 0.475, 0)
 texture_filter = 0
@@ -50,7 +50,7 @@ size = Vector3(2, 2, 2)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkyhk"]
 
 [node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath")]
-script = ExtResource("1_rkyhk")
+script = ExtResource("1_vqjdx")
 Car_Root = Array[NodePath]([NodePath("Car_Container/P_1")])
 TrackPath = NodePath("Path3D")
 
@@ -129,7 +129,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 230.28387, 373.40646, 381.373
 shape = SubResource("SphereShape3D_u2cnu")
 
 [node name="Finish_Line" type="Area3D" parent="."]
-script = ExtResource("5_qgo1d")
+script = ExtResource("5_fn2mn")
 
 [node name="FINISH_LINE" type="CollisionShape3D" parent="Finish_Line"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.415817, 247.31738, 188.13095)
@@ -152,7 +152,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
-[node name="Car" parent="Car_Container/P_1" instance=ExtResource("1_08lf0")]
+[node name="Car" parent="Car_Container/P_1" instance=ExtResource("6_1nnrc")]
 transform = Transform3D(1.0000002, 0, 0, 0, 1, -3.4924597e-10, 0, -3.1432137e-09, 1.0000002, 0, 0, 0)
 
 [node name="P_2" type="Node3D" parent="Car_Container"]

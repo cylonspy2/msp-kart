@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_qt2eu"]
 [ext_resource type="Texture2D" uid="uid://cdw75kjembx7r" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/Textures/colormap.png" id="2_50v30"]
 [ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="2_jtldb"]
+[ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_rq2n6"]
 [ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="3_3mrxu"]
 [ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://Karts/car_ui.gd" id="3_efqrk"]
 [ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="4_jtldb"]
+[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://Karts/car_hitbox.gd" id="4_ud1d0"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_50v30"]
 properties/0/path = NodePath(".:player_id")
@@ -458,13 +460,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dd7r2")
 
-[sub_resource type="PackedScene" id="PackedScene_h4l1t"]
-
-[sub_resource type="PackedScene" id="PackedScene_efqrk"]
-
 [node name="CarParent" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel")]
 script = ExtResource("1_qt2eu")
 username = "USERNAME"
+Racer = ExtResource("2_rq2n6")
 Car = NodePath("Car")
 RightWheel = NodePath("Car/ModelParent/Model/wheel-front-right")
 LeftWheel = NodePath("Car/ModelParent/Model/wheel-front-left")
@@ -534,12 +533,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_efqrk")
 
-[node name="CarHitbox" type="RigidBody3D" parent="Car/CarLogic"]
+[node name="CarHitbox" type="RigidBody3D" parent="Car/CarLogic" node_paths=PackedStringArray("parentCar")]
 collision_layer = 2
 collision_mask = 2
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_50v30")
 gravity_scale = 0.0
+script = ExtResource("4_ud1d0")
+parentCar = NodePath("../../..")
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox"]
 depth = 2.525
@@ -556,6 +557,8 @@ size = Vector3(1.0500488, 0.37345886, 0.7046814)
 [node name="GPUParticlesCollisionBox3D3" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0.0003315974, 0, -0.0003315974, 0.99999994, 0.0018310547, 0.9162394, -0.23225282)
 size = Vector3(1.0500488, 0.37345886, 0.7046814)
+
+[node name="Car_Marker" type="Node" parent="Car/CarLogic/CarHitbox"]
 
 [node name="RayCast3D1" type="RayCast3D" parent="Car/CarLogic"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.517, 1, 0.719)
@@ -620,8 +623,6 @@ skeleton = NodePath("")
 spawn_path = NodePath("..")
 script = ExtResource("4_jtldb")
 CarParent = NodePath("../..")
-racerAltItem = SubResource("PackedScene_h4l1t")
-Item = SubResource("PackedScene_efqrk")
 
 [connection signal="timeout" from="CarParent_Logic/driftTimer" to="." method="_on_drift_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/boostTimer" to="." method="_on_boost_timer_timeout"]

@@ -72,9 +72,9 @@ var prevForce = Vector3(0.0, 0.0, 0.0)
 
 var haveAuthority = false
 
-signal fireItem()
-signal altFireItem()
-signal gainItem()
+signal fireItem(item : PackedScene)
+signal altFireItem(item : PackedScene)
+signal gainItem(item : PackedScene)
 
 @export_group("Server Data")
 @export var start_drift = false
@@ -94,7 +94,7 @@ signal gainItem()
 func _enter_tree():
 	fireItem.connect(ThrowItem)
 	altFireItem.connect(TriggerRacerAbility)
-	gainItem.connect(PickupItem)
+	gainItem.connect(func(id) : PickupItem(id))
 
 func _ready():
 	$Car/CarLogic/CarHitbox.name = str(player_id)
@@ -203,17 +203,17 @@ func _process(delta):
 	
 	if multiplayer.is_server() or not HighLevelNetwork.multiplayer_enabled: 
 		## serverwork
-		$Items/ItemSpawner.Item = itemHeld
 		pass
 	
 	if haveAuthority:
 		$Car/CarLogic/UsernameHolder/Username.text = username
 	
-	if firedItem:
-		fireItem.emit()
+	if firedItem && itemHeld != null:
+		fireItem.emit(itemHeld)
+		itemHeld = null
 		firedItem = false
-	if altFiredItem:
-		altFireItem.emit()
+	if altFiredItem && altItem != null:
+		altFireItem.emit(altItem)
 		altFiredItem = false
 	
 	if start_drift and not drifting and rotateInput != 0 and speedInput > 0:
@@ -313,8 +313,9 @@ func GetHit():
 		pass
 	pass
 
-func PickupItem():
-	$Items/ItemSpawner.Item = itemHeld
+func PickupItem(item : PackedScene):
+	itemHeld = item
+	hasItem = true
 
 func ThrowItem():
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
@@ -338,10 +339,9 @@ func SpawnRacer(racer : PackedScene):
 	var race: Node = racer.instantiate()
 	race.name = str(name)
 	
-	get_node(RacerSpawnLoc).call_deferred("add_child", race)
+	RacerSpawnLoc.call_deferred("add_child", race)
 	
-	altItem = race.racerItem
-	$Items/ItemSpawner.racerAltItem = race.racerItem
+	altItem = race.RacerItem
 
 func _on_drift_timer_timeout() -> void:
 	if drifting:

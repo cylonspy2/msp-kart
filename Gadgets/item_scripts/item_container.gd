@@ -18,9 +18,9 @@ func _process(delta: float) -> void:
 		fullUp = false
 
 func pop():
-	$Collider.process_mode = Node.PROCESS_MODE_DISABLED
 	$Container.enabled = false
 	$AnimationPlayer.play("pop")
+	$Collider.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func respawn():
@@ -34,14 +34,12 @@ func _on_restock_timer_timeout() -> void:
 
 
 func _on_collider_body_entered(body: Node3D) -> void:
+	print("item box hit! " + str(body.name))
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		##client deferring to server data
 		pass
 	else:
-		if body.has_node("CarParent_Logic"):
+		if body.has_node("Car_Marker"):
 			popped = true
-			body.itemHeld = HighLevelNetwork._grab_item(body.leaderboard_placement)
-			body.hasItem = true
-			body.gainItem.emit()
-			pass
-		pass
+			body.parentCar.gainItem.emit(HighLevelNetwork._grab_item(body.parentCar.leaderboard_placement))
+			

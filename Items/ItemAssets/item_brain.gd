@@ -1,7 +1,5 @@
 extends Node3D
 
-signal despawn
-
 @export var caster : Node3D
 @export var leaderboard_max : float
 @export var leaderboard_min : float
@@ -9,14 +7,20 @@ signal despawn
 
 @onready var ItemEffect = $ItemEffect
 
-func _enter_tree() -> void:
-	despawn.connect(despawn_item)
+@export var job_done = false
+
+func _ready():
+	job_done = false
+
+func _process(delta: float) -> void:
+	if job_done:
+		despawn_item()
 
 func define_caster(spawner : Node3D):
 	caster = spawner
 
 func cast_item():
-	pass
+	job_done = true
 
 func despawn_item():
-	pass
+	queue_free()
