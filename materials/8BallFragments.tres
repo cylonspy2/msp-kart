@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://wqytgw7tfi2h"]
+
+[ext_resource type="Shader" uid="uid://dj6mtawnroxho" path="res://materials/shaders/8BallFragment.tres" id="1_i4one"]
+
+[resource]
+render_priority = -1
+shader = ExtResource("1_i4one")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/ShellRange = 0.19

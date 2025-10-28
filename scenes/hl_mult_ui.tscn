@@ -1,0 +1,441 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce4l45pg5pfxb"]
+
+[ext_resource type="Script" uid="uid://dbg6betg4ssvw" path="res://scripts/hl_mult_ui.gd" id="1_a1sbk"]
+[ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="2_g6gwi"]
+[ext_resource type="PackedScene" uid="uid://dvhqn57ltpn1t" path="res://scenes/server_button.tscn" id="2_puhv1"]
+[ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="3_tu0x2"]
+
+[node name="HLMultUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a1sbk")
+serverBrowserBoxContainer = NodePath("ServerBrowser/Container/ServBrow_Color/ScrollContainer/ServerBrowser")
+server_button = ExtResource("2_puhv1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(221, 90)
+texture = ExtResource("2_g6gwi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 208.0
+offset_bottom = 66.0
+
+[node name="Server" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Server"
+
+[node name="Client" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Client"
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 201.0
+offset_right = -673.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="make_server" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 42.84)
+layout_mode = 2
+text = "Make Server"
+
+[node name="Control2" type="Control" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 31.515)
+layout_mode = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="find_server" type="Button" parent="MainMenu"]
+layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.1
+text = "Connect to Lobby"
+
+[node name="Control" type="Control" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 55.2)
+layout_mode = 2
+size_flags_stretch_ratio = 0.33
+
+[node name="Settings" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 53.985)
+layout_mode = 2
+text = "Settings
+"
+
+[node name="Control3" type="Control" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 61.735)
+layout_mode = 2
+size_flags_stretch_ratio = 0.33
+
+[node name="Exit Game" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(0, 45.47)
+layout_mode = 2
+text = "Exit Game"
+
+[node name="ServerBrowser" type="Control" parent="."]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 1
+anchor_left = 0.24000001
+anchor_top = 0.19100001
+anchor_right = 0.76000005
+anchor_bottom = 0.809
+offset_left = -0.480011
+offset_top = 0.231987
+offset_right = 0.47991943
+offset_bottom = -0.23199463
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="ServerBrowser"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.056291588, 0.056291603, 0.056291595, 1)
+
+[node name="Container" type="VBoxContainer" parent="ServerBrowser"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="SearchHeader" type="HBoxContainer" parent="ServerBrowser/Container"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="ServerType" type="Button" parent="ServerBrowser/Container/SearchHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Steam"
+
+[node name="TextEdit" type="TextEdit" parent="ServerBrowser/Container/SearchHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Server name..."
+
+[node name="Button2" type="Button" parent="ServerBrowser/Container/SearchHeader"]
+layout_mode = 2
+text = "Search"
+
+[node name="Header" type="HBoxContainer" parent="ServerBrowser/Container"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="ServerBrowser/Container/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NAME"
+
+[node name="Label2" type="Label" parent="ServerBrowser/Container/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "IP_ADDRESS"
+
+[node name="Label3" type="Label" parent="ServerBrowser/Container/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player Count"
+
+[node name="Label4" type="Label" parent="ServerBrowser/Container/Header"]
+custom_minimum_size = Vector2(107.26, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_stretch_ratio = 1.67
+text = "Join Button"
+
+[node name="ServBrow_Color" type="ColorRect" parent="ServerBrowser/Container"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.103743516, 0.103743546, 0.10374347, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ServerBrowser/Container/ServBrow_Color"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.635
+offset_bottom = -9.109985
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ServerBrowser" type="VBoxContainer" parent="ServerBrowser/Container/ServBrow_Color/ScrollContainer"]
+custom_minimum_size = Vector2(597.02, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MenuFooter" type="HBoxContainer" parent="ServerBrowser/Container"]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Close" type="Button" parent="ServerBrowser/Container/MenuFooter"]
+layout_mode = 2
+text = "Close"
+
+[node name="ServerLobby" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 1
+anchor_left = 0.24000001
+anchor_top = 0.19100001
+anchor_right = 0.76000005
+anchor_bottom = 0.809
+offset_left = -0.480011
+offset_top = 0.231987
+offset_right = 0.47991943
+offset_bottom = -0.23199463
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ServerLobby"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3515629, 0.3515629, 0.35156286, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lobby_name" type="Label" parent="ServerLobby/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "LOBBY, YAY"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ExitLobbyControl" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Exit Lobby" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ExitLobbyControl"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 113.0
+offset_bottom = 35.0
+text = "Leave Lobby"
+
+[node name="ChooseRacer" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Choose Racer"
+
+[node name="ChooseKart" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Choose Kart"
+
+[node name="ChooseCourse" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Choose Course"
+
+[node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.0142752165, 0.014275218, 0.014275218, 1)
+
+[node name="PlayerRoster" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ColorRect/PlayerRoster"]
+layout_mode = 2
+text = "Players:"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ColorRect/PlayerRoster"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextChat" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(172.65, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/TextChat"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.072842635, 0.072842635, 0.072842635, 1)
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/TextChat"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "TextChat:"
+
+[node name="VScrollBar" type="VScrollBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/TextChat"]
+layout_mode = 0
+offset_top = 21.0
+offset_right = 172.0
+offset_bottom = 171.0
+
+[node name="BoxContainer" type="BoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/TextChat/VScrollBar"]
+layout_mode = 0
+offset_right = 173.0
+offset_bottom = 150.0
+
+[node name="ChosenRacerKartLabel" type="Label" parent="ServerLobby/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Chosen Racer & Kart:"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Kart" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Racer" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(114.275, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ability" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control/VBoxContainer"]
+layout_mode = 2
+text = "Skill:"
+
+[node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.5132329, 0.5132329, 0.5132329, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control/VBoxContainer/ColorRect"]
+position = Vector2(57, 65)
+texture = ExtResource("3_tu0x2")
+
+[node name="Stats" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="STATS" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+text = "STATS"
+
+[node name="Weight" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Weight"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Weight"
+
+[node name="Acceleration" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Acceleration"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Acceleration"
+
+[node name="Steering" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Steering"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Steering"
+
+[node name="Drift Control" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Drift Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Drift Control"
+
+[node name="Boost" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Boost"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Boost Speed"
+
+[node name="BoostDuration" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/BoostDuration"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Boost Duration"
+
+[connection signal="pressed" from="VBoxContainer/Server" to="." method="_on_server_pressed"]
+[connection signal="pressed" from="VBoxContainer/Client" to="." method="_on_client_pressed"]
+[connection signal="pressed" from="MainMenu/make_server" to="." method="_on_make_server_pressed"]
+[connection signal="pressed" from="MainMenu/find_server" to="." method="_on_find_server_pressed"]
+[connection signal="pressed" from="MainMenu/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MainMenu/Exit Game" to="." method="_on_exit_game_pressed"]
+[connection signal="pressed" from="ServerBrowser/Container/SearchHeader/ServerType" to="." method="_on_server_type_pressed"]
+[connection signal="pressed" from="ServerBrowser/Container/MenuFooter/Close" to="." method="_on_close_pressed"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4lf6mqid4l3"]
+
+[ext_resource type="Script" uid="uid://daygg40j43bio" path="res://scripts/main_scene.gd" id="1_k24pf"]
+[ext_resource type="PackedScene" uid="uid://ce4l45pg5pfxb" path="res://scenes/hl_mult_ui.tscn" id="1_x4av3"]
+[ext_resource type="Script" uid="uid://behmnpb2ebith" path="res://scripts/multiplayer_spawner_Handler.gd" id="2_rpqi1"]
+[ext_resource type="Script" uid="uid://bc5ff5nyrprfc" path="res://scripts/multiplayer/networks/network_manager.gd" id="2_ygjfp"]
+[ext_resource type="PackedScene" uid="uid://bq4bbfhb2b6wx" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/ambulance.glb" id="3_c6dvc"]
+[ext_resource type="PackedScene" uid="uid://ci7uqeytx4o21" path="res://scenes/spectator.tscn" id="4_611at"]
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_k24pf")
+
+[node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("_players_spawn_node")]
+unique_name_in_owner = true
+script = ExtResource("2_ygjfp")
+_players_spawn_node = NodePath("../SpectatorLobby")
+
+[node name="SpectatorLobby" type="Node3D" parent="."]
+
+[node name="Environment3D" type="Node3D" parent="."]
+
+[node name="ambulance" parent="Environment3D" instance=ExtResource("3_c6dvc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9440767, -2.1557972, -2.0600843)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment3D"]
+transform = Transform3D(0.9417119, -0.04050074, 0.33397374, -0.30174276, 0.33728987, 0.8917325, -0.1487618, -0.9405292, 0.30540907, 1.9606417, -5.9604645e-08, -3.2162223)
+
+[node name="MainMenuCam" type="Camera3D" parent="."]
+transform = Transform3D(0.7749445, -0.26310167, 0.5746639, 0, 0.90923613, 0.4162808, -0.6320293, -0.32259452, 0.70460755, 1.9397755, 0.7382055, 1.9181392)
+
+[node name="HLMultUI" parent="MainMenuCam" instance=ExtResource("1_x4av3")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://ci7uqeytx4o21")
+spawn_path = NodePath("../SpectatorLobby")
+script = ExtResource("2_rpqi1")
+networkPlayer = ExtResource("4_611at")

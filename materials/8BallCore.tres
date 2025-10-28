@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cwfwkatswq0kd"]
+
+[resource]
+render_priority = 1
+transparency = 4
+diffuse_mode = 3
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture_force_srgb = true
+emission_enabled = true
+emission = Color(0.44897228, 0.11571961, 0.43529406, 1)
+emission_energy_multiplier = 1.49
+rim_tint = 1.0
+clearcoat = 0.05
+clearcoat_roughness = 1.0

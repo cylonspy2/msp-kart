@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci7uqeytx4o21"]
+
+[ext_resource type="Script" uid="uid://crpp754v8oajd" path="res://scripts/spectatorMaster.gd" id="1_jjbhc"]
+[ext_resource type="Script" uid="uid://cl1a3kta53iac" path="res://scripts/Spectator_multiplayer_spawner.gd" id="2_t4j2n"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t4j2n"]
+properties/0/path = NodePath("Spectator:requestedTrack")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("Spectator:requestedRacer")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("Spectator:requestedKart")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath(".:is_controlled")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+
+[node name="Spectator" type="Node3D" node_paths=PackedStringArray("camera")]
+script = ExtResource("1_jjbhc")
+camera = NodePath("Camera")
+
+[node name="Camera" type="Camera3D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_t4j2n")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("parent")]
+spawn_path = NodePath("..")
+script = ExtResource("2_t4j2n")
+parent = NodePath("..")
+
+[node name="Spectator_ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

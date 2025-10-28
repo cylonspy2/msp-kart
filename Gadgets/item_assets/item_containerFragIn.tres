@@ -1,0 +1,11 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://585r1pt7o7cx"]
+
+[ext_resource type="Material" uid="uid://wqytgw7tfi2h" path="res://materials/8BallFragments.tres" id="1_qhxae"]
+
+[resource]
+lightmap_size_hint = Vector2i(14, 8)
+material = ExtResource("1_qhxae")
+flip_faces = true
+radius = 0.4
+height = 0.4
+is_hemisphere = true

@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq731ts5mb6ri"]
+
+[ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="1_4epg7"]
+[ext_resource type="PackedScene" uid="uid://vg0ts2oyhyr6" path="res://car.tscn" id="1_08lf0"]
+
+[sub_resource type="Environment" id="Environment_4epg7"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_p5e3n"]
+
+[sub_resource type="Compositor" id="Compositor_f7uto"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_p5e3n"]
+albedo_texture = ExtResource("1_4epg7")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4epg7")
+camera_attributes = SubResource("CameraAttributesPhysical_p5e3n")
+compositor = SubResource("Compositor_f7uto")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.89381796, 0.15780567, 0.4197462, -0.44843003, 0.3145408, 0.8366449, 0, -0.936035, 0.351907, -12.151199, 7.562768, 7.985528)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.56137586, 0.34743682, -0.7510958, 0, 0.9076017, 0.4198323, 0.82756096, -0.23568371, 0.5095057, -15.551117, 4.2952385, 0)
+use_collision = true
+size = Vector3(1000, 0.523, 1000)
+material = SubResource("ORMMaterial3D_p5e3n")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3184716, 0)
+use_collision = true
+size = Vector3(1000, 0.523, 1000)
+material = SubResource("ORMMaterial3D_p5e3n")
+
+[node name="Car" parent="." instance=ExtResource("1_08lf0")]
+transform = Transform3D(0.8302945, 0, 0.55732495, 0, 1, 0, -0.55732495, 0, 0.8302945, 14.338227, 4.02828, 3.5528116)
+steeringDrift = null
+steeringAccelMod = null
+gravForce = Vector3(0, -1.1, 0)
+maxCarTwist = null
+carTwistRate = null
+driftBoost = null

@@ -1,0 +1,118 @@
+[gd_resource type="VisualShader" load_steps=10 format=3 uid="uid://l0fxthhoj1hk"]
+
+[sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_1kxpf"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_bhftm"]
+parameter_name = "EdgeStrength"
+default_value_enabled = true
+default_value = 0.5
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_1kxpf"]
+parameter_name = "Color"
+default_value_enabled = true
+default_value = Color(0, 0, 0, 1)
+
+[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_uorvg"]
+default_input_values = [2, false, 3, 0.03]
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_1kxpf"]
+function = 31
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_uorvg"]
+parameter_name = "Fresnel"
+default_value_enabled = true
+default_value = 0.99
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_1kxpf"]
+parameter_name = "Clearcoat"
+default_value_enabled = true
+default_value = 0.1
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_w15nl"]
+parameter_name = "Clearcoat_Roughness"
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_ufa0u"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_toon, specular_toon;
+
+uniform vec4 Color : source_color = vec4(0.000000, 0.000000, 0.000000, 1.000000);
+uniform float Fresnel = 0.99000000953674;
+uniform float EdgeStrength = 0.5;
+uniform float Clearcoat = 0.10000000149012;
+uniform float Clearcoat_Roughness = 1.0;
+
+
+
+void fragment() {
+// ColorParameter:2
+	vec4 n_out2p0 = Color;
+
+
+// FloatParameter:5
+	float n_out5p0 = Fresnel;
+
+
+// FloatFunc:4
+	float n_out4p0 = 1.0 - n_out5p0;
+
+
+// Fresnel:3
+	float n_out3p0 = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), n_out4p0);
+
+
+// FloatParameter:11
+	float n_out11p0 = EdgeStrength;
+
+
+// FloatOp:9
+	float n_out9p0 = n_out3p0 + n_out11p0;
+
+
+// Clamp:10
+	float n_in10p1 = 0.00000;
+	float n_in10p2 = 1.00000;
+	float n_out10p0 = clamp(n_out9p0, n_in10p1, n_in10p2);
+
+
+// FloatParameter:6
+	float n_out6p0 = Clearcoat;
+
+
+// FloatParameter:7
+	float n_out7p0 = Clearcoat_Roughness;
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	ALPHA = n_out10p0;
+	CLEARCOAT = n_out6p0;
+	CLEARCOAT_ROUGHNESS = n_out7p0;
+
+
+}
+"
+modes/diffuse = 3
+modes/specular = 1
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_1kxpf")
+nodes/fragment/2/position = Vector2(-260, 20)
+nodes/fragment/3/node = SubResource("VisualShaderNodeFresnel_uorvg")
+nodes/fragment/3/position = Vector2(-560, 200)
+nodes/fragment/4/node = SubResource("VisualShaderNodeFloatFunc_1kxpf")
+nodes/fragment/4/position = Vector2(-780, 300)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatParameter_uorvg")
+nodes/fragment/5/position = Vector2(-1120, 300)
+nodes/fragment/6/node = SubResource("VisualShaderNodeFloatParameter_1kxpf")
+nodes/fragment/6/position = Vector2(-300, 580)
+nodes/fragment/7/node = SubResource("VisualShaderNodeFloatParameter_w15nl")
+nodes/fragment/7/position = Vector2(-300, 840)
+nodes/fragment/9/node = SubResource("VisualShaderNodeFloatOp_ufa0u")
+nodes/fragment/9/position = Vector2(-20, 240)
+nodes/fragment/10/node = SubResource("VisualShaderNodeClamp_1kxpf")
+nodes/fragment/10/position = Vector2(200, 240)
+nodes/fragment/11/node = SubResource("VisualShaderNodeFloatParameter_bhftm")
+nodes/fragment/11/position = Vector2(-680, 500)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 4, 0, 3, 3, 5, 0, 4, 0, 6, 0, 0, 13, 7, 0, 0, 14, 3, 0, 9, 0, 9, 0, 10, 0, 10, 0, 0, 1, 11, 0, 9, 1)

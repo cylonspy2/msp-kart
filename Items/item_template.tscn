@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8i2gsjkkjlnc"]
+
+[ext_resource type="Script" uid="uid://4ch5qxld3wda" path="res://Items/ItemAssets/item_brain.gd" id="1_4liem"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wwut3"]
+
+[node name="ItemTemplate" type="Node3D"]
+script = ExtResource("1_4liem")
+leaderboard_max = 1.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wwut3")
+
+[node name="ItemEffect" type="Node3D" parent="."]
