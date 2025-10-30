@@ -1,8 +1,9 @@
-[gd_scene load_steps=31 format=3 uid="uid://b25331hubbvp6"]
+[gd_scene load_steps=32 format=3 uid="uid://b25331hubbvp6"]
 
 [ext_resource type="Script" uid="uid://dd64iyelwg5c2" path="res://scripts/racer.gd" id="1_ay3fd"]
 [ext_resource type="PackedScene" uid="uid://b8i2gsjkkjlnc" path="res://Items/item_template.tscn" id="2_lnda5"]
 [ext_resource type="Texture2D" uid="uid://d1sgfymsfdxyu" path="res://ExternalAssets/ref_Racer/Timeline 1_0001.png" id="3_agxhp"]
+[ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="3_lnda5"]
 [ext_resource type="Texture2D" uid="uid://dfdykvii0wyrq" path="res://ExternalAssets/ref_Racer/Timeline 1_0005.png" id="4_xwdfb"]
 [ext_resource type="Texture2D" uid="uid://cu07tidt8cocu" path="res://ExternalAssets/ref_Racer/Timeline 1_0012.png" id="5_y7xrk"]
 [ext_resource type="Texture2D" uid="uid://80x8be8w2gmt" path="res://ExternalAssets/ref_Racer/Timeline 1_0013.png" id="6_k0yyu"]
@@ -125,6 +126,7 @@ animations = [{
 [node name="Racer" type="Node3D"]
 script = ExtResource("1_ay3fd")
 RacerItem = ExtResource("2_lnda5")
+RacerIcon = ExtResource("3_lnda5")
 
 [node name="RacerSkin" type="Node3D" parent="."]
 

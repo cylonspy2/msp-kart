@@ -1,11 +1,28 @@
-[gd_scene load_steps=18 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=21 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="2_rwgo1"]
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_6mdqg"]
+[ext_resource type="LabelSettings" uid="uid://c781sptcjwjxk" path="res://Racetracks/RacetrackAssets/Rank_Label_Settings.tres" id="3_rwgo1"]
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="4_3yda7"]
 [ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="5_fn2mn"]
 [ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="6_8vqid"]
+
+[sub_resource type="Curve2D" id="Curve2D_8vqid"]
+bake_interval = 0.01
+_data = {
+"points": PackedVector2Array(12.851439, -0.58415633, -12.851439, 0.58415633, -76.66666, 121.666664, 24.210533, 1.8803864, -24.210533, -1.8803864, -123.33334, 135, -14.77273, 14.77273, 14.77273, -14.77273, -171.66669, 75, 0, 0, 0, 0, -105.000015, 28.333332, -23.325363, -3.8875604, 23.325363, 3.8875604, -40.00003, -3.333334, 2.3325362, -27.990435, -2.3325362, 27.990435, -20.00003, 43.33333, 0, 0, 0, 0, 31.666656, 56.666664, -26.43541, 11.662682, 26.43541, -11.662682, 76.66666, 41.666664, 2.3325362, 31.100483, -2.3325362, -31.100483, 118.33334, -15, 18.66029, -3.8875604, -18.66029, 3.8875604, 75, -46.666664, 9.330145, -15.550241, -9.330145, 15.550241, 33.333344, -11.666664, -4.6650724, -19.437801, 4.6650724, 19.437801, 23.333344, 41.666664, 10.1076565, -31.877995, -10.1076565, 31.877995, 68.33334, 130, 34.210533, 0.7775121, -34.210533, -0.7775121, 5, 168.33334, 20.44547, 1.1683127, -20.44547, -1.1683127, -76.66666, 121.666664)
+}
+point_count = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_rwgo1"]
+font_size = 97
+font_color = Color(1, 1, 0, 1)
+outline_size = 15
+outline_color = Color(1, 0.53333336, 0, 1)
+shadow_size = 26
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2.48, 2.89)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_f7uto"]
 panorama = ExtResource("2_rwgo1")
@@ -29,7 +46,7 @@ albedo_texture = ExtResource("3_6mdqg")
 closed = true
 bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(71.69524, 0.07631683, -7.9223175, -71.69524, -0.07631683, 7.9223175, -36.788605, 5.911682, 141.9358, 109.08635, -60.108482, 38.109833, -109.08635, 60.108482, -38.109833, -230.59285, 37.424667, 148.21686, -25.652649, 49.505974, 70.49655, 25.652649, -49.505974, -70.49655, -397.735, -2.219986, -31.171684, -80.004425, 17.85289, 69.60007, 80.004425, -17.85289, -69.60007, -147.371, -156.36, -256.612, -83.72702, -12.259689, -35.52179, 83.72702, 12.259689, 35.52179, 212.69315, -145.03737, -485.6513, -12.842255, -63.604126, -82.72269, 12.842255, 63.604126, 82.72269, 279.55106, -66.345566, -321.68335, -110.27063, -16.042969, -39.870255, 110.27063, 16.042969, 39.870255, 385.3083, 227.05136, -198.48247, -6.93, 0, 3.49, 162.765, 33.885, -23.065, 720.19934, 311.49963, -285.6363, -0.22991943, 35.698975, 32.77588, 0.22991943, -35.698975, -32.77588, 900.4589, 103.14376, -484.6344, 22.079285, 12.252045, 25.01062, -22.079285, -12.252045, -25.01062, 870.7781, 46.495445, -558.74896, 45.09845, 1.6611328, 2.6535645, -45.09845, -1.6611328, -2.6535645, 777.6441, 19.335762, -615.08997, 30.064697, -6.7156982, -21.809631, -30.064697, 6.7156982, 21.809631, 660.7472, 21.540932, -587.1297, 33.322876, -5.1425323, -19.180847, -33.322876, 5.1425323, 19.180847, 573.8108, 42.375237, -528.32385, 12.612488, -10.346832, -36.69574, -12.612488, 10.346832, 36.69574, 499.71765, 70.285255, -437.00055, 6.401367, -8.897736, -34.572052, -6.401367, 8.897736, 34.572052, 470.70947, 112.00475, -310.92905, -19.667297, -4.15802, -30.166626, 19.667297, 4.15802, 30.166626, 485.2924, 131.78397, -209.59012, -15.46228, -9.686272, -53.95382, 15.46228, 9.686272, 53.95382, 576.57666, 136.95267, -63.595535, 23.471313, 26.116028, -44.64296, -23.471313, -26.116028, 44.64296, 582.766, 194.80304, 170.68411, 38.079224, 20.589172, -20.009094, -38.079224, -20.589172, 20.009094, 472.95877, 209.09549, 318.84784, 47.04718, 12.16507, -0.59835815, -47.04718, -12.16507, 0.59835815, 323.80896, 185.40924, 381.2625, 22.496094, 16.20346, 10.236938, -22.496094, -16.20346, -10.236938, 187.64368, 137.30997, 356.46066, 17.409111, 9.824059, 25.034271, -17.409111, -9.824059, -25.034271, 77.59247, 46.19864, 258.68246),
+"points": PackedVector3Array(71.69524, 0.07631683, -7.9223175, -71.69524, -0.07631683, 7.9223175, -36.788605, 5.911682, 141.9358, 109.08635, -60.108482, 38.109833, -109.08635, 60.108482, -38.109833, -230.59285, 37.424667, 148.21686, -25.652649, 49.505974, 70.49655, 25.652649, -49.505974, -70.49655, -397.735, -2.219986, -31.171684, -80.004425, 17.85289, 69.60007, 80.004425, -17.85289, -69.60007, -147.371, -156.36, -256.612, -83.72702, -12.259689, -35.52179, 83.72702, 12.259689, 35.52179, 212.69315, -145.03737, -485.6513, -12.842255, -63.604126, -82.72269, 12.842255, 63.604126, 82.72269, 279.55106, -66.345566, -321.68335, -106.9057, -37.717712, -51.644394, 106.9057, 37.717712, 51.644394, 385.3083, 227.05136, -198.48247, -70.22034, -22.740936, 42.793915, 70.22034, 22.740936, -42.793915, 720.19934, 311.49963, -285.6363, -7.5133667, 33.991943, 42.73883, 7.5133667, -33.991943, -42.73883, 916.2581, 134.46619, -447.612, 22.079285, 12.252045, 25.01062, -22.079285, -12.252045, -25.01062, 870.7781, 46.495445, -558.74896, 45.09845, 1.6611328, 2.6535645, -45.09845, -1.6611328, -2.6535645, 777.6441, 19.335762, -615.08997, 30.064697, -6.7156982, -21.809631, -30.064697, 6.7156982, 21.809631, 660.7472, 21.540932, -587.1297, 33.322876, -5.1425323, -19.180847, -33.322876, 5.1425323, 19.180847, 573.8108, 42.375237, -528.32385, 12.612488, -10.346832, -36.69574, -12.612488, 10.346832, 36.69574, 499.71765, 70.285255, -437.00055, 6.401367, -8.897736, -34.572052, -6.401367, 8.897736, 34.572052, 470.70947, 112.00475, -310.92905, -19.667297, -4.15802, -30.166626, 19.667297, 4.15802, 30.166626, 485.2924, 131.78397, -209.59012, -15.46228, -9.686272, -53.95382, 15.46228, 9.686272, 53.95382, 576.57666, 136.95267, -63.595535, 23.471313, 26.116028, -44.64296, -23.471313, -26.116028, 44.64296, 582.766, 194.80304, 170.68411, 38.079224, 20.589172, -20.009094, -38.079224, -20.589172, 20.009094, 472.95877, 209.09549, 318.84784, 47.04718, 12.16507, -0.59835815, -47.04718, -12.16507, 0.59835815, 323.80896, 185.40924, 381.2625, 22.496094, 16.20346, 10.236938, -22.496094, -16.20346, -10.236938, 187.64368, 137.30997, 356.46066, 17.409111, 9.824059, 25.034271, -17.409111, -9.824059, -25.034271, 77.59247, 46.19864, 258.68246),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 22
@@ -49,44 +66,103 @@ size = Vector3(2, 2, 2)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkyhk"]
 
-[node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath")]
+[node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath", "Cars")]
 script = ExtResource("1_vqjdx")
 Car_Root = Array[NodePath]([NodePath("Car_Container/P_1")])
-TrackPath = NodePath("Path3D")
+TrackPath = NodePath("Environment/Path3D")
+Cars = [NodePath("Car_Container/P_1/CarParent")]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="Minimap" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Minimap_road" type="Node2D" parent="Minimap"]
+position = Vector2(182, 49)
+scale = Vector2(0.6, 0.6)
+
+[node name="Line2D2" type="Line2D" parent="Minimap/Minimap_road"]
+closed = true
+width = 20.955
+default_color = Color(0, 0, 0, 1)
+texture_mode = 2
+joint_mode = 2
+antialiased = true
+
+[node name="Line2D" type="Line2D" parent="Minimap/Minimap_road"]
+closed = true
+width = 16.0
+texture_mode = 2
+joint_mode = 2
+antialiased = true
+
+[node name="Path2D" type="Path2D" parent="Minimap/Minimap_road"]
+curve = SubResource("Curve2D_8vqid")
+
+[node name="Placement" type="HBoxContainer" parent="Minimap"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -148.0
+offset_top = -133.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(1.35, 0)
+
+[node name="Rank" type="Label" parent="Minimap/Placement"]
+layout_mode = 2
+text = "10"
+label_settings = SubResource("LabelSettings_rwgo1")
+
+[node name="Denotion" type="Label" parent="Minimap/Placement"]
+layout_mode = 2
+text = "th"
+label_settings = ExtResource("3_rwgo1")
+
+[node name="Control" type="Control" parent="Minimap/Placement"]
+custom_minimum_size = Vector2(31.695, 0)
+layout_mode = 2
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_4epg7")
 camera_attributes = SubResource("CameraAttributesPhysical_p5e3n")
 compositor = SubResource("Compositor_f7uto")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.89381796, 0.15780567, 0.4197462, -0.44843003, 0.3145408, 0.8366449, 0, -0.936035, 0.351907, -12.151199, 7.562768, 7.985528)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.89381796, 0.15780568, 0.4197462, -0.44843003, 0.3145408, 0.8366449, 0, -0.936035, 0.35190704, -12.151199, 7.562768, 7.985528)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3184716, 0)
 use_collision = true
 size = Vector3(4000, 0.523, 4000)
 material = SubResource("ORMMaterial3D_p5e3n")
 
-[node name="Path3D" type="Path3D" parent="."]
+[node name="Path3D" type="Path3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.99999976, 3.5614777, 222.00648, 5.9313965)
 curve = SubResource("Curve3D_p5e3n")
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+[node name="Road" type="CSGPolygon3D" parent="Environment"]
 use_collision = true
-polygon = PackedVector2Array(-10, 0, -10, 1, -5, 1, 0, 1, 5, 1, 10, 1, 10, 0, 5, 0, 0, 0, -5, 0)
+polygon = PackedVector2Array(-10, -2, -10, 1.1, -5, 0.855, 0, 1, 5, 0.855, 10, 1.1, 10, -2, 5, -2, 0, -2, -5, -2)
 mode = 2
 path_node = NodePath("../Path3D")
 path_interval_type = 1
 path_interval = 0.01
-path_simplify_angle = 0.0
+path_simplify_angle = 0.1
 path_rotation = 1
 path_rotation_accurate = true
 path_local = false
 path_continuous_u = true
 path_u_distance = 10.0
 path_joined = true
-smooth_faces = true
 material = SubResource("StandardMaterial3D_qgo1d")
 
 [node name="CheckpointSystem" type="Area3D" parent="."]
@@ -153,6 +229,7 @@ shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
 [node name="CarParent" parent="Car_Container/P_1" instance=ExtResource("6_8vqid")]
+transform = Transform3D(1, 0, 0, 0, 1, -7.916242e-09, 0, -3.1432137e-09, 1, 1.5258789e-05, 0.52641296, -0.04743576)
 
 [node name="P_2" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.07587035, 0.03367175, -0.9965489, -0.034343876, 0.9987488, 0.03636083, 0.9965259, 0.036984168, -0.07461885, -13.710028, 230.01643, 151.57384)

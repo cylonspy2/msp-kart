@@ -4,6 +4,7 @@ var haveAuthority = false
 @onready var RacerSkin = $RacerSkin
 @onready var RacerSprites = $RacerSkin/AnimatedSprite3D
 @export var RacerItem : PackedScene
+@export var RacerIcon : Texture2D
 
 var relativeRotation : Vector3
 var angleDot : float

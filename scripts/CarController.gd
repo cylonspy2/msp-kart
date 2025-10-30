@@ -39,6 +39,7 @@ extends Node3D
 
 @export_group("Car Stats")
 @export var maxSpeed = 100.0
+@export var hurtSpeed = 100.0
 @export var acceleration = 70.0
 @export var steering = 12.0
 @export var steeringDrift = 0.55
@@ -46,6 +47,7 @@ extends Node3D
 @export var turnspeed = 5.0
 @export var weight = 10.0
 @export var driftBoost = 1.75
+@export var airControl = 0.1
 
 var speedInput = 0.0
 var rotateInput = 0.0
@@ -78,6 +80,8 @@ signal altFireItem(item : PackedScene)
 signal gainItem(item : PackedScene)
 
 @export_group("Server Data")
+@export var velocity_smooth = 2.0
+@export var angular_smooth = 3.64
 @export var start_drift = false
 @export var end_drift = false
 @export var firedItem = false
@@ -86,6 +90,9 @@ signal gainItem(item : PackedScene)
 @export var server_Rot : Basis
 @export var server_Pos_Offset : Vector3
 @export var time_since_last_update : float
+
+var gravDir : Vector3
+var hurtAccel : float
 
 @export var player_id := 1:
 	set(id):
@@ -118,6 +125,8 @@ func _ready():
 	groundRay2.add_exception(Ball)
 	groundRay3.add_exception(Ball)
 	groundRay4.add_exception(Ball)
+	
+	hurtAccel = acceleration
 
 func _physics_process(_delta):
 	
@@ -127,10 +136,16 @@ func _physics_process(_delta):
 		server_Pos_Offset = Vector3()
 		time_since_last_update = 0.0
 	
-	Car.transform.origin = Ball.transform.origin + ModelOffset
-	Ball.transform.origin = Car.transform.origin - ModelOffset
+	Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin + ModelOffset, velocity_smooth)
+	Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
 	
 	var forceForce = (Car.global_transform.basis.z * speedInput)
+	
+	gravDir = gravForce * 9.810 * weight
+	var hitr = Ball.move_and_collide(gravDir * _delta, true)
+	if not hitr:
+		forceForce *= airControl
+	
 	if drifting :
 		var lerpForce = lerp(((forceForce * boost) * steeringAccelMod), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
 		
@@ -154,8 +169,7 @@ func _physics_process(_delta):
 		Ball.apply_central_force(lerpForce)
 		prevForce = lerpForce
 	
-	var gravDir = gravForce * 9.810 * weight
-	var hitr = Ball.move_and_collide(gravDir * _delta, true)
+	hitr = Ball.move_and_collide(gravDir * _delta, true)
 	if hitr:
 		Ball.gravity_scale = 0.0
 		var avgHitPos = Vector3(0.0, 0.0, 0.0)
@@ -183,10 +197,17 @@ func _physics_process(_delta):
 	else:
 		server_Pos = Ball.global_position
 		server_Rot = Car.global_transform.basis
+	
+	#print(Ball.angular_velocity.length())
 
 func _process(delta):
 	speedInput = (MS.inputDir) * acceleration
 	rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+	
+	var hiter = Ball.move_and_collide(gravDir * delta, true)
+	if not hiter:
+		rotateInput *= airControl
+	
 	RightWheel.rotation.y = lerp(RightWheel.rotation.y, rotateInput, 5 * delta)
 	LeftWheel.rotation.y = lerp(LeftWheel.rotation.y, rotateInput, 5 * delta)
 	
@@ -269,13 +290,13 @@ func RotateCar(delta):
 		var gravDiffDot = Car.global_transform.basis.y.dot(antiGrav)
 		if acos(gravDiffDot) != 0.0:
 			var rotatedBasis = carBasis.rotated(gravDiffCross, acos(gravDiffDot))
-			Car.global_transform.basis = lerp(Car.global_transform.basis, rotatedBasis, 2.5 * delta)
+			Car.global_transform.basis = lerp(Car.global_transform.basis, rotatedBasis, angular_smooth * delta)
 	else:
 		var gravDiffCross = Car.global_transform.basis.y.cross(Vector3(0.0, 1.0, 0.0)).normalized()
 		var gravDiffDot = Car.global_transform.basis.y.dot(Vector3(0.0, 1.0, 0.0))
 		if acos(gravDiffDot) != 0.0:
 			var rotatedBasis = carBasis.rotated(gravDiffCross, acos(gravDiffDot))
-			Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, 2.5 * delta)
+			Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, angular_smooth * delta)
 	
 	var t = -rotari * (Ball.linear_velocity.length()/maxSpeed) * bodytilt
 	CarBody.rotation.z = lerp(CarBody.rotation.z, t, 10 * delta)
@@ -305,12 +326,15 @@ func StopDrift():
 	drifting = false
 	minimumDrift = false
 
-func GetHit():
+func GetHit(strength : float):
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
-		##client deferring to server data
+		Anim.play("Hop")
 		pass
 	else:
-		##server producing data for clients
+		Anim.play("Hop")
+		Ball.angular_velocity = Vector3(0.0, 0.0, 0.0)
+		$CarParent_Logic/hurtTimer.start(strength)
+		acceleration = hurtSpeed
 		pass
 	pass
 
@@ -355,6 +379,9 @@ func _on_boost_timer_timeout() -> void:
 	boost = 1.0
 	boostTiering = 0
 	camAnim.play("ZoomIn")
+
+func _on_hurt_timer_timeout() -> void:
+	acceleration = hurtAccel
 
 func despawn_player(id : int):
 	if name.to_int() == id:

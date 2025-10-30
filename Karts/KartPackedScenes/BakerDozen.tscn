@@ -510,11 +510,12 @@ LeftWheel = NodePath("Car/ModelParent/Model/LeftThrustCorrection")
 CarBody = NodePath("Car/ModelParent/Model")
 CarModel = NodePath("Car/ModelParent")
 maxSpeed = 900.0
-acceleration = 700.0
-steering = 6.365
-turnspeed = 4.065
+acceleration = 900.0
+steering = 7.415
+turnspeed = 4.95
 weight = 15.49
-bodytilt = 15.0
+airControl = 0.9
+bodytilt = 8.435
 
 [node name="CarParent_Logic" type="Node" parent="."]
 
@@ -527,6 +528,8 @@ unique_name_in_owner = true
 root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_uoj53")
 script = ExtResource("3_xxkov")
+
+[node name="hurtTimer" type="Timer" parent="CarParent_Logic"]
 
 [node name="driftTimer" type="Timer" parent="CarParent_Logic"]
 wait_time = 2.0
@@ -553,8 +556,8 @@ physics_material_override = SubResource("PhysicsMaterial_24jkt")
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
-linear_damp = 2.0
-angular_damp = 5.0
+linear_damp_mode = 1
+linear_damp = 1.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
 shape = SubResource("SphereShape3D_7822p")
@@ -718,5 +721,6 @@ spawn_path = NodePath("..")
 script = ExtResource("8_rsk53")
 CarParent = NodePath("../..")
 
+[connection signal="timeout" from="CarParent_Logic/hurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/driftTimer" to="." method="_on_drift_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/boostTimer" to="." method="_on_boost_timer_timeout"]
