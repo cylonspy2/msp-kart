@@ -58,14 +58,15 @@ var correctivey = 0.0
 @export var carTwistRate = 5.0
 var carTwist = 0.0
 var faceForce = Vector3(0.0, 0.0, 1.0)
-var drifting = false
-var startedDrifting = false
-var driftDirection = 0
+@export_group("Car Drift Data")
+@export var drifting = false
+@export var startedDrifting = false
+@export var driftDirection = 0
 var startDriftDirection = 0
 var minimumDrift = false
 var boost = 1
 
-var boostTiering = 0
+@export var boostTiering = 0
 var maxBoostTier = 4
 var turnable = false
 var prevForce = Vector3(0.0, 0.0, 0.0)
@@ -186,8 +187,8 @@ func _physics_process(_delta):
 func _process(delta):
 	speedInput = (MS.inputDir) * acceleration
 	rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
-	RightWheel.rotation.y = rotateInput
-	LeftWheel.rotation.y = rotateInput
+	RightWheel.rotation.y = lerp(RightWheel.rotation.y, rotateInput, 5 * delta)
+	LeftWheel.rotation.y = lerp(LeftWheel.rotation.y, rotateInput, 5 * delta)
 	
 	#if not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled: 
 		###Only do the bare necessity to figure out what animations to play

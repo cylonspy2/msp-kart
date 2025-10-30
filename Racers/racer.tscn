@@ -129,7 +129,7 @@ RacerItem = ExtResource("2_lnda5")
 [node name="RacerSkin" type="Node3D" parent="."]
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="RacerSkin"]
-transform = Transform3D(0.34, 0, 0, 0, 0.34, 0, 0, 0, 0.34, 0, 0, 0)
+transform = Transform3D(0.235, 0, 0, 0, 0.235, 0, 0, 0, 0.235, 0, 0, 0)
 offset = Vector2(30.21, 200.675)
 sprite_frames = SubResource("SpriteFrames_dd78r")
 animation = &"full_nelson"

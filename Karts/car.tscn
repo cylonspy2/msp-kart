@@ -1,13 +1,15 @@
-[gd_scene load_steps=37 format=4 uid="uid://vg0ts2oyhyr6"]
+[gd_scene load_steps=46 format=4 uid="uid://vg0ts2oyhyr6"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_qt2eu"]
 [ext_resource type="Texture2D" uid="uid://cdw75kjembx7r" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/Textures/colormap.png" id="2_50v30"]
 [ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="2_jtldb"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_rq2n6"]
 [ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="3_3mrxu"]
-[ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://Karts/car_ui.gd" id="3_efqrk"]
+[ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="3_efqrk"]
 [ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="4_jtldb"]
-[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://Karts/car_hitbox.gd" id="4_ud1d0"]
+[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://scripts/car_hitbox.gd" id="4_ud1d0"]
+[ext_resource type="Script" uid="uid://do7enh7rf11n3" path="res://scripts/bd_particles.gd" id="8_4yu8s"]
+[ext_resource type="Material" uid="uid://ls1u6neao7es" path="res://Karts/KartAssets/BakerDozen/BakerDozenSparks.tres" id="9_kvdoa"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_50v30"]
 properties/0/path = NodePath(".:player_id")
@@ -460,6 +462,46 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dd7r2")
 
+[sub_resource type="Curve" id="Curve_4yu8s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kvdoa"]
+curve = SubResource("Curve_4yu8s")
+
+[sub_resource type="Curve" id="Curve_2hfgr"]
+_limits = [0.0, 1024.0, 0.0, 1.0]
+_data = [Vector2(0, 0.60674167), 0.0, 0.0, 0, 0, Vector2(0.024630547, 3), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lb1tj"]
+curve = SubResource("Curve_2hfgr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2hfgr"]
+emission_shape_scale = Vector3(0.03, 0.055, 0.355)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, -1)
+spread = 7.759
+initial_velocity_min = 0.95
+initial_velocity_max = 4.7
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_kvdoa")
+scale_over_velocity_max = 1000.0
+scale_over_velocity_curve = SubResource("CurveTexture_lb1tj")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lb1tj"]
+material = ExtResource("9_kvdoa")
+size = Vector2(0.05, 0.05)
+orientation = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_btiea"]
+material = ExtResource("9_kvdoa")
+flip_faces = true
+size = Vector2(0.05, 0.05)
+orientation = 0
+
 [node name="CarParent" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel")]
 script = ExtResource("1_qt2eu")
 username = "USERNAME"
@@ -616,6 +658,32 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0.65999997)
 mesh = SubResource("ArrayMesh_v0hk8")
 skeleton = NodePath("")
+
+[node name="BD_Particles" type="Node3D" parent="Car/ModelParent/Model" node_paths=PackedStringArray("sparks")]
+script = ExtResource("8_4yu8s")
+sparkMat = ExtResource("9_kvdoa")
+base_color = Color(0.99999994, 0.85295594, 0.64457, 1)
+tier_1_color = Color(0.733438, 0.44500756, 1.92523e-07, 1)
+tier_2_color = Color(0.9235263, 0, 0.12967843, 1)
+tier_3_color = Color(0.98134226, 0, 0.49822664, 1)
+tier_4_color = Color(1.8289685e-06, 0.5617465, 0.8190756, 1)
+sparks = [NodePath("groundSparks"), NodePath("groundSparks2")]
+
+[node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
+transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_2hfgr")
+draw_passes = 2
+draw_pass_1 = SubResource("PlaneMesh_lb1tj")
+draw_pass_2 = SubResource("PlaneMesh_btiea")
+
+[node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
+transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, -0.694, 0.109, -0.5174992)
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_2hfgr")
+draw_passes = 2
+draw_pass_1 = SubResource("PlaneMesh_lb1tj")
+draw_pass_2 = SubResource("PlaneMesh_btiea")
 
 [node name="Items" type="Node3D" parent="."]
 

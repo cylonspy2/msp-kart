@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dnwcnfrjhxwws"]
+
+[ext_resource type="Shader" uid="uid://oit4rvv0p44l" path="res://Karts/KartAssets/BakerDozen/BD_Flame.tres" id="1_e1vq3"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_e1vq3")
+shader_parameter/albedo = Color(0.7244719, 0.53046244, 1, 1)
+shader_parameter/glow = Color(2.695322e-06, 0.6977841, 0.9446193, 1)
+shader_parameter/alphaCutoff = 0.07
