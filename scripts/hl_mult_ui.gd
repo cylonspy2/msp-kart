@@ -3,8 +3,10 @@ extends Control
 @export var serverBrowserBoxContainer : NodePath
 @onready var ServerBroswer = $ServerBrowser
 @onready var ServerLobby = $ServerLobby
+@onready var LobbyCreate = $LobbyCreation
 @onready var MainMenu = $MainMenu
 @onready var ServerBrowserScrollbar = $ServerBrowser/Container/ServBrow_Color/ScrollContainer
+@onready var lobby_search_bar = $ServerBrowser/Container/SearchHeader/TextEdit
 @export var server_button : PackedScene
 @export var useSteam = true
 var buttonArray : Array
@@ -20,6 +22,10 @@ func _ready() -> void:
 	if OS.has_feature("dedicated_server"):
 		#HighLevelNetwork.start_dedicated_server()
 		%NetworkManager.start_dedicated_server()
+
+func _process(_delta: float) -> void:
+	if lobby_search_bar.visible:
+		HighLevelNetwork.lobby_search = lobby_search_bar.text
 
 func list_lobbies():
 	print("finding all the Steam Lobbies")
@@ -43,13 +49,13 @@ func _populate_lobbies(lobbies : Array) -> void:
 	for lobby in lobbies:
 		var lobby_name: String = Steam.getLobbyData(lobby, "name")
 		print("lobby found: " + lobby_name)
-		if lobby_name != "" && lobby_name == "BADDIE313":
+		if lobby_name != "":
 			var servButton : Control = server_button.instantiate()
 			var lobby_mode = Steam.getLobbyData(lobby, "mode")
 			var lobby_player_cap = Steam.getLobbyData(lobby, "player cap")
 			#var scrip = servButton.get_script()
 			
-			servButton._setupInfo(lobby_name, lobby_mode, lobby, lobby_player_cap.to_int())
+			servButton._setupInfo(lobby_name, lobby_mode, lobby, lobby_player_cap.to_int(), %NetworkManager)
 			buttonArray.append(servButton)
 			_connect_join_button(servButton)
 			get_node(serverBrowserBoxContainer).call_deferred("add_child", servButton)
@@ -114,6 +120,11 @@ func _starting_game() -> void:
 
 func become_host(): #Will need work for dedicated servers
 	print("Hosting Lobby")
+	if useSteam:
+		SteamManager._initialize_steam()
+		%NetworkManager.active_network_type = %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM
+	else:
+		%NetworkManager.active_network_type = %NetworkManager.MULTIPLAYER_NETWORK_TYPE.ENET
 	%NetworkManager.become_host()
 
 func become_client():
@@ -126,9 +137,28 @@ func _on_make_server_pressed() -> void:
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
 	MainMenu.visible = false
 	MainMenu.mouse_filter = MOUSE_FILTER_IGNORE
+	ServerLobby.visible = false
+	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
+	LobbyCreate.visible = true
+	LobbyCreate.mouse_filter = MOUSE_FILTER_PASS
+	
+	#become_host()
+
+func _on_exit_pressed() -> void:
+	LobbyCreate.visible = false
+	LobbyCreate.mouse_filter = MOUSE_FILTER_IGNORE
+	MainMenu.visible = true
+	MainMenu.mouse_filter = MOUSE_FILTER_PASS
+
+func _on_make_lobby_pressed() -> void:
+	ServerBroswer.visible = false
+	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
+	MainMenu.visible = false
+	MainMenu.mouse_filter = MOUSE_FILTER_IGNORE
 	ServerLobby.visible = true
 	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
-	
+	LobbyCreate.visible = false
+	LobbyCreate.mouse_filter = MOUSE_FILTER_IGNORE
 	become_host()
 
 
@@ -181,3 +211,11 @@ func _on_server_type_pressed() -> void:
 		%NetworkManager.active_network_type = %NetworkManager.MULTIPLAYER_NETWORK_TYPE.ENET
 	
 	list_lobbies()
+
+
+func _on_button_2_pressed() -> void:
+	list_lobbies()
+
+
+func _on_exit_lobby_pressed() -> void:
+	leave_lobby()

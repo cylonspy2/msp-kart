@@ -8,7 +8,7 @@ func _ready() -> void:
 	pass
 
 func _spawn_item(altFired : bool, item : PackedScene):
-	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if not (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		##client deferring to server data
 		pass
 	else:

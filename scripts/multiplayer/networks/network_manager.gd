@@ -11,6 +11,7 @@ var steam_network_scene := preload("res://scenes/multiplayer/networks/steam_netw
 var active_network
 
 var is_host : bool
+var targ_id : int
 
 func _ready() -> void:
 	is_host = false

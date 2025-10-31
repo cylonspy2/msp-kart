@@ -9,11 +9,18 @@ extends Node3D
 @export var tier_4_color : Color
 @export var sparks : Array[GPUParticles3D]
 
+var renderable = true
+
 func _ready() -> void:
+	if (multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
+		renderable = false
+		return
 	for sparky : GPUParticles3D in sparks:
 		sparky.emitting = false
 
 func _process(delta: float) -> void:
+	if renderable:
+		return
 	if parrent.start_drift:
 		for sparky : GPUParticles3D in sparks:
 			sparky.emitting = true

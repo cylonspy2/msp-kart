@@ -1,12 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=24 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="2_rwgo1"]
+[ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="3_3yda7"]
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_6mdqg"]
 [ext_resource type="LabelSettings" uid="uid://c781sptcjwjxk" path="res://Racetracks/RacetrackAssets/Rank_Label_Settings.tres" id="3_rwgo1"]
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="4_3yda7"]
+[ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="4_6mdqg"]
 [ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="5_fn2mn"]
 [ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="6_8vqid"]
+[ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="10_3yda7"]
 
 [sub_resource type="Curve2D" id="Curve2D_8vqid"]
 bake_interval = 0.01
@@ -128,6 +131,95 @@ label_settings = ExtResource("3_rwgo1")
 [node name="Control" type="Control" parent="Minimap/Placement"]
 custom_minimum_size = Vector2(31.695, 0)
 layout_mode = 2
+
+[node name="Item_Visualizer" type="Control" parent="Minimap"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Minimap/Item_Visualizer"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 321.0
+grow_horizontal = 0
+
+[node name="Item" type="Control" parent="Minimap/Item_Visualizer/VBoxContainer"]
+custom_minimum_size = Vector2(100.95, 129.825)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
+layout_mode = 0
+offset_left = -4.999956
+offset_top = 2.0
+offset_right = 143.00005
+offset_bottom = 190.0
+scale = Vector2(0.69, 0.69)
+texture = ExtResource("3_3yda7")
+stretch_mode = 4
+
+[node name="ItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.565308
+offset_top = 17.391304
+offset_right = -33.985474
+offset_bottom = -27.130432
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_6mdqg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11764706, 0.11764706, 0.11764706, 0.63529414)
+
+[node name="AltItem" type="Control" parent="Minimap/Item_Visualizer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 188)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = -3.0000067
+offset_right = 200.0
+offset_bottom = 185.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_3yda7")
+stretch_mode = 4
+
+[node name="AltItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2"]
+layout_mode = 0
+offset_left = 12.083333
+offset_top = 15.13331
+offset_right = 112.083336
+offset_bottom = 161.80032
+texture = ExtResource("4_6mdqg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11764706, 0.11764706, 0.11764706, 0.63529414)
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -457,5 +549,25 @@ disabled = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rkyhk")
+
+[node name="Gadgets" type="Node3D" parent="."]
+
+[node name="ItemContainer" parent="Gadgets" instance=ExtResource("10_3yda7")]
+transform = Transform3D(0.8433914, 0, -0.53729963, 0, 1, 0, 0.53729963, 0, 0.8433914, -338.5413, 288.4212, 98.543175)
+
+[node name="ItemContainer2" parent="Gadgets" instance=ExtResource("10_3yda7")]
+transform = Transform3D(0.8433914, 0, -0.53729963, 0, 1, 0, 0.53729963, 0, 0.8433914, -341.0419, 288.4212, 102.47032)
+
+[node name="ItemContainer3" parent="Gadgets" instance=ExtResource("10_3yda7")]
+transform = Transform3D(0.8433914, 0, -0.53729963, 0, 1, 0, 0.53729963, 0, 0.8433914, -335.97192, 288.4212, 94.53346)
+
+[node name="ItemContainer4" parent="Gadgets" instance=ExtResource("10_3yda7")]
+transform = Transform3D(0.84874105, 0, 0.5288087, 0, 1, 0, -0.5288087, 0, 0.84874105, 646.7627, 516.29114, -234.46274)
+
+[node name="ItemContainer5" parent="Gadgets" instance=ExtResource("10_3yda7")]
+transform = Transform3D(0.84874105, 0, 0.5288087, 0, 1, 0, -0.5288087, 0, 0.84874105, 649.2256, 516.29114, -230.51181)
+
+[node name="ItemContainer6" parent="Gadgets" instance=ExtResource("10_3yda7")]
+transform = Transform3D(0.84874105, 0, 0.5288087, 0, 1, 0, -0.5288087, 0, 0.84874105, 644.255, 516.29114, -238.51129)
 
 [connection signal="body_entered" from="Finish_Line" to="." method="_on_finish_line_body_entered"]

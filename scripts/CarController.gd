@@ -80,7 +80,7 @@ signal altFireItem(item : PackedScene)
 signal gainItem(item : PackedScene)
 
 @export_group("Server Data")
-@export var velocity_smooth = 2.0
+@export var velocity_smooth = 3.0
 @export var angular_smooth = 3.64
 @export var start_drift = false
 @export var end_drift = false
@@ -90,6 +90,7 @@ signal gainItem(item : PackedScene)
 @export var server_Rot : Basis
 @export var server_Pos_Offset : Vector3
 @export var time_since_last_update : float
+@export var fireDisabled = false
 
 var gravDir : Vector3
 var hurtAccel : float
@@ -224,17 +225,16 @@ func _process(delta):
 		#return
 	
 	if multiplayer.is_server() or not HighLevelNetwork.multiplayer_enabled: 
-		## serverwork
+		## serverwork + singleplayer work
 		pass
 	
 	if haveAuthority:
 		$Car/CarLogic/UsernameHolder/Username.text = username
 	
-	if firedItem && itemHeld != null:
+	if (firedItem && itemHeld != null) && not fireDisabled:
 		fireItem.emit(itemHeld)
-		itemHeld = null
 		firedItem = false
-	if altFiredItem && altItem != null:
+	if (altFiredItem && altItem != null && itemHeld != null) && not fireDisabled:
 		altFireItem.emit(altItem)
 		altFiredItem = false
 	
@@ -332,6 +332,7 @@ func GetHit(strength : float):
 		pass
 	else:
 		Anim.play("Hop")
+		fireDisabled = true
 		Ball.angular_velocity = Vector3(0.0, 0.0, 0.0)
 		$CarParent_Logic/hurtTimer.start(strength)
 		acceleration = hurtSpeed
@@ -339,6 +340,8 @@ func GetHit(strength : float):
 	pass
 
 func PickupItem(item : PackedScene):
+	if hasItem:
+		return
 	itemHeld = item
 	hasItem = true
 
@@ -347,7 +350,8 @@ func ThrowItem():
 		##client deferring to server data
 		pass
 	else:
-		##server producing data for clients
+		fireDisabled = true
+		$CarParent_Logic/itemTimer.start()
 		pass
 	pass
 
@@ -356,7 +360,8 @@ func TriggerRacerAbility():
 		##client deferring to server data
 		pass
 	else:
-		##server producing data for clients
+		fireDisabled = true
+		$CarParent_Logic/itemTimer.start()
 		pass
 	pass
 
@@ -382,6 +387,12 @@ func _on_boost_timer_timeout() -> void:
 
 func _on_hurt_timer_timeout() -> void:
 	acceleration = hurtAccel
+	fireDisabled = false
+
+func _on_item_timer_timeout() -> void:
+	hasItem = false
+	itemHeld = null
+	fireDisabled = false
 
 func despawn_player(id : int):
 	if name.to_int() == id:

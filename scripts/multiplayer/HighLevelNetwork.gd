@@ -1,5 +1,13 @@
 extends Node
 
+var MAX_PLAYERS : int = 16
+var STEAM_LOBBY_TYPE : int = 2
+var passwordReq = false
+var pwrd = "shadow money wizard gang"
+var lobbyName = "BADDIE343"
+
+var lobby_search = ""
+
 signal enter_lobby(id : int)
 signal enter_race
 signal end_race (id : int, score : int)
@@ -41,8 +49,11 @@ func _grab_item(placementy : float) -> PackedScene:
 	for itemm : Vector3 in available_ranges:
 		if itemm.x > placementy and itemm.y < placementy:
 			possible_picks.append(available_items[itemm.z])
-	var picked = possible_picks.pick_random()
-	return picked
+	if possible_picks.size() > 0:
+		var picked = possible_picks.pick_random()
+		return picked
+	else:
+		return possible_picks[0]
 
 #
 #func retarget_server(IPA : String, PRT : int) -> void:

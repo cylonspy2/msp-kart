@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8i2gsjkkjlnc"]
 
 [ext_resource type="Script" uid="uid://4ch5qxld3wda" path="res://Items/ItemAssets/item_brain.gd" id="1_4liem"]
-[ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="2_wwut3"]
+[ext_resource type="Texture2D" uid="uid://d1gfu4gbpi28p" path="res://ExternalAssets/ref_Racer/Timeline 1_0094.png" id="2_wwut3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wwut3"]
 properties/0/path = NodePath(".:job_done")

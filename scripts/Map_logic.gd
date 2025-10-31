@@ -9,35 +9,42 @@ extends Node3D
 @export var Cars : Array[Node3D]
 @export var RacerIcons : Array[TextureRect]
 @onready var Path = $Minimap/Minimap_road/Path2D
+@onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ItemIcon
+@onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/AltItemIcon
 
+var yourAuthority : int
 
 func _ready() -> void:
 	$Minimap/Minimap_road/Line2D.clear_points()
 	$Minimap/Minimap_road/Line2D2.clear_points()
 	RacerIcons.clear()
+	
+	yourAuthority = get_multiplayer_authority()
+	
 	for car in Cars:
 		var racee = car.Racer.instantiate()
 		var carIcon = racee.RacerIcon
 		var racer: TextureRect = TextureRect.new()
 		racer.name = str(car.player_id)
-		racer.expand_mode = 1
+		racer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		racer.texture = carIcon
 		racer.size = Vector2(32, 32)
 		racer.position = Path.curve.sample_baked(0.0) + Vector2(-16,-16)
 		$Minimap/Minimap_road/Path2D.call_deferred("add_child", racer)
 		RacerIcons.append(racer)
+		if yourAuthority == car.player_id: 
+			var rep = racee.RacerItem.instantiate()
+			$Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/AltItemIcon.texture = rep.inventory_icon
+			rep.queue_free()
 		racee.queue_free()
-		pass
 	var pointCol = Path.curve.get_baked_points()
 	for point in pointCol:
 		$Minimap/Minimap_road/Line2D.add_point(point)
 		$Minimap/Minimap_road/Line2D2.add_point(point)
 
-func _process(delta: float) -> void:
-	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled): 
-		if HighLevelNetwork.multiplayer_enabled:
-			return
-		
+func _process(_delta: float) -> void:
+	if not (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
+		return
 	
 	for car in Cars:
 		car.track_pos = get_track_placement(car.Ball.global_position)
@@ -52,6 +59,28 @@ func _process(delta: float) -> void:
 	for car in Cars:
 		var placement = Cars.find(car) + 1
 		car.leaderboard_placement = placement
+		
+		#if the current racer isn't yours, don't bother doing the UI work
+		if yourAuthority != car.player_id: continue
+		
+		##TODO: All UI work that is specific to the given racer
+		
+		if ItemIcon.texture == null:
+			if car.hasItem:
+				var Itemm = car.itemHeld.instantiate()
+				ItemIcon.texture = Itemm.inventory_icon
+				Itemm.queue_free()
+		else:
+			if not car.hasItem:
+				ItemIcon.texture = null
+		
+		if car.fireDisabled:
+			$Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ColorRect.visible = true
+			$Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/ColorRect.visible = true
+		else:
+			$Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ColorRect.visible = false
+			$Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/ColorRect.visible = false
+		
 		$Minimap/Placement/Rank.text = str(placement)
 		match(placement):
 			1:

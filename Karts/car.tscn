@@ -517,8 +517,6 @@ steering = 6.365
 turnspeed = 4.065
 weight = 15.49
 bodytilt = 15.0
-velocity_smooth = 1.29
-angular_smooth = 3.11
 
 [node name="CarParent_Logic" type="Node" parent="."]
 
@@ -533,12 +531,17 @@ replication_config = SubResource("SceneReplicationConfig_uoj53")
 script = ExtResource("2_jtldb")
 
 [node name="hurtTimer" type="Timer" parent="CarParent_Logic"]
+one_shot = true
 
 [node name="driftTimer" type="Timer" parent="CarParent_Logic"]
 wait_time = 2.0
 one_shot = true
 
 [node name="boostTimer" type="Timer" parent="CarParent_Logic"]
+one_shot = true
+
+[node name="itemTimer" type="Timer" parent="CarParent_Logic"]
+wait_time = 0.1
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CarParent_Logic"]
@@ -700,3 +703,4 @@ CarParent = NodePath("../..")
 [connection signal="timeout" from="CarParent_Logic/hurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/driftTimer" to="." method="_on_drift_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/boostTimer" to="." method="_on_boost_timer_timeout"]
+[connection signal="timeout" from="CarParent_Logic/itemTimer" to="." method="_on_item_timer_timeout"]

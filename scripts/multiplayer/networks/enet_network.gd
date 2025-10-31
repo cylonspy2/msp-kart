@@ -3,6 +3,7 @@ extends Node
 var MAX_PLAYERS = 16
 var IP_ADDRESS : String = "localhost"
 var PORT : int = 42168
+var targ_id : int
 
 var host_mode_enabled = false
 
@@ -22,6 +23,7 @@ func start_dedicated_server() -> void :
 
 func become_host() -> void :
 	peer = ENetMultiplayerPeer.new()
+	MAX_PLAYERS = HighLevelNetwork.MAX_PLAYERS
 	peer.create_server(PORT, MAX_PLAYERS)
 	multiplayer.multiplayer_peer = peer
 	host_mode_enabled = true

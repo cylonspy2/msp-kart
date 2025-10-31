@@ -1,9 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce4l45pg5pfxb"]
+[gd_scene load_steps=11 format=3 uid="uid://ce4l45pg5pfxb"]
 
 [ext_resource type="Script" uid="uid://dbg6betg4ssvw" path="res://scripts/hl_mult_ui.gd" id="1_a1sbk"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="2_g6gwi"]
 [ext_resource type="PackedScene" uid="uid://dvhqn57ltpn1t" path="res://scenes/server_button.tscn" id="2_puhv1"]
 [ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="3_tu0x2"]
+[ext_resource type="Script" uid="uid://ckj0r115rh5lu" path="res://scenes/lobby_creation.gd" id="5_1qyww"]
+[ext_resource type="LabelSettings" uid="uid://blyqo7t3apovf" path="res://addons/MainMenuFont_1.tres" id="5_5lwns"]
+[ext_resource type="Script" uid="uid://8gwrx4qjo6mw" path="res://scripts/LobbySetupWiggle.gd" id="5_nfuve"]
+[ext_resource type="LabelSettings" uid="uid://bc51l2bv20pkb" path="res://addons/MakeLobbyFont.tres" id="6_1qyww"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nfuve"]
+font_size = 56
+font_color = Color(0, 0, 0, 1)
+outline_size = 40
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5lwns"]
+font_size = 36
+font_color = Color(0.47843137, 1, 0.1764706, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [node name="HLMultUI" type="Control"]
 layout_mode = 3
@@ -84,6 +100,7 @@ layout_mode = 2
 text = "Exit Game"
 
 [node name="ServerBrowser" type="Control" parent="."]
+visible = false
 custom_minimum_size = Vector2(600, 400)
 layout_mode = 1
 anchor_left = 0.24000001
@@ -431,6 +448,187 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "Boost Duration"
 
+[node name="LobbyCreation" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchor_left = 0.242
+anchor_top = 0.15900001
+anchor_right = 0.71900004
+anchor_bottom = 0.83500004
+offset_top = -0.03200531
+offset_right = -0.32000732
+offset_bottom = 0.030944824
+grow_horizontal = 2
+script = ExtResource("5_1qyww")
+
+[node name="ColorRect" type="ColorRect" parent="LobbyCreation"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.47397572, 0.47397572, 0.47397572, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyCreation/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="LobbyCreation/ColorRect/VBoxContainer" node_paths=PackedStringArray("labell", "labShad")]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("5_nfuve")
+labell = NodePath("Label")
+labShad = NodePath("Label2")
+pointy = Vector2(6, 0)
+speed = 2.75
+
+[node name="Label2" type="Label" parent="LobbyCreation/ColorRect/VBoxContainer/Control"]
+layout_mode = 0
+offset_left = 14.806004
+offset_top = 5.284999
+offset_right = 380.806
+offset_bottom = 82.284996
+text = "LOBBY SETUP"
+label_settings = SubResource("LabelSettings_nfuve")
+
+[node name="Label" type="Label" parent="LobbyCreation/ColorRect/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.2160034
+offset_top = -2.040001
+offset_right = 7.2160034
+offset_bottom = -2.040001
+grow_horizontal = 2
+grow_vertical = 2
+text = "LOBBY SETUP"
+label_settings = ExtResource("6_1qyww")
+
+[node name="LobbyName&Exit" type="ColorRect" parent="LobbyCreation/ColorRect/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35.885)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Set Lobby Name Here..."
+
+[node name="ColorRect" type="ColorRect" parent="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer"]
+custom_minimum_size = Vector2(48.845, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+color = Color(1, 0, 0, 1)
+
+[node name="Exit" type="Button" parent="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CLOSE"
+
+[node name="PlayerCap" type="HBoxContainer" parent="LobbyCreation/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="LobbyCreation/ColorRect/VBoxContainer/PlayerCap"]
+custom_minimum_size = Vector2(126.965, 0)
+layout_mode = 2
+text = "MAX_PLAYERS:"
+label_settings = ExtResource("5_5lwns")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="LobbyCreation/ColorRect/VBoxContainer/PlayerCap"]
+custom_minimum_size = Vector2(47.14, 0)
+layout_mode = 2
+text = "16"
+label_settings = SubResource("LabelSettings_5lwns")
+
+[node name="HSlider" type="HSlider" parent="LobbyCreation/ColorRect/VBoxContainer/PlayerCap"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 1.0
+max_value = 16.0
+value = 1.0
+
+[node name="ServerType&FriendsOnly" type="HBoxContainer" parent="LobbyCreation/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CheckButton" type="CheckButton" parent="LobbyCreation/ColorRect/VBoxContainer/ServerType&FriendsOnly"]
+layout_mode = 2
+disabled = true
+button_pressed = true
+text = "Use Steam?"
+
+[node name="OptionButton" type="OptionButton" parent="LobbyCreation/ColorRect/VBoxContainer/ServerType&FriendsOnly"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+selected = 2
+item_count = 3
+popup/item_0/text = "Private"
+popup/item_0/id = 0
+popup/item_1/text = "Friends Only"
+popup/item_1/id = 1
+popup/item_2/text = "Public"
+popup/item_2/id = 2
+
+[node name="Server Password" type="ColorRect" parent="LobbyCreation/ColorRect/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35.885)
+layout_mode = 2
+color = Color(0, 0, 0, 0)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbyCreation/ColorRect/VBoxContainer/Server Password"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckButton" type="CheckButton" parent="LobbyCreation/ColorRect/VBoxContainer/Server Password/HBoxContainer"]
+layout_mode = 2
+text = "Lobby Password?"
+
+[node name="TextEdit" type="TextEdit" parent="LobbyCreation/ColorRect/VBoxContainer/Server Password/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Set Password Here..."
+
+[node name="Control2" type="Control" parent="LobbyCreation/ColorRect/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32.79)
+layout_mode = 2
+
+[node name="MakeLobby" type="Button" parent="LobbyCreation/ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.4
+text = "START LOBBY"
+
+[node name="Control3" type="Control" parent="LobbyCreation/ColorRect/VBoxContainer"]
+custom_minimum_size = Vector2(0, 11.435)
+layout_mode = 2
+
 [connection signal="pressed" from="VBoxContainer/Server" to="." method="_on_server_pressed"]
 [connection signal="pressed" from="VBoxContainer/Client" to="." method="_on_client_pressed"]
 [connection signal="pressed" from="MainMenu/make_server" to="." method="_on_make_server_pressed"]
@@ -438,4 +636,8 @@ text = "Boost Duration"
 [connection signal="pressed" from="MainMenu/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainMenu/Exit Game" to="." method="_on_exit_game_pressed"]
 [connection signal="pressed" from="ServerBrowser/Container/SearchHeader/ServerType" to="." method="_on_server_type_pressed"]
+[connection signal="pressed" from="ServerBrowser/Container/SearchHeader/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="ServerBrowser/Container/MenuFooter/Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ExitLobbyControl/Exit Lobby" to="." method="_on_exit_lobby_pressed"]
+[connection signal="pressed" from="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer/ColorRect/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="LobbyCreation/ColorRect/VBoxContainer/MakeLobby" to="." method="_on_make_lobby_pressed"]

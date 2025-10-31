@@ -45,6 +45,9 @@ properties/7/replication_mode = 1
 properties/8/path = NodePath(".:time_since_last_update")
 properties/8/spawn = true
 properties/8/replication_mode = 1
+properties/9/path = NodePath("CarParent:fireDisabled")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_uoj53"]
 properties/0/path = NodePath("ControlSynchronizer:inputDir")
@@ -530,12 +533,17 @@ replication_config = SubResource("SceneReplicationConfig_uoj53")
 script = ExtResource("3_xxkov")
 
 [node name="hurtTimer" type="Timer" parent="CarParent_Logic"]
+one_shot = true
 
 [node name="driftTimer" type="Timer" parent="CarParent_Logic"]
 wait_time = 2.0
 one_shot = true
 
 [node name="boostTimer" type="Timer" parent="CarParent_Logic"]
+one_shot = true
+
+[node name="itemTimer" type="Timer" parent="CarParent_Logic"]
+wait_time = 0.1
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CarParent_Logic"]
@@ -724,3 +732,4 @@ CarParent = NodePath("../..")
 [connection signal="timeout" from="CarParent_Logic/hurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/driftTimer" to="." method="_on_drift_timer_timeout"]
 [connection signal="timeout" from="CarParent_Logic/boostTimer" to="." method="_on_boost_timer_timeout"]
+[connection signal="timeout" from="CarParent_Logic/itemTimer" to="." method="_on_item_timer_timeout"]
