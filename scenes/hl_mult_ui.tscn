@@ -1,13 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://ce4l45pg5pfxb"]
+[gd_scene load_steps=15 format=3 uid="uid://ce4l45pg5pfxb"]
 
 [ext_resource type="Script" uid="uid://dbg6betg4ssvw" path="res://scripts/hl_mult_ui.gd" id="1_a1sbk"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="2_g6gwi"]
 [ext_resource type="PackedScene" uid="uid://dvhqn57ltpn1t" path="res://scenes/server_button.tscn" id="2_puhv1"]
 [ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="3_tu0x2"]
+[ext_resource type="Script" uid="uid://osc0gheplvqr" path="res://scenes/selectedCourse.gd" id="4_h86ac"]
+[ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="4_wuvjb"]
 [ext_resource type="Script" uid="uid://ckj0r115rh5lu" path="res://scenes/lobby_creation.gd" id="5_1qyww"]
 [ext_resource type="LabelSettings" uid="uid://blyqo7t3apovf" path="res://addons/MainMenuFont_1.tres" id="5_5lwns"]
 [ext_resource type="Script" uid="uid://8gwrx4qjo6mw" path="res://scripts/LobbySetupWiggle.gd" id="5_nfuve"]
 [ext_resource type="LabelSettings" uid="uid://bc51l2bv20pkb" path="res://addons/MakeLobbyFont.tres" id="6_1qyww"]
+[ext_resource type="Script" uid="uid://mh8dpmqy82jl" path="res://scenes/chosen_racer_kart_data.gd" id="6_8cjkf"]
+[ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="6_h86ac"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nfuve"]
 font_size = 56
@@ -26,6 +30,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 1.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a1sbk")
@@ -207,7 +215,6 @@ layout_mode = 2
 text = "Close"
 
 [node name="ServerLobby" type="Control" parent="."]
-visible = false
 custom_minimum_size = Vector2(600, 400)
 layout_mode = 1
 anchor_left = 0.24000001
@@ -284,7 +291,51 @@ text = "Choose Kart"
 
 [node name="ChooseCourse" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Choose Course"
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.49
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -84.5
+offset_right = 80.0
+offset_bottom = 84.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_h86ac")
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Selected Course:"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("4_wuvjb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -46.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -342,23 +393,24 @@ offset_bottom = 150.0
 layout_mode = 2
 text = "Chosen Racer & Kart:"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer"]
+[node name="ChosenRacerKartData" type="HBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_8cjkf")
 
-[node name="Kart" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="Kart" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Racer" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="Racer" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="Control" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData"]
 custom_minimum_size = Vector2(114.275, 0)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -366,24 +418,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Ability" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control/VBoxContainer"]
+[node name="Ability" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Control/VBoxContainer"]
 layout_mode = 2
 text = "Skill:"
 
-[node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control/VBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.5132329, 0.5132329, 0.5132329, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Control/VBoxContainer/ColorRect"]
-position = Vector2(57, 65)
-texture = ExtResource("3_tu0x2")
+[node name="TextureRect" type="TextureRect" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Control/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -72.0
+offset_right = 57.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_h86ac")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Stats" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2"]
+[node name="Item" type="TextureRect" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Control/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -58.0
+offset_right = 32.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_tu0x2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Stats" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="STATS" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats"]
+[node name="STATS" type="VBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -391,71 +473,71 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 text = "STATS"
 
-[node name="Weight" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="Weight" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Weight"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Weight"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Weight"
 
-[node name="Acceleration" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="Acceleration" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Acceleration"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Acceleration"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Acceleration"
 
-[node name="Steering" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="Steering" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Steering"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Steering"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Steering"
 
-[node name="Drift Control" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="Drift Control" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Drift Control"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Drift Control"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Drift Control"
 
-[node name="Boost" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="Boost" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/Boost"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Boost"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Boost Speed"
 
-[node name="BoostDuration" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS"]
+[node name="BoostDuration" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer2/Stats/STATS/BoostDuration"]
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/BoostDuration"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -642,6 +724,47 @@ text = "START LOBBY"
 custom_minimum_size = Vector2(0, 11.435)
 layout_mode = 2
 
+[node name="SelectionMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ServBrow_Color" type="ColorRect" parent="SelectionMenu"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+color = Color(0.24477637, 0.2447764, 0.24477637, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SelectionMenu/ServBrow_Color"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.635
+offset_bottom = -9.109985
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ServerBrowser" type="VBoxContainer" parent="SelectionMenu/ServBrow_Color/ScrollContainer"]
+custom_minimum_size = Vector2(597.02, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
 [connection signal="pressed" from="VBoxContainer/Server" to="." method="_on_server_pressed"]
 [connection signal="pressed" from="VBoxContainer/Client" to="." method="_on_client_pressed"]
 [connection signal="pressed" from="MainMenu/make_server" to="." method="_on_make_server_pressed"]
@@ -653,5 +776,8 @@ layout_mode = 2
 [connection signal="pressed" from="ServerBrowser/Container/MenuFooter/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ExitLobbyControl/Exit Lobby" to="." method="_on_exit_lobby_pressed"]
 [connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ChooseRacer" to="." method="_on_choose_racer_pressed"]
+[connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ChooseKart" to="." method="_on_choose_kart_pressed"]
+[connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse" to="." method="_on_choose_course_pressed"]
 [connection signal="pressed" from="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer/ColorRect/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="LobbyCreation/ColorRect/VBoxContainer/MakeLobby" to="." method="_on_make_lobby_pressed"]

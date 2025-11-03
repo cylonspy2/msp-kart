@@ -23,6 +23,10 @@ func _enter_tree() -> void:
 	multiplayer.peer_disconnected.connect(func(id): despawn_player(id))
 	HighLevelNetwork.end_race.connect(func(id, score): finish_race(id, score))
 	HighLevelNetwork.enter_race.connect(enter_race)
+	HighLevelNetwork.select_kart.connect(func(id): set_kart(id))
+	HighLevelNetwork.select_kart.connect(func(id): set_kart(id))
+	HighLevelNetwork.select_racer.connect(func(id): set_racer(id))
+	HighLevelNetwork.select_track.connect(func(id): set_track(id))
 
 func _ready() -> void:
 	if haveAuthority:
@@ -57,3 +61,12 @@ func finish_race(id : int, score : int):
 		camera.make_current()
 	$MultiplayerSpawner.despawn_kart(id)
 	has_spawned = false
+
+func set_kart(id : PackedScene):
+	requestedKart = id
+
+func set_racer(id : PackedScene):
+	requestedRacer = id
+
+func set_track(id : PackedScene):
+	requestedTrack = id

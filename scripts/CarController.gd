@@ -55,6 +55,7 @@ var minimumDriftRotation = 2.0
 var gravForce = Vector3(0.0, -1.0, 0.0)
 var correctivey = 0.0
 @export_group("Car Visual Tweaks")
+@export var kart_icon : Texture2D
 @export var bodytilt = 30.0
 @export var maxCarTwist = 30.0
 @export var carTwistRate = 5.0

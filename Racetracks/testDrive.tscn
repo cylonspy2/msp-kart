@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
-[ext_resource type="Texture2D" uid="uid://bobeajwec8c5s" path="res://icon.svg" id="2_fn2mn"]
+[ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_3yda7"]
 [ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="2_rwgo1"]
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="3_3yda7"]
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_6mdqg"]
@@ -71,7 +71,7 @@ size = Vector3(2, 2, 2)
 
 [node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath", "checkpoints")]
 script = ExtResource("1_vqjdx")
-map_icon = ExtResource("2_fn2mn")
+map_icon = ExtResource("2_3yda7")
 MAX_LAPS = 3
 Car_Root = Array[NodePath]([NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")])
 TrackPath = NodePath("Environment/Path3D")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=48 format=4 uid="uid://c3ywrjpbr02ay"]
+[gd_scene load_steps=49 format=4 uid="uid://c3ywrjpbr02ay"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
+[ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="3_us48a"]
 [ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="3_xxkov"]
 [ext_resource type="Script" uid="uid://bwkkh8kt1o3t7" path="res://Karts/KartAssets/BakerDozen/bd_flame.gd" id="4_0x8ti"]
 [ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="4_duwg8"]
@@ -518,6 +519,7 @@ steering = 7.415
 turnspeed = 4.95
 weight = 15.49
 airControl = 0.9
+kart_icon = ExtResource("3_us48a")
 bodytilt = 8.435
 
 [node name="CarParent_Logic" type="Node" parent="."]

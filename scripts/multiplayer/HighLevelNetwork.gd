@@ -15,6 +15,10 @@ signal exit_race
 signal spawn_racers (spawn_path : NodePath)
 signal despawn_player(id : int)
 
+signal select_track(scene : PackedScene)
+signal select_kart(scene : PackedScene)
+signal select_racer(scene : PackedScene)
+
 var host_mode_enabled = false
 var multiplayer_enabled = false
 

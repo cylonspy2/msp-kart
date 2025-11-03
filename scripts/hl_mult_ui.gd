@@ -10,6 +10,7 @@ extends Control
 @onready var lobby_search_bar = $ServerBrowser/Container/SearchHeader/TextEdit
 @onready var startGameButton = $ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl
 @onready var lobbyName = $ServerLobby/ColorRect/VBoxContainer/lobby_name
+@onready var selectMenu = $SelectionMenu
 @export var server_button : PackedScene
 @export var useSteam = true
 var haveAuthority = false
@@ -244,3 +245,20 @@ func _on_exit_lobby_pressed() -> void:
 
 func _on_start_game_pressed() -> void:
 	HighLevelNetwork.enter_race.emit()
+
+
+
+
+
+
+
+func _on_choose_course_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_choose_kart_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_choose_racer_pressed() -> void:
+	pass # Replace with function body.
