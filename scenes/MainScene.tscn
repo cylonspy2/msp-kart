@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4lf6mqid4l3"]
+[gd_scene load_steps=10 format=3 uid="uid://c4lf6mqid4l3"]
 
 [ext_resource type="Script" uid="uid://daygg40j43bio" path="res://scripts/main_scene.gd" id="1_k24pf"]
 [ext_resource type="PackedScene" uid="uid://ce4l45pg5pfxb" path="res://scenes/hl_mult_ui.tscn" id="1_x4av3"]
@@ -6,6 +6,22 @@
 [ext_resource type="Script" uid="uid://bc5ff5nyrprfc" path="res://scripts/multiplayer/networks/network_manager.gd" id="2_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://bq4bbfhb2b6wx" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/ambulance.glb" id="3_c6dvc"]
 [ext_resource type="PackedScene" uid="uid://ci7uqeytx4o21" path="res://scenes/spectator.tscn" id="4_611at"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ygjfp"]
+properties/0/path = NodePath(".:trackListPos")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:levelChosen")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+
+[sub_resource type="Animation" id="Animation_ygjfp"]
+resource_name = "CHOOSE"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1wiy7"]
+_data = {
+&"CHOOSE": SubResource("Animation_ygjfp")
+}
 
 [node name="MainScene" type="Node3D"]
 script = ExtResource("1_k24pf")
@@ -32,6 +48,19 @@ transform = Transform3D(0.7749445, -0.26310167, 0.5746639, 0, 0.90923613, 0.4162
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://ci7uqeytx4o21")
-spawn_path = NodePath("../SpectatorLobby")
+spawn_path = NodePath("../RaceSlot")
 script = ExtResource("2_rpqi1")
 networkPlayer = ExtResource("4_611at")
+SpectatorSpawnpath = NodePath("../SpectatorLobby")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ygjfp")
+
+[node name="RaceSlot" type="Node" parent="."]
+
+[node name="LevelChooser" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1wiy7")
+}
+
+[connection signal="animation_finished" from="LevelChooser" to="." method="_on_level_chooser_animation_finished"]

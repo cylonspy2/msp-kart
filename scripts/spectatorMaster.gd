@@ -9,6 +9,7 @@ extends Node3D
 @export var score : int = 0
 var haveAuthority = false
 var is_controlled = true
+var has_spawned = false
 
 func _enter_tree() -> void:
 	is_controlled = true
@@ -18,7 +19,7 @@ func _enter_tree() -> void:
 		haveAuthority = true
 		UI.visible = true
 		UI.mouse_filter = UI.MOUSE_FILTER_PASS
-	HighLevelNetwork.enter_race.connect(_on_toggle_control)
+	HighLevelNetwork.spawn_racers.connect(_on_toggle_control)
 	multiplayer.peer_disconnected.connect(func(id): despawn_player(id))
 	HighLevelNetwork.end_race.connect(func(id, score): finish_race(id, score))
 	HighLevelNetwork.enter_race.connect(enter_race)
@@ -49,8 +50,10 @@ func enter_race():
 		spawner._spawn_Car = requestedKart
 		spawner._spawn_Racer = requestedRacer
 		spawner.spawn_player(name.to_int())
+		has_spawned = true
 
 func finish_race(id : int, score : int):
 	if name.to_int() == id:
 		camera.make_current()
 	$MultiplayerSpawner.despawn_kart(id)
+	has_spawned = false

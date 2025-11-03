@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
 	if lobby_name.text != "":
 		HighLevelNetwork.lobbyName = lobby_name.text
 	else:
-		HighLevelNetwork.lobbyName = "BADDIE343"
+		HighLevelNetwork.lobbyName = HighLevelNetwork.userName + "'s lobby"
 	HighLevelNetwork.MAX_PLAYERS = playCap.value
 	HighLevelNetwork.STEAM_LOBBY_TYPE = friendsOnly.selected
 	playCapVal.text = str(playCap.value)

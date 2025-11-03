@@ -1,0 +1,139 @@
+[gd_scene load_steps=17 format=3 uid="uid://6a327nhpgdjl"]
+
+[ext_resource type="Script" uid="uid://4ch5qxld3wda" path="res://Items/ItemAssets/item_brain.gd" id="1_gc1mp"]
+[ext_resource type="Texture2D" uid="uid://d1gfu4gbpi28p" path="res://ExternalAssets/ref_Racer/Timeline 1_0094.png" id="2_onmmx"]
+[ext_resource type="Script" uid="uid://c6u7eqx5oc0b8" path="res://Items/ItemAssets/horn_effect.gd" id="3_cjxn5"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wwut3"]
+properties/0/path = NodePath(".:job_done")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="Curve" id="Curve_fjvtb"]
+_data = [Vector2(0.44324327, 1), 0.0, 0.0, 0, 0, Vector2(0.88648653, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_d1uwk"]
+curve = SubResource("Curve_fjvtb")
+
+[sub_resource type="Curve" id="Curve_cjxn5"]
+_data = [Vector2(0, 0), 0.0, 3.2219105, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fjvtb"]
+curve = SubResource("Curve_cjxn5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d1uwk"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_fjvtb")
+alpha_curve = SubResource("CurveTexture_d1uwk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cjxn5"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.6039216, 0, 0.7294118, 1)
+emission_enabled = true
+emission = Color(0.6039216, 0, 0.7294118, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_fjvtb"]
+material = SubResource("StandardMaterial3D_cjxn5")
+inner_radius = 1.446
+outer_radius = 1.835
+ring_segments = 4
+
+[sub_resource type="Animation" id="Animation_cjxn5"]
+resource_name = "HONK"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemEffect/AnimComponents/GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_fjvtb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ItemEffect/AnimComponents/GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fjvtb"]
+_data = {
+&"HONK": SubResource("Animation_cjxn5"),
+&"RESET": SubResource("Animation_fjvtb")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ociam"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Area3D/CollisionShape3D:disabled")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cjxn5"]
+height = 0.9160538
+radius = 2.0566406
+
+[node name="ItemTemplate" type="Node3D"]
+script = ExtResource("1_gc1mp")
+leaderboard_max = 1.0
+inventory_icon = ExtResource("2_onmmx")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wwut3")
+
+[node name="ItemEffect" type="Node3D" parent="."]
+script = ExtResource("3_cjxn5")
+strength = 2.0
+
+[node name="AnimComponents" type="Node3D" parent="ItemEffect"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="ItemEffect/AnimComponents"]
+emitting = false
+amount = 3
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_d1uwk")
+draw_pass_1 = SubResource("TorusMesh_fjvtb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ItemEffect"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_fjvtb")
+}
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="ItemEffect"]
+replication_config = SubResource("SceneReplicationConfig_ociam")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="ItemEffect"]
+
+[node name="Area3D" type="Area3D" parent="ItemEffect"]
+collision_layer = 2
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemEffect/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.027950287, 0)
+shape = SubResource("CylinderShape3D_cjxn5")
+disabled = true
+
+[connection signal="animation_finished" from="ItemEffect/AnimationPlayer" to="ItemEffect" method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="ItemEffect/Area3D" to="ItemEffect" method="_on_area_3d_body_entered"]

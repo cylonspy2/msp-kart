@@ -98,6 +98,7 @@ func connect_socket(steam_id : int):
 	if error == OK:
 		print("connecting peer to host...")
 		multiplayer.set_multiplayer_peer(peer)
+		HighLevelNetwork.lobbyName = Steam.getLobbyData(steam_id, "name")
 	else:
 		print("Error creating client: %s" % str(error))
 

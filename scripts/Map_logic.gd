@@ -1,5 +1,7 @@
 extends Node3D
 
+@export var map_icon : Texture2D
+
 @export var MAX_LAPS : int
 
 @onready var finish_line = $Finish_Line

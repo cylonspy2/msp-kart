@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="MSPKart"
-run/main_scene="uid://dq731ts5mb6ri"
+run/main_scene="uid://c4lf6mqid4l3"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

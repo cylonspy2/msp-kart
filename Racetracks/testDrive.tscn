@@ -1,6 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
+[ext_resource type="Texture2D" uid="uid://bobeajwec8c5s" path="res://icon.svg" id="2_fn2mn"]
 [ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="2_rwgo1"]
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="3_3yda7"]
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="3_6mdqg"]
@@ -8,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="4_3yda7"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="4_6mdqg"]
 [ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="5_fn2mn"]
-[ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="6_8vqid"]
 [ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="10_3yda7"]
 
 [sub_resource type="Curve2D" id="Curve2D_8vqid"]
@@ -69,11 +69,13 @@ size = Vector3(2, 2, 2)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkyhk"]
 
-[node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath", "Cars")]
+[node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath", "checkpoints")]
 script = ExtResource("1_vqjdx")
-Car_Root = Array[NodePath]([NodePath("Car_Container/P_1")])
+map_icon = ExtResource("2_fn2mn")
+MAX_LAPS = 3
+Car_Root = Array[NodePath]([NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")])
 TrackPath = NodePath("Environment/Path3D")
-Cars = [NodePath("Car_Container/P_1/CarParent")]
+checkpoints = [NodePath("CheckpointSystem/Checkpoint1"), NodePath("CheckpointSystem/Checkpoint2")]
 
 [node name="Minimap" type="Control" parent="."]
 layout_mode = 3
@@ -261,39 +263,11 @@ material = SubResource("StandardMaterial3D_qgo1d")
 monitorable = false
 
 [node name="Checkpoint1" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.726974, 226.98537, 153.28355)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -324.81973, 151.55254, -116.83089)
 shape = SubResource("SphereShape3D_u2cnu")
 
 [node name="Checkpoint2" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -275.2348, 275.45734, 139.58286)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint3" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -369.27347, 272.1738, 60.453484)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint4" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -376.0753, 208.85497, -49.65776)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint5" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.07443, 74.167435, -250.30893)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint6" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118.093155, 64.9771, -458.51105)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint7" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 288.05322, 242.0168, -269.32385)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint8" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 597.699, 419.2809, 122.9617)
-shape = SubResource("SphereShape3D_u2cnu")
-
-[node name="Checkpoint9" type="CollisionShape3D" parent="CheckpointSystem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 230.28387, 373.40646, 381.37338)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 294.5843, 275.4573, -250.30795)
 shape = SubResource("SphereShape3D_u2cnu")
 
 [node name="Finish_Line" type="Area3D" parent="."]
@@ -319,9 +293,6 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
-
-[node name="CarParent" parent="Car_Container/P_1" instance=ExtResource("6_8vqid")]
-transform = Transform3D(1, 0, 0, 0, 1, -7.916242e-09, 0, -3.1432137e-09, 1, 1.5258789e-05, 0.52641296, -0.04743576)
 
 [node name="P_2" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.07587035, 0.03367175, -0.9965489, -0.034343876, 0.9987488, 0.03636083, 0.9965259, 0.036984168, -0.07461885, -13.710028, 230.01643, 151.57384)

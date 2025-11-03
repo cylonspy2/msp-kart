@@ -7,13 +7,23 @@ extends MultiplayerSpawner
 func _ready() -> void :
 	#multiplayer.peer_connected.connect(func(id): multiplayer.spawn_player(id))
 	HighLevelNetwork.despawn_player.connect(func(id): despawn_kart(id))
+	HighLevelNetwork.spawn_racers.connect(func(patth): spawn_kart(patth))
 	pass
 
-func spawn_player(id : int) -> void :
-	if not multiplayer.is_server() : return
+func spawn_kart(spawnpath : NodePath) -> void :
+	#if not multiplayer.is_server() : return
+	
+	var spawnpathNodes : Array[NodePath] 
+	
+	for baka : Node in get_node(spawnpath).get_children(false):
+		var truf = baka.get_path()
+		spawnpathNodes.append(truf)
+	
+	var chosenSlot = clamp(parent.name.to_int(), 0, spawnpathNodes.size())
+	spawn_path = spawnpathNodes[chosenSlot]
 	
 	var player: Node = spawn(_spawn_Car)
-	player.name = str(id)
+	player.name = str(parent.name)
 	
 	get_node(spawn_path).call_deferred("add_child", player)
 	

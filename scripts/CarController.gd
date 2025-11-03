@@ -233,9 +233,13 @@ func _process(delta):
 	
 	if (firedItem && itemHeld != null) && not fireDisabled:
 		fireItem.emit(itemHeld)
+		itemHeld = null
+		hasItem = false
 		firedItem = false
 	if (altFiredItem && altItem != null && itemHeld != null) && not fireDisabled:
 		altFireItem.emit(altItem)
+		itemHeld = null
+		hasItem = false
 		altFiredItem = false
 	
 	if start_drift and not drifting and rotateInput != 0 and speedInput > 0:

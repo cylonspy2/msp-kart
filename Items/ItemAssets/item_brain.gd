@@ -12,7 +12,7 @@ extends Node3D
 func _ready():
 	job_done = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if job_done:
 		despawn_item()
 
@@ -20,7 +20,7 @@ func define_caster(spawner : Node3D):
 	caster = spawner
 
 func cast_item():
-	job_done = true
+	ItemEffect.activation()
 
 func despawn_item():
 	queue_free()

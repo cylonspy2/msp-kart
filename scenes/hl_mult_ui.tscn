@@ -255,11 +255,24 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Exit Lobby" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ExitLobbyControl"]
-layout_mode = 0
-offset_top = 4.0
-offset_right = 113.0
-offset_bottom = 35.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
 text = "Leave Lobby"
+
+[node name="StartGameControl" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StartGame" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "Start Game"
 
 [node name="ChooseRacer" type="Button" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -639,5 +652,6 @@ layout_mode = 2
 [connection signal="pressed" from="ServerBrowser/Container/SearchHeader/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="ServerBrowser/Container/MenuFooter/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/ExitLobbyControl/Exit Lobby" to="." method="_on_exit_lobby_pressed"]
+[connection signal="pressed" from="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl/StartGame" to="." method="_on_start_game_pressed"]
 [connection signal="pressed" from="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer/ColorRect/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="LobbyCreation/ColorRect/VBoxContainer/MakeLobby" to="." method="_on_make_lobby_pressed"]

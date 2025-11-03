@@ -11,6 +11,7 @@ var lobby_search = ""
 signal enter_lobby(id : int)
 signal enter_race
 signal end_race (id : int, score : int)
+signal exit_race
 signal spawn_racers (spawn_path : NodePath)
 signal despawn_player(id : int)
 
@@ -18,7 +19,9 @@ var host_mode_enabled = false
 var multiplayer_enabled = false
 
 var PLAYERS : Array = ["localhost"]
+var SCORES : Array = [0.0]
 var gameStarted = false
+var trackPosChosen = -1
 var userName : String = "juneEgbert"
 var userName_not_steam : String = "ectoBiologist"
 

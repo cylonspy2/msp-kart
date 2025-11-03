@@ -1,5 +1,6 @@
 extends Control
 
+@export var trackListPos = -1
 @export var serverBrowserBoxContainer : NodePath
 @onready var ServerBroswer = $ServerBrowser
 @onready var ServerLobby = $ServerLobby
@@ -7,25 +8,37 @@ extends Control
 @onready var MainMenu = $MainMenu
 @onready var ServerBrowserScrollbar = $ServerBrowser/Container/ServBrow_Color/ScrollContainer
 @onready var lobby_search_bar = $ServerBrowser/Container/SearchHeader/TextEdit
+@onready var startGameButton = $ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl
+@onready var lobbyName = $ServerLobby/ColorRect/VBoxContainer/lobby_name
 @export var server_button : PackedScene
 @export var useSteam = true
+var haveAuthority = false
 var buttonArray : Array
 
 func _ready() -> void:
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
 	HighLevelNetwork.enter_race.connect(_starting_game)
+	HighLevelNetwork.end_race.connect(_ending_race)
 	ServerBroswer.visible = false
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
 	ServerLobby.visible = false
 	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
+	if not is_multiplayer_authority() or OS.has_feature("dedicated_server"): haveAuthority = false
+	else:
+		haveAuthority = true
 	
 	if OS.has_feature("dedicated_server"):
 		#HighLevelNetwork.start_dedicated_server()
 		%NetworkManager.start_dedicated_server()
 
 func _process(_delta: float) -> void:
+	lobbyName.text = HighLevelNetwork.lobbyName
 	if lobby_search_bar.visible:
 		HighLevelNetwork.lobby_search = lobby_search_bar.text
+	if  (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
+		startGameButton.visible = false
+	else:
+		startGameButton.visible = true
 
 func list_lobbies():
 	print("finding all the Steam Lobbies")
@@ -95,6 +108,11 @@ func _lobby_joined(targ_lobby_id = 0) -> void:
 	
 	ServerBroswer.visible = false
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
+	
+	if HighLevelNetwork.trackPosChosen != -1:
+		pass
+	
+	
 	ServerLobby.visible = true
 	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
 
@@ -116,6 +134,9 @@ func _starting_game() -> void:
 #
 #func _on_client_pressed() -> void:
 	#HighLevelNetwork.start_client()
+
+func _ending_race() -> void:
+	pass
 
 
 func become_host(): #Will need work for dedicated servers
@@ -219,3 +240,7 @@ func _on_button_2_pressed() -> void:
 
 func _on_exit_lobby_pressed() -> void:
 	leave_lobby()
+
+
+func _on_start_game_pressed() -> void:
+	HighLevelNetwork.enter_race.emit()
