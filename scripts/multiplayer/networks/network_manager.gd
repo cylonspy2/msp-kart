@@ -26,10 +26,12 @@ func _build_multiplayer_network():
 			MULTIPLAYER_NETWORK_TYPE.ENET:
 				print("Setting network type to eNet")
 				network_is_steam = false
+				HighLevelNetwork.steam_active = false
 				_set_active_network(enet_network_scene)
 			MULTIPLAYER_NETWORK_TYPE.STEAM:
 				print("Setting network type to Steam")
 				network_is_steam = true
+				HighLevelNetwork.steam_active = true
 				_set_active_network(steam_network_scene)
 			_:
 				print("no matching network type!")

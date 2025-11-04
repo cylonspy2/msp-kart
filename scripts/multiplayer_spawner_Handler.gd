@@ -32,7 +32,7 @@ func spawn_player(id : int) -> void :
 func spawn_level(track : PackedScene):
 	var trac: Node = track.instantiate()
 	
-	get_node(SpectatorSpawnpath).call_deferred("add_child", trac)
+	get_node(trackSlot).call_deferred("add_child", trac)
 	
 	spawnedTrack = trac
 	racerSpawnpath = trac.Car_Root[0].get_parent()

@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://gfcgbjrr8f5x"]
+[gd_scene load_steps=3 format=3 uid="uid://gfcgbjrr8f5x"]
 
+[ext_resource type="Script" uid="uid://03a8m5e3bhh6" path="res://scenes/select_button.gd" id="1_okds2"]
 [ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="1_ubw1l"]
 
 [node name="Control" type="Control"]
@@ -12,6 +13,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_okds2")
 
 [node name="Button" type="Button" parent="."]
 custom_minimum_size = Vector2(80, 60)
@@ -43,3 +45,6 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 text = "THING"
 horizontal_alignment = 1
+text_overrun_behavior = 3
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -30,7 +30,7 @@ func spawn_kart(spawnpath : NodePath) -> void :
 	player.username = HighLevelNetwork.userName
 	player.Racer = _spawn_Racer
 	
-	var camcam : Camera3D = player.get_child(0)
+	var camcam : Camera3D = player.get_child(2).get_child(0).get_child(0)
 	camcam.make_current()
 
 func despawn_kart(id : int) -> void :

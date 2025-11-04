@@ -504,7 +504,7 @@ flip_faces = true
 size = Vector2(0.05, 0.05)
 orientation = 0
 
-[node name="CarParent" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel")]
+[node name="BakerDozen" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel")]
 script = ExtResource("1_8ri5e")
 username = "USERNAME"
 Racer = ExtResource("2_hwo32")

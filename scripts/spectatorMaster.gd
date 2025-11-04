@@ -24,7 +24,7 @@ func _enter_tree() -> void:
 	HighLevelNetwork.end_race.connect(func(id, score): finish_race(id, score))
 	HighLevelNetwork.enter_race.connect(enter_race)
 	HighLevelNetwork.select_kart.connect(func(id): set_kart(id))
-	HighLevelNetwork.select_kart.connect(func(id): set_kart(id))
+	#HighLevelNetwork.select_kart.connect(func(id): set_kart(id))
 	HighLevelNetwork.select_racer.connect(func(id): set_racer(id))
 	HighLevelNetwork.select_track.connect(func(id): set_track(id))
 

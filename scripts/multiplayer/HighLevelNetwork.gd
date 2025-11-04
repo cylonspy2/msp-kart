@@ -9,6 +9,7 @@ var lobbyName = "BADDIE343"
 var lobby_search = ""
 
 signal enter_lobby(id : int)
+signal hosted_lobby
 signal enter_race
 signal end_race (id : int, score : int)
 signal exit_race
@@ -21,6 +22,7 @@ signal select_racer(scene : PackedScene)
 
 var host_mode_enabled = false
 var multiplayer_enabled = false
+var steam_active = false
 
 var PLAYERS : Array = ["localhost"]
 var SCORES : Array = [0.0]
@@ -28,6 +30,11 @@ var gameStarted = false
 var trackPosChosen = -1
 var userName : String = "juneEgbert"
 var userName_not_steam : String = "ectoBiologist"
+
+var TrackPath = "res://Racetracks/RacetrackPackedScenes"
+var RacerPath = "res://Racers/RacerPackedScenes"
+var KartPath = "res://Karts/KartPackedScenes"
+var ItemPath = "res://Items/ItemPackedScenes"
 
 var available_items : Array[PackedScene]
 var available_ranges : Array[Vector3]

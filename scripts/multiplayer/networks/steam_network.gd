@@ -46,6 +46,7 @@ func become_host() -> void :
 func _on_lobby_created(connect : int, lobby_id):
 	if connect == 1:
 		_hosted_lobby_id = lobby_id
+		SteamManager.lobby_id = lobby_id
 		
 		Steam.setLobbyJoinable(_hosted_lobby_id, true)
 		
@@ -61,6 +62,7 @@ func _create_host():
 	var error = peer.create_host(0)
 	if error == OK:
 		if not OS.has_feature("dedicated_server"):
+			print("Hosting Lobby")
 			multiplayer.set_multiplayer_peer(peer)
 	else:
 		print("error creating host: %s" % str(error))
@@ -71,7 +73,12 @@ func become_client(id : int) -> void :
 	Steam.joinLobby(targ_id)
 
 func _on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response : int):
-	print("joined lobby with ID %s" % str(targ_id))
+	print("joined lobby with ID %s" % str(lobby_id))
+	
+	_hosted_lobby_id = lobby_id
+	SteamManager.lobby_id = lobby_id
+	
+	HighLevelNetwork.hosted_lobby.emit()
 	
 	if response == 1:
 		var id = Steam.getLobbyOwner(lobby_id)

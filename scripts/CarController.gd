@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var username : String
+@export var username : String = "EctoBiologist"
 
 @export var Racer : PackedScene
 
@@ -29,6 +29,7 @@ extends Node3D
 @onready var groundRay3 = $Car/CarLogic/RayCast3D3
 @onready var groundRay4 = $Car/CarLogic/RayCast3D4
 @onready var CarHitBox = $Car/CarLogic/CarHitbox
+@onready var usernameBox = $Car/CarLogic/UsernameHolder/Username
 @export_group("Car Model Data")
 @export var Car = Node3D
 @export var RightWheel = MeshInstance3D
@@ -229,8 +230,8 @@ func _process(delta):
 		## serverwork + singleplayer work
 		pass
 	
-	if haveAuthority:
-		$Car/CarLogic/UsernameHolder/Username.text = username
+	if haveAuthority && usernameBox != null:
+		usernameBox.text = username
 	
 	if (firedItem && itemHeld != null) && not fireDisabled:
 		fireItem.emit(itemHeld)

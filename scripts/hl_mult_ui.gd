@@ -1,5 +1,6 @@
 extends Control
 
+@export var select_menu_width_count : int = 8
 @export var trackListPos = -1
 @export var serverBrowserBoxContainer : NodePath
 @onready var ServerBroswer = $ServerBrowser
@@ -11,7 +12,11 @@ extends Control
 @onready var startGameButton = $ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl
 @onready var lobbyName = $ServerLobby/ColorRect/VBoxContainer/lobby_name
 @onready var selectMenu = $SelectionMenu
+@onready var selectMenuName = $SelectionMenu/ServBrow_Color/VBoxContainer/Label
+@onready var selectMenuHolder = $SelectionMenu/ServBrow_Color/VBoxContainer/ScrollContainer/ServerBrowser
 @export var server_button : PackedScene
+@export var select_button : PackedScene
+@export var select_row : PackedScene
 @export var useSteam = true
 var haveAuthority = false
 var buttonArray : Array
@@ -20,6 +25,9 @@ func _ready() -> void:
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
 	HighLevelNetwork.enter_race.connect(_starting_game)
 	HighLevelNetwork.end_race.connect(_ending_race)
+	HighLevelNetwork.select_track.connect(_back_to_lobby)
+	HighLevelNetwork.select_kart.connect(_back_to_lobby)
+	HighLevelNetwork.select_racer.connect(_back_to_lobby)
 	ServerBroswer.visible = false
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
 	ServerLobby.visible = false
@@ -245,6 +253,7 @@ func _on_exit_lobby_pressed() -> void:
 
 func _on_start_game_pressed() -> void:
 	HighLevelNetwork.enter_race.emit()
+	
 
 
 
@@ -253,12 +262,75 @@ func _on_start_game_pressed() -> void:
 
 
 func _on_choose_course_pressed() -> void:
-	pass # Replace with function body.
+	ServerLobby.visible = false
+	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
+	selectMenu.visible = true
+	selectMenu.mouse_filter = MOUSE_FILTER_PASS
+	selectMenuName.text = "CHOOSE TRACK"
+	populate_choose_menu(0)
 
 
 func _on_choose_kart_pressed() -> void:
-	pass # Replace with function body.
+	ServerLobby.visible = false
+	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
+	selectMenu.visible = true
+	selectMenu.mouse_filter = MOUSE_FILTER_PASS
+	selectMenuName.text = "CHOOSE KART"
+	populate_choose_menu(1)
 
 
 func _on_choose_racer_pressed() -> void:
-	pass # Replace with function body.
+	ServerLobby.visible = false
+	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
+	selectMenu.visible = true
+	selectMenu.mouse_filter = MOUSE_FILTER_PASS
+	selectMenuName.text = "CHOOSE RACER"
+	populate_choose_menu(2)
+
+
+func _back_to_lobby(_selectedElement : PackedScene):
+	ServerLobby.visible = true
+	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
+	selectMenu.visible = false
+	selectMenu.mouse_filter = MOUSE_FILTER_IGNORE
+
+
+func populate_choose_menu(type : int):
+	for thingy in selectMenuHolder.get_children():
+		thingy.queue_free()
+	
+	var path : PackedStringArray
+	var hostDir : String
+	match(type):
+		0:
+			path = ResourceLoader.list_directory(HighLevelNetwork.TrackPath)
+			hostDir = HighLevelNetwork.TrackPath
+		1:
+			path = ResourceLoader.list_directory(HighLevelNetwork.KartPath)
+			hostDir = HighLevelNetwork.KartPath
+		2:
+			path = ResourceLoader.list_directory(HighLevelNetwork.RacerPath)
+			hostDir = HighLevelNetwork.RacerPath
+	#var length = path.size()
+	
+	var holdz : HBoxContainer
+	for element in path:
+		var count = path.find(element)
+		if count % select_menu_width_count == 0:
+			holdz = HBoxContainer.new()
+			selectMenuHolder.add_child(holdz)
+		var mucho = ResourceLoader.load(hostDir + "/" + path[count])
+		var ele = select_button.instantiate()
+		var much = mucho.instantiate()
+		ele.get_child(0).get_child(0).get_child(1).text = much.name
+		match(type):
+			0:
+				ele.get_child(0).get_child(0).get_child(0).texture = much.map_icon
+			1:
+				ele.get_child(0).get_child(0).get_child(0).texture = much.kart_icon
+			2:
+				ele.get_child(0).get_child(0).get_child(0).texture = much.RacerIcon
+		much.queue_free()
+		ele.type = type
+		ele.object = mucho
+		holdz.call_deferred("add_child", ele)

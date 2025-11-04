@@ -6,6 +6,7 @@ extends MultiplayerSynchronizer
 @export var inputRot : float
 
 var haveAuthority = false
+var racing = true
 
 func _ready() -> void:
 	if get_multiplayer_authority() != Car.player_id: 
@@ -19,7 +20,7 @@ func _ready() -> void:
 	inputRot = Input.get_action_strength("SteerLeft") - Input.get_action_strength("SteerRight")
 
 func _process(delta: float) -> void:
-	if not haveAuthority: return
+	if not haveAuthority or not racing: return
 	inputDir = Input.get_action_strength("Accelerate") - Input.get_action_strength("Brake")
 	inputRot = Input.get_action_strength("SteerLeft") - Input.get_action_strength("SteerRight")
 	if HighLevelNetwork.multiplayer_enabled:
