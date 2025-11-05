@@ -24,7 +24,6 @@ var buttonArray : Array
 func _ready() -> void:
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
 	HighLevelNetwork.enter_race.connect(_starting_game)
-	HighLevelNetwork.end_race.connect(_ending_race)
 	HighLevelNetwork.select_track.connect(_back_to_lobby)
 	HighLevelNetwork.select_kart.connect(_back_to_lobby)
 	HighLevelNetwork.select_racer.connect(_back_to_lobby)
@@ -143,10 +142,6 @@ func _starting_game() -> void:
 #
 #func _on_client_pressed() -> void:
 	#HighLevelNetwork.start_client()
-
-func _ending_race() -> void:
-	pass
-
 
 func become_host(): #Will need work for dedicated servers
 	print("Hosting Lobby")

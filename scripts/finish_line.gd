@@ -1,6 +1,6 @@
 extends Area3D
 
-
+@onready var parr = $".."
 
 ##COMMENT: This is a default template for your map's objective data,
 ## set up for a barebones leaderboard style race
@@ -15,4 +15,4 @@ func missed_lap(kart : Node3D):
 
 func finished_race(kart : Node3D):
 	if kart.haveAuthority:
-		HighLevelNetwork.end_race.emit(kart.player_id, kart.leaderboard_placement * 1000)
+		parr._on_all_done(kart.player_id, kart.leaderboard_placement * 1000)

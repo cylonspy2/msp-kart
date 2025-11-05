@@ -17,6 +17,7 @@ extends Node3D
 
 func _enter_tree() -> void:
 	HighLevelNetwork.enter_race.connect(_choose_level)
+	HighLevelNetwork.end_race.connect(_ending_race)
 	HighLevelNetwork.exit_race.connect(end_level)
 
 func _process(_delta: float) -> void:
@@ -73,6 +74,10 @@ func start_level() -> void:
 	HighLevelNetwork.spawn_racers.emit(MainSpawner.racerSpawnpath)
 	if HighLevelNetwork.host_mode_enabled && %NetworkManager.MULTIPLAYER_NETWORK_TYPE == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM:
 		pass
+	pass
+
+func _ending_race(id : int, score : int):
+	##TODO: make a system to keep track of the cumulative score of lobby members
 	pass
 
 func end_level():

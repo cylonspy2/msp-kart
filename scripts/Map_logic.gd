@@ -13,6 +13,9 @@ extends Node3D
 @onready var Path = $Minimap/Minimap_road/Path2D
 @onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ItemIcon
 @onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/AltItemIcon
+@onready var victorTime = $Finish_Line/finishline_delay
+
+var doneRacers : Dictionary[int, int]
 
 var yourAuthority : int
 
@@ -20,6 +23,8 @@ func _ready() -> void:
 	$Minimap/Minimap_road/Line2D.clear_points()
 	$Minimap/Minimap_road/Line2D2.clear_points()
 	RacerIcons.clear()
+	
+	#HighLevelNetwork.end_race.connect(_on_all_done)
 	
 	yourAuthority = get_multiplayer_authority()
 	
@@ -120,3 +125,13 @@ func _on_finish_line_body_entered(body: Node3D) -> void:
 			body.laps_made = updatd_lap_count
 			if updatd_lap_count >= MAX_LAPS:
 				finish_line.finished_race(body)
+
+func _on_all_done(id : int, score : int):
+	var bogo = doneRacers.get_or_add(id, score)
+	if bogo != score:
+		HighLevelNetwork.end_race.emit(id, score)
+		if doneRacers.size() >= RacerIcons.size():
+			victorTime.start()
+
+func _on_finishline_delay_timeout() -> void:
+	HighLevelNetwork.exit_race.emit()

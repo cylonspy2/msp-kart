@@ -93,7 +93,7 @@ properties/2/replication_mode = 1
 height = 0.9160538
 radius = 2.0566406
 
-[node name="ItemTemplate" type="Node3D"]
+[node name="Horn" type="Node3D"]
 script = ExtResource("1_gc1mp")
 leaderboard_max = 1.0
 inventory_icon = ExtResource("2_onmmx")
