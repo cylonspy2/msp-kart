@@ -16,7 +16,8 @@ extends Node3D
 
 @onready var MS = $CarParent_Logic/ControlSynchronizer
 @onready var UI = $Car/CarLogic/Camera/Car_UI
-@onready var RacerSpawnLoc = $Car/ModelParent/RacerSpawn
+@onready var Cam = $Car/CarLogic/Camera
+@onready var RacerSpawnLoc = $Car/ModelParent/Model/RacerSpawn
 @onready var ItemSpawner = $Items/ItemSpawner
 @onready var Ball = $Ball
 @onready var BallCollisionShape = $Ball/CollisionShape3D
@@ -93,9 +94,16 @@ signal gainItem(item : PackedScene)
 @export var server_Pos_Offset : Vector3
 @export var time_since_last_update : float
 @export var fireDisabled = false
+@export var hasControl = true
+
+var lockedCamPos = Vector3(0.0, 0.0, 0.0)
+var lockedCamRot : Basis
 
 var gravDir : Vector3
 var hurtAccel : float
+var camStartPos : Vector3
+var camStartRot : Basis
+var camLocked = false
 
 @export var player_id := 1:
 	set(id):
@@ -130,45 +138,59 @@ func _ready():
 	groundRay4.add_exception(Ball)
 	
 	hurtAccel = acceleration
+	camStartPos = Cam.position
+	camStartRot = Cam.basis
 
 func _physics_process(_delta):
 	
-	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		time_since_last_update += _delta
 	else:
 		server_Pos_Offset = Vector3()
 		time_since_last_update = 0.0
 	
 	Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin + ModelOffset, velocity_smooth)
-	Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
 	
 	var forceForce = (Car.global_transform.basis.z * speedInput)
-	
 	gravDir = gravForce * 9.810 * weight
 	var hitr = Ball.move_and_collide(gravDir * _delta, true)
 	if not hitr:
 		forceForce *= airControl
 	
+	var lerpForce : Vector3
 	if drifting :
-		var lerpForce = lerp(((forceForce * boost) * steeringAccelMod), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
-		
-		var hitS = CarHitBox.move_and_collide(lerpForce * _delta, true)
-		if hitS:
-			pass
-		else:
-			pass
-		
-		Ball.apply_central_force((lerpForce))
-		prevForce = lerpForce
+		lerpForce = lerp(((forceForce * boost) * steeringAccelMod), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
 	else :
-		var lerpForce = lerp(((forceForce * boost)), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
-		
-		var hitS = CarHitBox.move_and_collide(lerpForce * _delta, true)
-		if hitS:
-			pass
+		lerpForce = lerp(((forceForce * boost)), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
+	
+	var hitS = CarHitBox.move_and_collide(_delta * lerpForce * 0.1, true)
+	if hitS:
+		var avgHitShellPos = Vector3(0.0, 0.0, 0.0)
+		var b = 0
+		while b < hitS.get_collision_count():
+			avgHitShellPos += hitS.get_position(b)
+			b += 1
+		avgHitShellPos /= b
+		var newForce = (-(CarHitBox.global_position - avgHitShellPos)).normalized()
+		var rotat : float
+		var chec = Car.global_basis.rotated(Car.global_basis.y, Car.global_rotation.y).rotated(Car.global_basis.z, Car.global_rotation.z).x.cross(newForce).y
+		if chec > 0.5:
+			print("right-ward")
+			rotat = deg_to_rad(-90)
+		else : if chec < -0.5:
+			print("left-ward")
+			rotat = deg_to_rad(90)
 		else:
-			pass
-		
+			print("BACK")
+			rotat = deg_to_rad(180)
+		Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
+		newForce = newForce * Ball.linear_velocity.length() * (0.3) * lerpForce.length()
+		newForce = newForce.rotated(Car.global_basis.y, rotat)
+		Ball.linear_velocity = Vector3.ZERO
+		Ball.apply_central_force(newForce)
+		prevForce = newForce
+	else:
+		Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
 		Ball.apply_central_force(lerpForce)
 		prevForce = lerpForce
 	
@@ -204,8 +226,33 @@ func _physics_process(_delta):
 	#print(Ball.angular_velocity.length())
 
 func _process(delta):
-	speedInput = (MS.inputDir) * acceleration
-	rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+	
+	if hasControl:
+		speedInput = (MS.inputDir) * acceleration
+		rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+		lockedCamPos = null
+		Cam.position = camStartPos
+		Cam.basis = camStartRot
+		camLocked = true
+	else:
+		speedInput = 0.0
+		rotateInput = 0.0
+		if camLocked == true:
+			if lockedCamPos == null:
+				lockedCamPos = Cam.global_position
+				lockedCamRot = Cam.global_basis
+			else:
+				Cam.global_position = lockedCamPos
+				Cam.global_basis = lockedCamRot
+		else:
+			if lockedCamPos != null:
+				Cam.global_position = lockedCamPos
+				Cam.global_basis = lockedCamRot
+				lockedCamPos = null
+			else:
+				Cam.position = lerp(Cam.position, camStartPos, 0.1)
+				Cam.basis = lerp(Cam.basis.orthonormalized(), camStartRot, 0.1).orthonormalized()
+	
 	
 	var hiter = Ball.move_and_collide(gravDir * delta, true)
 	if not hiter:
@@ -284,8 +331,8 @@ func RotateCar(delta):
 	var carBasis = Car.global_transform.basis.orthonormalized()
 	if not turnable :
 		rotari = 0.0
-	var newBasis = Car.transform.basis.rotated(Car.transform.basis.y, rotari)
-	Car.transform.basis = Car.transform.basis.slerp(newBasis, turnspeed * delta)
+	var newBasis = Car.transform.basis.rotated(Car.transform.basis.y, rotari).get_rotation_quaternion()
+	Car.transform.basis = Car.transform.basis.orthonormalized().slerp(newBasis, turnspeed * delta)
 	Car.transform.basis = Car.transform.basis.orthonormalized()
 	carBasis = Car.global_transform.basis.orthonormalized()
 	
@@ -399,6 +446,19 @@ func _on_item_timer_timeout() -> void:
 	hasItem = false
 	itemHeld = null
 	fireDisabled = false
+
+func _recover():
+	Ball.axis_lock_linear_x = true
+	Ball.axis_lock_linear_y = true
+	Ball.axis_lock_linear_z = true
+	camLocked = false
+	Anim.play("recover")
+
+func _all_done_recovering():
+	Ball.axis_lock_linear_x = false
+	Ball.axis_lock_linear_y = false
+	Ball.axis_lock_linear_z = false
+	hasControl = true
 
 func despawn_player(id : int):
 	if name.to_int() == id:

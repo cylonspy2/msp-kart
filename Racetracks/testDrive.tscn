@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=27 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_3yda7"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="4_6mdqg"]
 [ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="5_fn2mn"]
 [ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="10_3yda7"]
+[ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_fn2mn"]
 
 [sub_resource type="Curve2D" id="Curve2D_8vqid"]
 bake_interval = 0.01
@@ -68,6 +69,13 @@ radius = 25.99
 size = Vector3(2, 2, 2)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkyhk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3yda7"]
+size = Vector3(3689.4392, 20, 3604.4045)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3yda7"]
+height = 100.0
+radius = 100.0
 
 [node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath", "checkpoints")]
 script = ExtResource("1_vqjdx")
@@ -545,5 +553,22 @@ transform = Transform3D(0.84874105, 0, 0.5288087, 0, 1, 0, -0.5288087, 0, 0.8487
 [node name="ItemContainer6" parent="Gadgets" instance=ExtResource("10_3yda7")]
 transform = Transform3D(0.84874105, 0, 0.5288087, 0, 1, 0, -0.5288087, 0, 0.84874105, 644.255, 516.29114, -238.51129)
 
+[node name="KillBox" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="KillBox" node_paths=PackedStringArray("master_path", "true_paths", "CarContainer")]
+script = ExtResource("11_fn2mn")
+master_path = NodePath("../../Environment/Path3D")
+true_paths = [NodePath("../../Environment/Path3D")]
+CarContainer = NodePath("../../Car_Container")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KillBox/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.162476, 0, 42.382446)
+shape = SubResource("BoxShape3D_3yda7")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="KillBox/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 649.0631, 429.39105, -232.67914)
+shape = SubResource("CylinderShape3D_3yda7")
+
 [connection signal="body_entered" from="Finish_Line" to="." method="_on_finish_line_body_entered"]
 [connection signal="timeout" from="Finish_Line/finishline_delay" to="." method="_on_finishline_delay_timeout"]
+[connection signal="body_entered" from="KillBox/Area3D" to="KillBox/Area3D" method="_on_body_entered"]

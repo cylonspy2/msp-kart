@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://kif2ptjo2qt1"]
+[gd_scene load_steps=27 format=3 uid="uid://kif2ptjo2qt1"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_234m1"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_j5pbr"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="8_x10nv"]
 [ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="9_tvu4j"]
 [ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="9_unlcg"]
+[ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_dh4jp"]
 
 [sub_resource type="Curve2D" id="Curve2D_8vqid"]
 bake_interval = 0.01
@@ -56,6 +57,12 @@ point_count = 7
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgo1d"]
 albedo_texture = ExtResource("8_x10nv")
+uv1_scale = Vector3(0.5, 5, 0)
+uv1_offset = Vector3(0, 0.66, 0)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unlcg"]
+albedo_color = Color(0.88235295, 0.6784314, 0, 1)
 uv1_scale = Vector3(0.5, 7.038, 0)
 uv1_offset = Vector3(0, 0.475, 0)
 texture_filter = 0
@@ -68,13 +75,16 @@ size = Vector3(2, 2, 2)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkyhk"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_unlcg"]
+size = Vector3(1800, 66.705, 1800)
+
 [node name="Biscuit Park" type="Node3D" node_paths=PackedStringArray("TrackPath", "Cars")]
 script = ExtResource("1_234m1")
 map_icon = ExtResource("2_j5pbr")
 MAX_LAPS = 6
 Car_Root = Array[NodePath]([NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")])
-TrackPath = NodePath("Environment/Path3D")
-Cars = [NodePath("Car_Container/P_1/BakerDozen")]
+TrackPath = NodePath("Environment/master_path")
+Cars = [NodePath("Car_Container/BakerDozen")]
 
 [node name="Minimap" type="Control" parent="."]
 layout_mode = 3
@@ -233,20 +243,20 @@ compositor = SubResource("Compositor_f7uto")
 transform = Transform3D(0.89381796, 0.15780568, 0.4197462, -0.44843003, 0.3145408, 0.8366449, 0, -0.936035, 0.35190704, -12.151199, 7.562768, 7.985528)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3184716, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -194.61061, 0)
 use_collision = true
 size = Vector3(4000, 0.523, 4000)
 material = SubResource("ORMMaterial3D_p5e3n")
 
-[node name="Path3D" type="Path3D" parent="Environment"]
+[node name="master_path" type="Path3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.99999976, -1.4469452, 222.00648, 14.278748)
 curve = SubResource("Curve3D_p5e3n")
 
 [node name="Road" type="CSGPolygon3D" parent="Environment"]
 use_collision = true
-polygon = PackedVector2Array(-10, -2, -10, 1.1, -5, 0.855, 0, 1, 5, 0.855, 10, 1.1, 10, -2, 5, -2, 0, -2, -5, -2)
+polygon = PackedVector2Array(-10, -2, -10, 0.61, -5, 0, -2, 0.1, 0, 0.1, 2, 0.1, 5, 0, 10, -0.5, 10, -1.5, 5, -2, 0, -2, -5, -2)
 mode = 2
-path_node = NodePath("../Path3D")
+path_node = NodePath("../master_path")
 path_interval_type = 1
 path_interval = 0.01
 path_simplify_angle = 0.1
@@ -257,6 +267,24 @@ path_continuous_u = true
 path_u_distance = 10.0
 path_joined = true
 material = SubResource("StandardMaterial3D_qgo1d")
+
+[node name="rim" type="CSGPolygon3D" parent="Environment"]
+use_collision = true
+collision_layer = 2
+collision_mask = 2
+polygon = PackedVector2Array(-11, -6, -11, 4, -9, 4, -9, -6)
+mode = 2
+path_node = NodePath("../master_path")
+path_interval_type = 1
+path_interval = 0.01
+path_simplify_angle = 0.1
+path_rotation = 2
+path_rotation_accurate = true
+path_local = false
+path_continuous_u = true
+path_u_distance = 10.0
+path_joined = true
+material = SubResource("StandardMaterial3D_unlcg")
 
 [node name="FinishLine" type="Node3D" parent="Environment"]
 transform = Transform3D(0.45103332, 0, 0.89250714, 0, 1, 0, -0.89250714, 0, 0.45103332, -68.85633, 44.21537, 373.20074)
@@ -299,6 +327,9 @@ one_shot = true
 
 [node name="Car_Container" type="Node3D" parent="."]
 
+[node name="BakerDozen" parent="Car_Container" instance=ExtResource("9_unlcg")]
+transform = Transform3D(-0.4102732, -6.7055225e-08, -0.9119632, 1.6763806e-08, 1.0000001, 2.9802322e-08, 0.9119626, -1.4901161e-08, -0.41027322, -46.193565, 48.937973, 388.0921)
+
 [node name="P_1" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.11509888, -0.089150645, -0.9893455, 1.360476e-05, 0.99596447, -0.08974865, 0.993354, -0.010343403, -0.11463315, -13.244827, 230.32054, 146.66603)
 
@@ -313,9 +344,6 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
-
-[node name="BakerDozen" parent="Car_Container/P_1" instance=ExtResource("9_unlcg")]
-transform = Transform3D(0.95312375, 1.3571668e-05, -0.30258065, 0.027143305, 0.9959646, 0.08554575, 0.30136073, -0.08974861, 0.9492775, 243.61147, -180.21036, 21.201088)
 
 [node name="P_2" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.07587035, 0.03367175, -0.9965489, -0.034343876, 0.9987488, 0.03636083, 0.9965259, 0.036984168, -0.07461885, -13.710028, 230.01643, 151.57384)
@@ -547,5 +575,17 @@ replication_config = SubResource("SceneReplicationConfig_rkyhk")
 [node name="Gadgets" type="Node3D" parent="."]
 visible = false
 
+[node name="KillBox" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="KillBox" node_paths=PackedStringArray("master_path", "true_paths", "CarContainer")]
+script = ExtResource("11_dh4jp")
+master_path = NodePath("../../Environment/master_path")
+true_paths = [NodePath("../../Environment/master_path")]
+CarContainer = NodePath("../../Car_Container")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KillBox/Area3D"]
+shape = SubResource("BoxShape3D_unlcg")
+
 [connection signal="body_entered" from="Finish_Line" to="." method="_on_finish_line_body_entered"]
 [connection signal="timeout" from="Finish_Line/finishline_delay" to="." method="_on_finishline_delay_timeout"]
+[connection signal="body_entered" from="KillBox/Area3D" to="KillBox/Area3D" method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://c3ywrjpbr02ay"]
+[gd_scene load_steps=51 format=4 uid="uid://c3ywrjpbr02ay"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
@@ -49,6 +49,9 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath("CarParent:fireDisabled")
 properties/9/spawn = true
 properties/9/replication_mode = 1
+properties/10/path = NodePath(".:hasControl")
+properties/10/spawn = true
+properties/10/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_uoj53"]
 properties/0/path = NodePath("ControlSynchronizer:inputDir")
@@ -252,6 +255,30 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector3(0, 2.5985155, 1.6289612)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Car/ModelParent:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Car/ModelParent:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_v0hk8"]
 resource_name = "ZoomIn"
@@ -285,6 +312,48 @@ tracks/0/keys = {
 "values": [75.0, 96.4]
 }
 
+[sub_resource type="Animation" id="Animation_us48a"]
+resource_name = "recover"
+length = 2.6
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_all_done_recovering"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Car/ModelParent:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 4.6111746, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Car/ModelParent:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.7333333, 2.1, 2.2, 2.3, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.119083814, 0), Vector3(0, -0.119083814, 0), Vector3(0, 0.13009684, 0), Vector3(0, -0.08972739, 0), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_06lh1"]
 _data = {
 &"Hop": SubResource("Animation_uoj53"),
@@ -292,7 +361,8 @@ _data = {
 &"HopRight": SubResource("Animation_td361"),
 &"RESET": SubResource("Animation_k61xc"),
 &"ZoomIn": SubResource("Animation_v0hk8"),
-&"ZoomOut": SubResource("Animation_72krn")
+&"ZoomOut": SubResource("Animation_72krn"),
+&"recover": SubResource("Animation_us48a")
 }
 
 [sub_resource type="Animation" id="Animation_mjudg"]
@@ -336,6 +406,9 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_7822p"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_50v30"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_us48a"]
+size = Vector3(2.21, 1.159, 1.878)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iu6dd"]
 resource_name = "Material"
@@ -595,12 +668,20 @@ collision_mask = 2
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_50v30")
 gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("5_v44p8")
 parentCar = NodePath("../../..")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Car/CarLogic/CarHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6465874, 0)
+shape = SubResource("BoxShape3D_us48a")
+
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox"]
-depth = 2.525
-polygon = PackedVector2Array(1, 0, 1, 1.5, -1, 1.5, -1, 0)
+visible = false
+depth = 2.395
+polygon = PackedVector2Array(1, 0, 1, 1.431, -1, 1.431, -1, 0)
+margin = 0.001
 
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.56398773, 0.006678164)
@@ -629,12 +710,13 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 text = "USERNAME"
 
 [node name="ModelParent" type="Node3D" parent="Car"]
-
-[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8566898, -0.029776663)
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
 transform = Transform3D(0.549, 0, 0, 0, 0.524, 0, 0, 0, 0.549, 0, 0, 0)
+
+[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1.8214935, 0, 0, 0, 1.9083967, 0, 0, 0, 1.8214935, 0, 1.6349049, -0.054238)
 
 [node name="Body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
 transform = Transform3D(1.3406076, 0, 0, 0, 1, 0, 0, 0, 1.3341691, 0, 1.0798104, 0)

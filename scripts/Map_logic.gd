@@ -1,5 +1,12 @@
 extends Node3D
 
+## For your own tracks: There are two kinds of path: the TrackPath (also called master_path), and true_paths. 
+### The TrackPath is a complete loop of the track, and used for things like leaderboard placement and minimap
+### True_paths are discreet strips of path used as reference for when a kart needs to be returned to the course
+#### When deciding a location to return it to, the TrackPath is referenced alongside each true_path,
+####  and then the kart is moved to the true_path whose closest point is nearest to the TrackPath's closest point
+##(For simple loop courses with no split paths, the TrackPath can be the true_path too)
+
 @export var map_icon : Texture2D
 
 @export var MAX_LAPS : int
@@ -54,7 +61,7 @@ func _process(_delta: float) -> void:
 		return
 	
 	for car in Cars:
-		car.track_pos = get_track_placement(car.Ball.global_position)
+		car.track_pos = get_track_placement(car.Ball.global_position, TrackPath)
 		#print(car.track_pos)
 		var indec = RacerIcons.find_custom(func(a): return str(car.player_id) == a.name)
 		var icon = RacerIcons[indec]
@@ -107,9 +114,9 @@ func update_lapcount(checkpointers : Array[Node3D], lap_count : int) -> int:
 		return lap_count + 1
 	return lap_count
 
-func get_track_placement(global_loc : Vector3) -> float:
-	var curvy = TrackPath.curve
-	var curv_space_pos = global_loc - TrackPath.global_position
+func get_track_placement(global_loc : Vector3, path : Path3D) -> float:
+	var curvy = path.curve
+	var curv_space_pos = global_loc - path.global_position
 	return curvy.get_closest_offset(curv_space_pos) / curvy.get_baked_length()
 	#return ((curvy.get_baked_points().find(curvy.get_closest_point(curv_space_pos))) / curvy.get_baked_length()) + curvy.get_closest_offset(curv_space_pos)
 
