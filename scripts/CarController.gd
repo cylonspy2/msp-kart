@@ -50,6 +50,7 @@ extends Node3D
 @export var weight = 10.0
 @export var driftBoost = 1.75
 @export var airControl = 0.1
+@export var wallBounce = 0.2
 
 var speedInput = 0.0
 var rotateInput = 0.0
@@ -163,36 +164,29 @@ func _physics_process(_delta):
 	else :
 		lerpForce = lerp(((forceForce * boost)), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
 	
-	var hitS = CarHitBox.move_and_collide(_delta * lerpForce * 0.1, true)
+	##code for when the kart's own hitbox detects collisions
+	var hitS : KinematicCollision3D = CarHitBox.move_and_collide(_delta * (lerpForce * 0.01 + Ball.linear_velocity), true)
 	if hitS:
-		var avgHitShellPos = Vector3(0.0, 0.0, 0.0)
-		var b = 0
-		while b < hitS.get_collision_count():
-			avgHitShellPos += hitS.get_position(b)
-			b += 1
-		avgHitShellPos /= b
-		var newForce = (-(CarHitBox.global_position - avgHitShellPos)).normalized()
-		var rotat : float
-		var chec = Car.global_basis.rotated(Car.global_basis.y, Car.global_rotation.y).rotated(Car.global_basis.z, Car.global_rotation.z).x.cross(newForce).y
-		if chec > 0.5:
-			print("right-ward")
-			rotat = deg_to_rad(-90)
-		else : if chec < -0.5:
-			print("left-ward")
-			rotat = deg_to_rad(90)
+		var hitted = hitS.get_collider(0)
+		if hitted.name != "rim":
+			if hitted.name != "CarHitBox":
+				print("%s Hit a Gadget or Item, which should have its own things to say about this" % username)
+				pass
+			else:
+				print("%s Hit another car" % username)
+				_process_kart_collision(hitS, lerpForce, wallBounce / weight)
+				pass
+			pass
 		else:
-			print("BACK")
-			rotat = deg_to_rad(180)
-		Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
-		newForce = newForce * Ball.linear_velocity.length() * (0.3) * lerpForce.length()
-		newForce = newForce.rotated(Car.global_basis.y, rotat)
-		Ball.linear_velocity = Vector3.ZERO
-		Ball.apply_central_force(newForce)
-		prevForce = newForce
+			print("%s Hit track guardrail" % username)
+			_process_kart_collision(hitS, lerpForce, wallBounce)
+			pass
+		pass
 	else:
 		Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
 		Ball.apply_central_force(lerpForce)
 		prevForce = lerpForce
+		pass
 	
 	hitr = Ball.move_and_collide(gravDir * _delta, true)
 	if hitr:
@@ -206,12 +200,14 @@ func _physics_process(_delta):
 		var newGrav = (-(Ball.global_position - avgHitPos)).normalized()
 		gravForce = lerp(gravForce, newGrav, clamp(_delta * 20 * rad_to_deg(gravForce.dot(newGrav)), 0.0, 1.0))
 		notify_property_list_changed()
+		pass
 	else:
 		Ball.gravity_scale = 3.0
 		forceForce *= 0
 		gravForce = Vector3(0.0, -1.0, 0.0)
 		notify_property_list_changed()
 		Ball.apply_central_force(gravForce * 9.81 * weight)
+		pass
 	gravDir = gravForce * weight
 	Ball.move_and_collide(gravDir * _delta)
 	
@@ -219,21 +215,52 @@ func _physics_process(_delta):
 		server_Pos_Offset += Ball.global_position - server_Pos
 		Ball.global_position.slerp(server_Pos + server_Pos_Offset, clamp(1 - time_since_last_update, 0, 1))
 		Car.global_transform.basis.slerp(server_Rot, clamp(1 - (time_since_last_update * 1000), 0, 1))
+		pass
 	else:
 		server_Pos = Ball.global_position
 		server_Rot = Car.global_transform.basis
+		pass
 	
 	#print(Ball.angular_velocity.length())
+
+func _process_kart_collision(hitter : KinematicCollision3D, force : Vector3, bounce : float) -> Vector3:
+	var avgHitShellPos = Vector3(0.0, 0.0, 0.0)
+	var b = 0
+	while b < hitter.get_collision_count():
+		avgHitShellPos += hitter.get_position(b)
+		b += 1
+	avgHitShellPos /= b
+	var newForce = (-(CarHitBox.global_position - avgHitShellPos)).normalized()
+	var rotat : float
+	var chec = Car.global_basis.x.cross(newForce)
+	if chec.dot(Car.global_basis.x) > chec.y:
+		#print("car up vector greater than hit_cross %s" % chec)
+		rotat = acos(chec.dot(Car.global_basis.x)) + deg_to_rad(90)
+		pass
+	else:
+		#print("car up vector less than or equal to hit_cross %s" % chec)
+		rotat = -acos(chec.dot(Car.global_basis.x)) - deg_to_rad(90)
+		pass
+	Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
+	newForce = (newForce * Ball.linear_velocity.length() * bounce * force.length()) + force
+	newForce = newForce.rotated(Car.global_basis.y, rotat) + force
+	#Ball.linear_velocity = Vector3.ZERO
+	Ball.apply_central_force(newForce)
+	prevForce = newForce
+	return newForce
 
 func _process(delta):
 	
 	if hasControl:
-		speedInput = (MS.inputDir) * acceleration
-		rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
-		lockedCamPos = null
-		Cam.position = camStartPos
-		Cam.basis = camStartRot
-		camLocked = true
+		if Cam == null:
+			return
+		else:
+			speedInput = (MS.inputDir) * acceleration
+			rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+			lockedCamPos = null
+			Cam.position = camStartPos
+			Cam.basis = camStartRot
+			camLocked = true
 	else:
 		speedInput = 0.0
 		rotateInput = 0.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=26 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_3yda7"]
@@ -12,14 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="10_3yda7"]
 [ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_fn2mn"]
 
-[sub_resource type="Curve2D" id="Curve2D_8vqid"]
-bake_interval = 0.01
-_data = {
-"points": PackedVector2Array(12.851439, -0.58415633, -12.851439, 0.58415633, -76.66666, 121.666664, 24.210533, 1.8803864, -24.210533, -1.8803864, -123.33334, 135, -14.77273, 14.77273, 14.77273, -14.77273, -171.66669, 75, 0, 0, 0, 0, -105.000015, 28.333332, -23.325363, -3.8875604, 23.325363, 3.8875604, -40.00003, -3.333334, 2.3325362, -27.990435, -2.3325362, 27.990435, -20.00003, 43.33333, 0, 0, 0, 0, 31.666656, 56.666664, -26.43541, 11.662682, 26.43541, -11.662682, 76.66666, 41.666664, 2.3325362, 31.100483, -2.3325362, -31.100483, 118.33334, -15, 18.66029, -3.8875604, -18.66029, 3.8875604, 75, -46.666664, 9.330145, -15.550241, -9.330145, 15.550241, 33.333344, -11.666664, -4.6650724, -19.437801, 4.6650724, 19.437801, 23.333344, 41.666664, 10.1076565, -31.877995, -10.1076565, 31.877995, 68.33334, 130, 34.210533, 0.7775121, -34.210533, -0.7775121, 5, 168.33334, 20.44547, 1.1683127, -20.44547, -1.1683127, -76.66666, 121.666664)
-}
-point_count = 15
-
-[sub_resource type="LabelSettings" id="LabelSettings_rwgo1"]
+[sub_resource type="LabelSettings" id="LabelSettings_fn2mn"]
 font_size = 97
 font_color = Color(1, 1, 0, 1)
 outline_size = 15
@@ -113,7 +106,6 @@ joint_mode = 2
 antialiased = true
 
 [node name="Path2D" type="Path2D" parent="Minimap/Minimap_road"]
-curve = SubResource("Curve2D_8vqid")
 
 [node name="Placement" type="HBoxContainer" parent="Minimap"]
 layout_mode = 1
@@ -131,7 +123,7 @@ pivot_offset = Vector2(1.35, 0)
 [node name="Rank" type="Label" parent="Minimap/Placement"]
 layout_mode = 2
 text = "10"
-label_settings = SubResource("LabelSettings_rwgo1")
+label_settings = SubResource("LabelSettings_fn2mn")
 
 [node name="Denotion" type="Label" parent="Minimap/Placement"]
 layout_mode = 2
@@ -156,25 +148,18 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 321.0
+offset_left = -148.0
+offset_bottom = 363.0
 grow_horizontal = 0
 
-[node name="Item" type="Control" parent="Minimap/Item_Visualizer/VBoxContainer"]
-custom_minimum_size = Vector2(100.95, 129.825)
+[node name="Item" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer"]
 layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
-layout_mode = 0
-offset_left = -4.999956
-offset_top = 2.0
-offset_right = 143.00005
-offset_bottom = 190.0
-scale = Vector2(0.69, 0.69)
+size_flags_horizontal = 4
+size_flags_vertical = 0
 texture = ExtResource("3_3yda7")
 stretch_mode = 4
 
-[node name="ItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect"]
+[node name="ItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,7 +174,7 @@ texture = ExtResource("4_6mdqg")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect"]
+[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,31 +183,29 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.11764706, 0.11764706, 0.11764706, 0.63529414)
 
-[node name="AltItem" type="Control" parent="Minimap/Item_Visualizer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 188)
+[node name="AltItem" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 82)
 layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
-layout_mode = 0
-offset_left = 52.0
-offset_top = -3.0000067
-offset_right = 200.0
-offset_bottom = 185.0
-scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 8
+size_flags_vertical = 0
 texture = ExtResource("3_3yda7")
+expand_mode = 1
 stretch_mode = 4
 
-[node name="AltItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2"]
-layout_mode = 0
-offset_left = 12.083333
-offset_top = 15.13331
-offset_right = 112.083336
-offset_bottom = 161.80032
+[node name="AltItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 3.14
+offset_top = 7.11
+offset_right = 51.54
+offset_bottom = -9.440002
+grow_vertical = 2
 texture = ExtResource("4_6mdqg")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2"]
+[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

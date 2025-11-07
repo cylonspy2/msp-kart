@@ -19,7 +19,7 @@ func _enter_tree() -> void:
 		haveAuthority = true
 		UI.visible = true
 		UI.mouse_filter = UI.MOUSE_FILTER_PASS
-	HighLevelNetwork.spawn_racers.connect(_on_toggle_control)
+	HighLevelNetwork.spawn_racers.connect(func(id, path) : _on_toggle_control())
 	multiplayer.peer_disconnected.connect(func(id): despawn_player(id))
 	HighLevelNetwork.end_race.connect(func(id, score): finish_race(id, score))
 	HighLevelNetwork.enter_race.connect(enter_race)
@@ -29,6 +29,7 @@ func _enter_tree() -> void:
 	HighLevelNetwork.select_track.connect(func(id): set_track(id))
 
 func _ready() -> void:
+	print("%s entered lobby" % name)
 	if haveAuthority:
 		camera.make_current()
 
@@ -53,7 +54,8 @@ func enter_race():
 		is_controlled = false
 		spawner._spawn_Car = requestedKart
 		spawner._spawn_Racer = requestedRacer
-		spawner.spawn_player(name.to_int())
+		#spawner.spawn_kart(name.to_int(), enterP)
+		#HighLevelNetwork.spawn_racers.emit(name.to_int(), enterP)
 		has_spawned = true
 
 func finish_race(id : int, score : int):

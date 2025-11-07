@@ -5,13 +5,14 @@ extends MultiplayerSpawner
 @export var _spawn_Racer : PackedScene
 
 func _ready() -> void :
-	#multiplayer.peer_connected.connect(func(id): multiplayer.spawn_player(id))
+	multiplayer.peer_connected.connect(func(id, spawn_path): multiplayer.spawn_kart(id, spawn_path))
 	HighLevelNetwork.despawn_player.connect(func(id): despawn_kart(id))
-	HighLevelNetwork.spawn_racers.connect(func(patth): spawn_kart(patth))
+	HighLevelNetwork.spawn_racers.connect(func(id, patth): spawn_kart(id, patth))
 	pass
 
-func spawn_kart(spawnpath : NodePath) -> void :
+func spawn_kart(id : int, spawnpath : NodePath) -> void :
 	#if not multiplayer.is_server() : return
+	if not parent.name.to_int() == id: return
 	
 	var spawnpathNodes : Array[NodePath] 
 	

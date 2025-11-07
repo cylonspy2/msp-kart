@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_234m1"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_j5pbr"]
-[ext_resource type="LabelSettings" uid="uid://c781sptcjwjxk" path="res://Racetracks/RacetrackAssets/Rank_Label_Settings.tres" id="3_8b540"]
+[ext_resource type="LabelSettings" uid="uid://bxtirqcglt8on" path="res://Racetracks/RacetrackAssets/BP_Rank_Label_Settings.tres" id="3_w7pp3"]
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="4_5o45a"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="5_cygye"]
 [ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="6_8a5b3"]
@@ -12,21 +12,20 @@
 [ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="9_unlcg"]
 [ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_dh4jp"]
 
-[sub_resource type="Curve2D" id="Curve2D_8vqid"]
-bake_interval = 0.01
+[sub_resource type="Curve2D" id="Curve2D_dh4jp"]
 _data = {
-"points": PackedVector2Array(12.851439, -0.58415633, -12.851439, 0.58415633, -76.66666, 121.666664, 24.210533, 1.8803864, -24.210533, -1.8803864, -123.33334, 135, -14.77273, 14.77273, 14.77273, -14.77273, -171.66669, 75, 0, 0, 0, 0, -105.000015, 28.333332, -23.325363, -3.8875604, 23.325363, 3.8875604, -40.00003, -3.333334, 2.3325362, -27.990435, -2.3325362, 27.990435, -20.00003, 43.33333, 0, 0, 0, 0, 31.666656, 56.666664, -26.43541, 11.662682, 26.43541, -11.662682, 76.66666, 41.666664, 2.3325362, 31.100483, -2.3325362, -31.100483, 118.33334, -15, 18.66029, -3.8875604, -18.66029, 3.8875604, 75, -46.666664, 9.330145, -15.550241, -9.330145, 15.550241, 33.333344, -11.666664, -4.6650724, -19.437801, 4.6650724, 19.437801, 23.333344, 41.666664, 10.1076565, -31.877995, -10.1076565, 31.877995, 68.33334, 130, 34.210533, 0.7775121, -34.210533, -0.7775121, 5, 168.33334, 20.44547, 1.1683127, -20.44547, -1.1683127, -76.66666, 121.666664)
+"points": PackedVector2Array(29.078957, 13.684215, -29.078957, -13.684215, -21.666656, 138.33334, 16.250004, 7.6973705, -16.250004, -7.6973705, -128.33331, 93.333336, -1.7105268, 12.828951, 1.7105268, -12.828951, -164.99998, 54.999992, -9.407898, 11.973688, 9.407898, -11.973688, -144.99998, -6.666664, -35.921062, 11.973688, 35.921062, -11.973688, -98.33331, -48.333332, -43.618435, -5.986844, 43.618435, 5.986844, 1.666687, -56.666664, -18.815796, -18.815796, 18.815796, 18.815796, 158.33334, 8.333336, 0.8552634, -16.250006, -0.8552634, 16.250006, 186.66669, 63.333336, 9.407897, -20.526321, -9.407897, 20.526321, 166.66669, 133.33334, 11.973688, -6.8421073, -11.973688, 6.8421073, 131.66669, 176.66666, 17.960531, 4.276317, -17.960531, -4.276317, 88.33334, 181.66666, 38.486855, 17.105268, -38.486855, -17.105268, -21.666656, 138.33334)
 }
-point_count = 15
+point_count = 12
 
-[sub_resource type="LabelSettings" id="LabelSettings_rwgo1"]
-font_size = 97
-font_color = Color(1, 1, 0, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_dh4jp"]
+font_size = 37
+font_color = Color(1, 0.5176471, 0, 1)
 outline_size = 15
-outline_color = Color(1, 0.53333336, 0, 1)
-shadow_size = 26
+outline_color = Color(1, 1, 0, 1)
+shadow_size = 36
 shadow_color = Color(0, 0, 0, 1)
-shadow_offset = Vector2(2.48, 2.89)
+shadow_offset = Vector2(4.745, 3.46)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_f7uto"]
 panorama = ExtResource("6_8a5b3")
@@ -47,18 +46,17 @@ sky = SubResource("Sky_4warc")
 albedo_texture = ExtResource("7_43y5v")
 
 [sub_resource type="Curve3D" id="Curve3D_p5e3n"]
-closed = true
 bake_interval = 0.01
 _data = {
-"points": PackedVector3Array(164.43466, 3.0283966, 82.53128, -164.43466, -3.0283966, -82.53128, -73.575455, -175.2588, 358.2756, 14.220093, -13.037712, 125.6108, -14.220093, 13.037712, -125.6108, -463.56073, -118.941444, 5.250803, -125.610855, -5.177368, 28.440216, 125.610855, 5.177368, -28.440216, -188.63896, -88.38284, -262.56094, -82.95055, -3.768921, -35.550232, 82.95055, 3.768921, 35.550232, 221.37361, -74.08792, -236.49075, -48.19861, 4.263031, -68.32167, 48.19861, -4.263031, 68.32167, 498.66522, -74.0762, -63.479637, 47.400146, 36.55934, -99.54062, -47.400146, -36.55934, 99.54062, 529.4755, -133.36197, 242.25232, 97.17053, -3.1086426, -23.700104, -97.17053, 3.1086426, 23.700104, 342.24445, -174.66484, 521.91406),
-"tilts": PackedFloat32Array(0, 1.0855948, 1.2409291, 1.860521, 2.3265238, 0.7749262, 0)
+"points": PackedVector3Array(268.39215, -0.06921387, 176.0408, -268.39215, 0.06921387, -176.0408, -124.87343, -173.84972, 297.6988, 2.1981812, -12.464287, 58.243546, -2.1981812, 12.464287, -58.243546, -441.50793, -123.3464, 13.793644, -128.83705, -11.931007, 44.48134, 128.83705, 11.931007, -44.48134, -197.43806, -100.442955, -263.3032, -127.24162, -4.8739014, -37.340942, 127.24162, 4.8739014, 37.340942, 164.8288, -74.117096, -268.83493, -57.362427, 7.9892426, -68.98627, 57.362427, -7.9892426, 68.98627, 486.62927, -75.41911, -83.66809, 74.762146, 32.214554, -167.23125, -74.762146, -32.214554, 167.23125, 529.4755, -133.36197, 242.25232, 50.013733, 5.545822, -22.434814, -50.013733, -5.545822, 22.434814, 342.24445, -174.66484, 521.91406, 268.392, 0.069, 176.041, -110.54434, -0.35832214, -71.1163, -124.87343, -173.84972, 297.6988),
+"tilts": PackedFloat32Array(0, 0.37699112, 1.2409291, 1.6842427, 2.3265238, 2.3684118, 2.476622, 3.1415927)
 }
-point_count = 7
+point_count = 8
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgo1d"]
 albedo_texture = ExtResource("8_x10nv")
-uv1_scale = Vector3(0.5, 5, 0)
-uv1_offset = Vector3(0, 0.66, 0)
+uv1_scale = Vector3(0.105, 4, 1)
+uv1_offset = Vector3(0, 2.085, 0)
 texture_filter = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unlcg"]
@@ -114,7 +112,7 @@ joint_mode = 2
 antialiased = true
 
 [node name="Path2D" type="Path2D" parent="Minimap/Minimap_road"]
-curve = SubResource("Curve2D_8vqid")
+curve = SubResource("Curve2D_dh4jp")
 
 [node name="Placement" type="HBoxContainer" parent="Minimap"]
 layout_mode = 1
@@ -132,12 +130,12 @@ pivot_offset = Vector2(1.35, 0)
 [node name="Rank" type="Label" parent="Minimap/Placement"]
 layout_mode = 2
 text = "10"
-label_settings = SubResource("LabelSettings_rwgo1")
+label_settings = ExtResource("3_w7pp3")
 
 [node name="Denotion" type="Label" parent="Minimap/Placement"]
 layout_mode = 2
 text = "th"
-label_settings = ExtResource("3_8b540")
+label_settings = SubResource("LabelSettings_dh4jp")
 
 [node name="Control" type="Control" parent="Minimap/Placement"]
 custom_minimum_size = Vector2(31.695, 0)
@@ -157,25 +155,18 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 321.0
+offset_left = -148.0
+offset_bottom = 363.0
 grow_horizontal = 0
 
-[node name="Item" type="Control" parent="Minimap/Item_Visualizer/VBoxContainer"]
-custom_minimum_size = Vector2(100.95, 129.825)
+[node name="Item" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer"]
 layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
-layout_mode = 0
-offset_left = -4.999956
-offset_top = 2.0
-offset_right = 143.00005
-offset_bottom = 190.0
-scale = Vector2(0.69, 0.69)
+size_flags_horizontal = 4
+size_flags_vertical = 0
 texture = ExtResource("4_5o45a")
 stretch_mode = 4
 
-[node name="ItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect"]
+[node name="ItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -190,7 +181,7 @@ texture = ExtResource("5_cygye")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect"]
+[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/Item"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -199,31 +190,29 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.11764706, 0.11764706, 0.11764706, 0.63529414)
 
-[node name="AltItem" type="Control" parent="Minimap/Item_Visualizer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 188)
+[node name="AltItem" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 82)
 layout_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
-layout_mode = 0
-offset_left = 52.0
-offset_top = -3.0000067
-offset_right = 200.0
-offset_bottom = 185.0
-scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 8
+size_flags_vertical = 0
 texture = ExtResource("4_5o45a")
+expand_mode = 1
 stretch_mode = 4
 
-[node name="AltItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2"]
-layout_mode = 0
-offset_left = 12.083333
-offset_top = 15.13331
-offset_right = 112.083336
-offset_bottom = 161.80032
+[node name="AltItemIcon" type="TextureRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 3.14
+offset_top = 7.11
+offset_right = 51.54
+offset_bottom = -9.440002
+grow_vertical = 2
 texture = ExtResource("5_cygye")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2"]
+[node name="ColorRect" type="ColorRect" parent="Minimap/Item_Visualizer/VBoxContainer/AltItem"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -254,7 +243,7 @@ curve = SubResource("Curve3D_p5e3n")
 
 [node name="Road" type="CSGPolygon3D" parent="Environment"]
 use_collision = true
-polygon = PackedVector2Array(-10, -2, -10, 0.61, -5, 0, -2, 0.1, 0, 0.1, 2, 0.1, 5, 0, 10, -0.5, 10, -1.5, 5, -2, 0, -2, -5, -2)
+polygon = PackedVector2Array(-20, 1.6, -10, 1, -8, 1.5, 0, 2, 8, 1.5, 10, 1, 20, 1.6, 20, -1.6, 10, -1, 8, -1.5, 0, -2, -8, -1.5, -10, -1, -20, -1.6)
 mode = 2
 path_node = NodePath("../master_path")
 path_interval_type = 1
@@ -265,14 +254,14 @@ path_rotation_accurate = true
 path_local = false
 path_continuous_u = true
 path_u_distance = 10.0
-path_joined = true
+path_joined = false
 material = SubResource("StandardMaterial3D_qgo1d")
 
 [node name="rim" type="CSGPolygon3D" parent="Environment"]
 use_collision = true
 collision_layer = 2
 collision_mask = 2
-polygon = PackedVector2Array(-11, -6, -11, 4, -9, 4, -9, -6)
+polygon = PackedVector2Array(-22, -6, -22, 4, -20, 4, -20, -6)
 mode = 2
 path_node = NodePath("../master_path")
 path_interval_type = 1
@@ -283,23 +272,23 @@ path_rotation_accurate = true
 path_local = false
 path_continuous_u = true
 path_u_distance = 10.0
-path_joined = true
+path_joined = false
 material = SubResource("StandardMaterial3D_unlcg")
 
 [node name="FinishLine" type="Node3D" parent="Environment"]
-transform = Transform3D(0.45103332, 0, 0.89250714, 0, 1, 0, -0.89250714, 0, 0.45103332, -68.85633, 44.21537, 373.20074)
+transform = Transform3D(0.45103332, 0, 0.89250714, 0, 1, 0, -0.89250714, 0, 0.45103332, -167.49867, 46.862297, 280.6666)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Environment/FinishLine"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.741577, 10.73457, 15.309563)
+transform = Transform3D(0.9763641, 0, -0.21613294, 0, 1, 0, 0.21613294, 0, 0.9763641, -25.677704, 10.734573, 14.418373)
 size = Vector3(1, 18.66, 1)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Environment/FinishLine"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.203, 10.735, 15.31)
+transform = Transform3D(0.9977679, 0, -0.06677908, 0, 1, 0, 0.06677908, 0, 0.9977679, 14.917603, 10.735001, 18.713272)
 size = Vector3(1, 18.66, 1)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Environment/FinishLine"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1200256, 18.035301, 15.30999)
-size = Vector3(21.3, 3.97, 1)
+transform = Transform3D(0.99409825, 0, -0.10848519, 0, 1, 0, 0.10848519, 0, 0.99409825, -5.1796875, 18.035301, 16.60839)
+size = Vector3(40.882008, 3.97, 1)
 
 [node name="CheckpointSystem" type="Area3D" parent="."]
 visible = false
@@ -328,7 +317,7 @@ one_shot = true
 [node name="Car_Container" type="Node3D" parent="."]
 
 [node name="BakerDozen" parent="Car_Container" instance=ExtResource("9_unlcg")]
-transform = Transform3D(-0.4102732, -6.7055225e-08, -0.9119632, 1.6763806e-08, 1.0000001, 2.9802322e-08, 0.9119626, -1.4901161e-08, -0.41027322, -46.193565, 48.937973, 388.0921)
+transform = Transform3D(-0.4137061, 0.10148577, -0.9047372, -0.07138024, 0.9870928, 0.14336382, 0.9076081, 0.12389078, -0.4011222, -144.18987, 51.136623, 294.86887)
 
 [node name="P_1" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.11509888, -0.089150645, -0.9893455, 1.360476e-05, 0.99596447, -0.08974865, 0.993354, -0.010343403, -0.11463315, -13.244827, 230.32054, 146.66603)
@@ -578,6 +567,7 @@ visible = false
 [node name="KillBox" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="KillBox" node_paths=PackedStringArray("master_path", "true_paths", "CarContainer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -45.636353, 0)
 script = ExtResource("11_dh4jp")
 master_path = NodePath("../../Environment/master_path")
 true_paths = [NodePath("../../Environment/master_path")]

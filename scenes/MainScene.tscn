@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4lf6mqid4l3"]
+[gd_scene load_steps=10 format=3 uid="uid://c4lf6mqid4l3"]
 
 [ext_resource type="Script" uid="uid://daygg40j43bio" path="res://scripts/main_scene.gd" id="1_k24pf"]
 [ext_resource type="PackedScene" uid="uid://ce4l45pg5pfxb" path="res://scenes/hl_mult_ui.tscn" id="1_x4av3"]
@@ -6,10 +6,6 @@
 [ext_resource type="Script" uid="uid://bc5ff5nyrprfc" path="res://scripts/multiplayer/networks/network_manager.gd" id="2_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://bq4bbfhb2b6wx" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/ambulance.glb" id="3_c6dvc"]
 [ext_resource type="PackedScene" uid="uid://ci7uqeytx4o21" path="res://scenes/spectator.tscn" id="4_611at"]
-
-[sub_resource type="Environment" id="Environment_ygjfp"]
-background_mode = 1
-background_color = Color(0.6706895, 0.6706895, 0.6706895, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ygjfp"]
 properties/0/path = NodePath(".:trackListPos")
@@ -24,6 +20,20 @@ properties/2/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_ygjfp"]
 resource_name = "CHOOSE"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.96666664),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_level"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1wiy7"]
 _data = {
@@ -48,9 +58,6 @@ transform = Transform3D(-0.72778475, 0, -0.6858056, 0, 1, 0, 0.6858056, 0, -0.72
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment3D"]
 transform = Transform3D(0.9417119, -0.04050074, 0.33397374, -0.30174276, 0.33728987, 0.8917325, -0.1487618, -0.9405292, 0.30540907, 1.9606417, -5.9604645e-08, -3.2162223)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment3D"]
-environment = SubResource("Environment_ygjfp")
-
 [node name="MainMenuCam" type="Camera3D" parent="."]
 transform = Transform3D(-0.96296054, 0.11224705, -0.24516873, 8.920547e-09, 0.90923613, 0.41628087, 0.26964256, 0.40086204, -0.87555844, -0.88435745, 1.959545, 7.18235)
 
@@ -62,6 +69,7 @@ spawn_path = NodePath("../RaceSlot")
 script = ExtResource("2_rpqi1")
 networkPlayer = ExtResource("4_611at")
 SpectatorSpawnpath = NodePath("../SpectatorLobby")
+trackSlot = NodePath("../RaceSlot")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ygjfp")

@@ -3,10 +3,11 @@ extends MultiplayerSpawner
 @export var networkPlayer : PackedScene
 @export var racerSpawnpath : NodePath
 @export var SpectatorSpawnpath : NodePath
-@onready var trackSlot = $"../RaceSlot"
+@export var trackSlot : NodePath
 @export var spawnedTrack : Node3D
 
 func _ready() -> void :
+	HighLevelNetwork.hosted_lobby.connect(func(id): spawn_player(id))
 	multiplayer.peer_connected.connect(func(id): spawn_player(id))
 	multiplayer.peer_disconnected.connect(func(id): despawn_player(id))
 
@@ -35,4 +36,5 @@ func spawn_level(track : PackedScene):
 	get_node(trackSlot).call_deferred("add_child", trac)
 	
 	spawnedTrack = trac
-	racerSpawnpath = trac.Car_Root[0].get_parent()
+	racerSpawnpath = trac.Car_Root[0].slice(0, -1)
+	print(racerSpawnpath)

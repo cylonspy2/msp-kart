@@ -9,11 +9,11 @@ var lobbyName = "BADDIE343"
 var lobby_search = ""
 
 signal enter_lobby(id : int)
-signal hosted_lobby
+signal hosted_lobby(id : int)
 signal enter_race
 signal end_race (id : int, score : int)
 signal exit_race
-signal spawn_racers (spawn_path : NodePath)
+signal spawn_racers (id : int, spawn_path : NodePath)
 signal despawn_player(id : int)
 
 signal select_track(scene : PackedScene)

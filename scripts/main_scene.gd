@@ -49,17 +49,23 @@ func _choose_level() -> void :
 		return
 	var trackArray : Array
 	for playeh : Node3D in spectatorLobby.get_children(false):
-		var playScrip = playeh.get_script()
-		trackArray.append(playScrip.requestedTrack)
+		trackArray.append(playeh.requestedTrack)
 		pass
-	var trackChoice = trackArray.pick_random()
+	var trackChoice
+	if not trackArray.is_empty():
+		trackChoice = trackArray.pick_random()
 	if not trackChoice == null :
-		trackListPos = trackArray.find(chosenTrack)
+		var dir = ResourceLoader.list_directory(HighLevelNetwork.TrackPath)
+		MainUI.trackListPos = trackArray.find(trackChoice)
+		trackListPos = trackArray.find(trackChoice)
+		chosenTrack = ResourceLoader.load(HighLevelNetwork.TrackPath + "/" + dir[trackListPos], "PackedScene")
 	else :
 		var dir = ResourceLoader.list_directory(HighLevelNetwork.TrackPath)
 		var randInt = randi_range(0, dir.size())
 		MainUI.trackListPos = randInt
 		trackListPos = randInt
+		chosenTrack = ResourceLoader.load(HighLevelNetwork.TrackPath + "/" + dir[trackListPos], "PackedScene")
+	levelChooserAnim.play("CHOOSE")
 
 
 func _on_level_chooser_animation_finished(_anim_name: StringName) -> void:
@@ -71,8 +77,9 @@ func start_level() -> void:
 	Environ.visible = false
 	_build_available_items_list()
 	MainSpawner.spawn_level(chosenTrack)
-	HighLevelNetwork.spawn_racers.emit(MainSpawner.racerSpawnpath)
-	if HighLevelNetwork.host_mode_enabled && %NetworkManager.MULTIPLAYER_NETWORK_TYPE == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM:
+	
+	HighLevelNetwork.spawn_racers.emit(get_multiplayer_authority(), MainSpawner.racerSpawnpath)
+	if HighLevelNetwork.host_mode_enabled && (%NetworkManager.active_network_type == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM):
 		pass
 	pass
 

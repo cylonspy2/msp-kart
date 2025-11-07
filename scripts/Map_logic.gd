@@ -18,8 +18,8 @@ extends Node3D
 @export var Cars : Array[Node3D]
 @export var RacerIcons : Array[TextureRect]
 @onready var Path = $Minimap/Minimap_road/Path2D
-@onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ItemIcon
-@onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/AltItemIcon
+@onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/ItemIcon
+@onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon
 @onready var victorTime = $Finish_Line/finishline_delay
 
 var doneRacers : Dictionary[int, int]
@@ -48,7 +48,7 @@ func _ready() -> void:
 		RacerIcons.append(racer)
 		if yourAuthority == car.player_id: 
 			var rep = racee.RacerItem.instantiate()
-			$Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/AltItemIcon.texture = rep.inventory_icon
+			$Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon.texture = rep.inventory_icon
 			rep.queue_free()
 		racee.queue_free()
 	var pointCol = Path.curve.get_baked_points()
@@ -89,11 +89,11 @@ func _process(_delta: float) -> void:
 				ItemIcon.texture = null
 		
 		if car.fireDisabled:
-			$Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ColorRect.visible = true
-			$Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/ColorRect.visible = true
+			$Minimap/Item_Visualizer/VBoxContainer/Item/ColorRect.visible = true
+			$Minimap/Item_Visualizer/VBoxContainer/AltItem/ColorRect.visible = true
 		else:
-			$Minimap/Item_Visualizer/VBoxContainer/Item/TextureRect/ColorRect.visible = false
-			$Minimap/Item_Visualizer/VBoxContainer/AltItem/TextureRect2/ColorRect.visible = false
+			$Minimap/Item_Visualizer/VBoxContainer/Item/ColorRect.visible = false
+			$Minimap/Item_Visualizer/VBoxContainer/AltItem/ColorRect.visible = false
 		
 		$Minimap/Placement/Rank.text = str(placement)
 		match(placement):

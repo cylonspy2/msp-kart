@@ -65,5 +65,5 @@ func update_racer(track : PackedScene):
 	var raceItem = trac.RacerItem.instantiate()
 	skill_item.texture = raceItem.inventory_icon
 	raceItem.queue_free()
-	namekart.text = track.name
+	namekart.text = trac.name
 	trac.queue_free()

@@ -36,13 +36,13 @@ func _on_finished_timer(naeme : String):
 						true_end_rot = potential_end_rot
 						tru_path = path
 				var struth = true_end_pos.basis.rotated(true_end_pos.basis.y, deg_to_rad(180))
-				item.Ball.global_position = true_end_pos.origin + tru_path.global_position + (Vector3(0.0, 0.5, 0.0) * (struth))
+				item.Ball.global_position = true_end_pos.origin + tru_path.global_position + (Vector3(0.0, 9, 0.0) * (struth))
 				item.Car.global_position = item.Ball.global_position
 				item.Car.global_basis = struth
 				#item.Car.global_basis.y = true_end_rot
-				item.Ball.move_and_collide(-item.Car.global_basis.y)# * 0.001)
+				item.Ball.move_and_collide(-struth.y * 9)
 				item.gravForce = -item.Car.global_basis.y
-				print(item.name + " " + str(true_end_pos.basis.y))
+				print(item.name + " " + str((Vector3(0.0, 9, 0.0) * (struth))))
 				item._recover()
 				return
 			print(item.name)
