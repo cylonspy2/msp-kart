@@ -16,7 +16,7 @@ func _ready() -> void:
 	Steam.lobby_created.connect(_on_lobby_created.bind())
 	pass
 
-func retarget_server(IPA : String, PRT : int) -> void:
+func retarget_server(_IPA : String, PRT : int) -> void:
 	targ_id = PRT
 
 func start_dedicated_server() -> void :
@@ -44,8 +44,8 @@ func become_host() -> void :
 	host_mode_enabled = true
 	
 
-func _on_lobby_created(connect : int, lobby_id):
-	if connect == 1:
+func _on_lobby_created(connectt : int, lobby_id):
+	if connectt == 1:
 		_hosted_lobby_id = lobby_id
 		SteamManager.lobby_id = lobby_id
 		
@@ -81,7 +81,7 @@ func _on_lobby_joined(lobby_id : int, _permissions : int, _locked : bool, respon
 	SteamManager.lobby_id = lobby_id
 	
 	#HighLevelNetwork.hosted_lobby.emit()
-	
+	print(response)
 	if response == 1:
 		var id = Steam.getLobbyOwner(lobby_id)
 		if id != Steam.getSteamID():

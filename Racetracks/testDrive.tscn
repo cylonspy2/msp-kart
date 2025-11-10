@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=27 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_3yda7"]
@@ -61,6 +61,9 @@ radius = 25.99
 [sub_resource type="BoxShape3D" id="BoxShape3D_dedrg"]
 size = Vector3(2, 2, 2)
 
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_fn2mn"]
+length = 5.8505406
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkyhk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3yda7"]
@@ -70,11 +73,11 @@ size = Vector3(3689.4392, 20, 3604.4045)
 height = 100.0
 radius = 100.0
 
-[node name="Map" type="Node3D" node_paths=PackedStringArray("TrackPath", "checkpoints")]
+[node name="Map" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath", "checkpoints")]
 script = ExtResource("1_vqjdx")
 map_icon = ExtResource("2_3yda7")
 MAX_LAPS = 3
-Car_Root = Array[NodePath]([NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")])
+Car_Root = [NodePath("Car_Container"), NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")]
 TrackPath = NodePath("Environment/Path3D")
 checkpoints = [NodePath("CheckpointSystem/Checkpoint1"), NodePath("CheckpointSystem/Checkpoint2")]
 
@@ -289,6 +292,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_1/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_2" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.07587035, 0.03367175, -0.9965489, -0.034343876, 0.9987488, 0.03636083, 0.9965259, 0.036984168, -0.07461885, -13.710028, 230.01643, 151.57384)
 
@@ -303,6 +309,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_2/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_3" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.16993028, -0.075914375, -0.9825278, -0.052601706, 0.99630624, -0.06788125, 0.98405105, 0.040147647, -0.1732956, -7.9790096, 230.59277, 147.8827)
@@ -319,6 +328,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_3/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_4" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.16726537, -0.07580577, -0.98299325, -0.05231841, 0.9963176, -0.06793072, 0.9845225, 0.04006628, -0.1706153, -8.367643, 230.55145, 153.00687)
 
@@ -333,6 +345,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_4/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_5" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.22996461, -0.13098325, -0.9643442, -0.061833188, 0.9908662, -0.11984025, 0.9712324, 0.032069538, -0.23596306, -2.9408274, 231.89645, 149.03072)
@@ -349,6 +364,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_5/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_6" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.3115204, -0.13465026, -0.94065094, -0.075122796, 0.99030125, -0.11687849, 0.9472649, 0.034254402, -0.3186141, -3.722042, 231.82773, 154.63806)
 
@@ -363,6 +381,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_6/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_7" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.32718483, -0.1335614, -0.93547386, -0.060765587, 0.9908862, -0.12021969, 0.9430042, 0.017510615, -0.33231866, 1.5756016, 232.18729, 150.27109)
@@ -379,6 +400,9 @@ transform = Transform3D(0.99999994, 1.6298145e-09, 0, -4.656613e-10, 0.99999994,
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_7/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_8" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.28332603, 0.025159793, -0.95869344, -0.03434387, 0.99874866, 0.036360823, 0.9584082, 0.0432273, -0.28210714, 0.08020258, 233.1446, 156.30876)
 
@@ -392,6 +416,9 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Car_Container/P_8/Visualizer"]
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_8/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_9" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.44311583, -0.1363542, -0.8860339, 0.039356768, 0.98445296, -0.17118296, 0.8955999, -0.110725254, -0.43086013, 6.440283, 233.11894, 153.57639)
@@ -408,6 +435,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_9/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_10" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.4053864, -0.037046798, -0.91339445, 0.008319125, 0.9989879, -0.04421062, 0.9141076, -0.02552095, -0.40466765, 4.365355, 233.01845, 158.05745)
 
@@ -422,6 +452,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_10/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_11" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.48854518, -0.14095978, -0.86107725, -0.017716967, 0.9882641, -0.1517282, 0.87235856, -0.058870375, -0.4853086, 10.963266, 233.8549, 156.45459)
@@ -438,6 +471,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_11/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_12" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.4862158, -0.14083096, -0.86241573, -0.017206647, 0.9882797, -0.1516833, 0.8736694, -0.058911562, -0.48294032, 8.872547, 234.0325, 161.1458)
 
@@ -452,6 +488,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_12/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_13" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.54012054, -0.18968076, -0.81993335, -0.032158762, 0.9782105, -0.20511156, 0.84097284, -0.084416986, -0.5344513, 15.237425, 235.59715, 159.1186)
@@ -468,6 +507,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_13/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_14" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.60793304, -0.1938317, -0.7699651, -0.052841507, 0.9774715, -0.20434782, 0.7922275, -0.08354366, -0.60447925, 12.616396, 235.74065, 164.13527)
 
@@ -482,6 +524,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_14/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="P_15" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.622025, -0.18719551, -0.7602909, -0.039957978, 0.97732514, -0.20794135, 0.7819766, -0.09896512, -0.6154007, 19.047129, 236.29501, 161.76819)
@@ -498,6 +543,9 @@ transform = Transform3D(0.99999994, 1.6298145e-09, 0, -4.656613e-10, 0.99999994,
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
 
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_15/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
+
 [node name="P_16" type="Node3D" parent="Car_Container"]
 transform = Transform3D(-0.64031357, -0.05047482, -0.7664532, -0.015467614, 0.9984841, -0.05283314, 0.7679574, -0.02197449, -0.6401231, 15.24093, 236.27222, 166.86812)
 
@@ -512,6 +560,9 @@ monitorable = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.825, 0)
 shape = SubResource("BoxShape3D_dedrg")
 disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Car_Container/P_16/Visualizer"]
+shape = SubResource("SeparationRayShape3D_fn2mn")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rkyhk")

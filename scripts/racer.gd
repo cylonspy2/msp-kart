@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func _physics_process(_delta):
 	global_basis = get_parent_node_3d().global_basis
-	RacerSkin.look_at(act_cam.global_position, global_transform.basis.y, true)
+	RacerSkin.look_at(get_viewport().get_camera_3d().global_position, global_transform.basis.y, true)
 	#RacerSkin.look_at_from_position(RacerSkin.global_position, act_cam.global_position, global_transform.basis.y, true)
 	#print(RacerSkin.global_transform.basis)
 	relativeRotation = RacerSkin.rotation_degrees

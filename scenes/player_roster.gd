@@ -19,7 +19,7 @@ func add_name(id : int = 0):
 			trust.text = Steam.getFriendPersonaName(userID)
 		else:
 			trust.text = Steam.getPersonaName()
-		print("%s %s %s %s" % [userID, SteamManager.lobby_id, id, Steam.getFriendPersonaName(userID)])
+		print("Adding name to lobby roster; %s %s %s %s" % [userID, SteamManager.lobby_id, id, Steam.getFriendPersonaName(userID)])
 	trust.name = str(id)
 
 func lose_name(id : int):

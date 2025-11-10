@@ -4,9 +4,11 @@ extends Area3D
 @export var master_path : Path3D
 @export var true_paths : Array[Path3D]
 @export var CarContainer : Node3D
+@export var drop_height : float = 9
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.get_parent().get_child(0).name == "CarParent_Logic":
+		print("%s fell" % body.get_parent().name)
 		body.get_parent().hasControl = false
 		var timee = Timer.new()
 		var idd = body.get_parent().name
@@ -20,8 +22,10 @@ func _on_finished_timer(naeme : String):
 	if (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) or not HighLevelNetwork.multiplayer_enabled:
 		print(naeme)
 		var things = CarContainer.get_children()
-		for item in things:
-			if item.name == naeme:
+		for itemn in things:
+			var item
+			if itemn.get_child_count() >= 2:
+				item = itemn.get_child(1)
 				var TrackPath_pos = item.track_pos
 				var master_end_pos = master_path.curve.sample_baked_with_rotation(TrackPath_pos * master_path.curve.get_baked_length())
 				var true_end_pos :Transform3D = master_end_pos
@@ -36,15 +40,15 @@ func _on_finished_timer(naeme : String):
 						true_end_rot = potential_end_rot
 						tru_path = path
 				var struth = true_end_pos.basis.rotated(true_end_pos.basis.y, deg_to_rad(180))
-				item.Ball.global_position = true_end_pos.origin + tru_path.global_position + (Vector3(0.0, 9, 0.0) * (struth))
+				item.Ball.global_position = true_end_pos.origin + tru_path.global_position + (Vector3(0.0, drop_height, 0.0) * (struth))
 				item.Car.global_position = item.Ball.global_position
 				item.Car.global_basis = struth
 				#item.Car.global_basis.y = true_end_rot
-				item.Ball.move_and_collide(-struth.y * 9)
+				item.Ball.move_and_collide(-struth.y * drop_height)
 				item.gravForce = -item.Car.global_basis.y
-				print(item.name + " " + str((Vector3(0.0, 9, 0.0) * (struth))))
+				print(item.name + " " + str((Vector3(0.0, drop_height, 0.0) * (struth))))
 				item._recover()
 				return
-			print(item.name)
+			print(itemn.name)
 	else:
 		print("wait, what?")

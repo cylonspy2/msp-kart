@@ -40,20 +40,20 @@ func _process(delta: float) -> void:
 
 @rpc("call_local")
 func drift():
-	if multiplayer.server() or haveAuthority:
+	if multiplayer.is_server() or haveAuthority:
 		Car.start_drift = true
 
 @rpc("call_local")
 func off_drift():
-	if multiplayer.server() or haveAuthority:
+	if multiplayer.is_server() or haveAuthority:
 		Car.end_drift = true
 
 @rpc("call_local")
 func item_used():
-	if multiplayer.server() or haveAuthority:
+	if multiplayer.is_server() or haveAuthority:
 		Car.firedItem = true
 
 @rpc("call_local")
 func ability_used():
-	if multiplayer.server() or haveAuthority:
+	if multiplayer.is_server() or haveAuthority:
 		Car.altFiredItem = true

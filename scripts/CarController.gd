@@ -117,6 +117,8 @@ func _enter_tree():
 	gainItem.connect(func(id) : PickupItem(id))
 
 func _ready():
+	print("%s ready, with controller %s" % [name, player_id])
+	
 	$Car/CarLogic/CarHitbox.name = str(player_id)
 	
 	if Racer != null:
@@ -166,9 +168,9 @@ func _physics_process(_delta):
 	
 	##code for when the kart's own hitbox detects collisions
 	var hitS : KinematicCollision3D = CarHitBox.move_and_collide(_delta * (lerpForce * 0.01 + Ball.linear_velocity), true)
-	if hitS:
+	if hitS != null:
 		var hitted = hitS.get_collider(0)
-		if hitted.name != "rim":
+		if hitted.name != "Rim":
 			if hitted.name != "CarHitBox":
 				print("%s Hit a Gadget or Item, which should have its own things to say about this" % username)
 				pass

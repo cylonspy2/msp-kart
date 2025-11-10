@@ -656,10 +656,10 @@ text = "USERNAME"
 
 [node name="ModelParent" type="Node3D" parent="Car"]
 
-[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06172, -0.20200408)
-
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
+
+[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06172, -0.20200408)
 
 [node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.025)

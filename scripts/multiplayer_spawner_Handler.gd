@@ -1,7 +1,7 @@
 extends MultiplayerSpawner
 
 @export var networkPlayer : PackedScene
-@export var racerSpawnpath : NodePath
+@export var racerSpawnpath : Node3D
 @export var SpectatorSpawnpath : NodePath
 @export var trackSlot : NodePath
 @export var spawnedTrack : Node3D
@@ -33,8 +33,8 @@ func spawn_player(id : int) -> void :
 func spawn_level(track : PackedScene):
 	var trac: Node = track.instantiate()
 	
-	get_node(trackSlot).call_deferred("add_child", trac)
+	get_node(trackSlot).add_child(trac)
 	
 	spawnedTrack = trac
-	racerSpawnpath = trac.Car_Root[0].slice(0, -1)
-	print(racerSpawnpath)
+	racerSpawnpath = trac.Car_Root[0]
+	#print(racerSpawnpath)
