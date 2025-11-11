@@ -11,15 +11,15 @@ func add_name(id : int = 0):
 	var trust = Label.new()
 	cont.add_child(trust)
 	if HighLevelNetwork.multiplayer_enabled and HighLevelNetwork.steam_active == true:
-		var userID = Steam.getSteamID()
+		#var userID = Steam.getSteamID()
 		var userInd = multiplayer.get_peers().find(id)
 		if userInd > 0:
-			Steam.getNumLobbyMembers(SteamManager.lobby_id)
-			userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd)
-			trust.text = Steam.getFriendPersonaName(userID)
+			#Steam.getNumLobbyMembers(SteamManager.lobby_id)
+			#userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd)
+			trust.text = Steam.getFriendPersonaName(id)
 		else:
 			trust.text = Steam.getPersonaName()
-		print("Adding name to lobby roster; %s %s %s %s" % [userID, SteamManager.lobby_id, id, Steam.getFriendPersonaName(userID)])
+		print("Adding name to lobby roster; %s %s %s %s" % [userInd, SteamManager.lobby_id, id, Steam.getFriendPersonaName(id)])
 	trust.name = str(id)
 
 func lose_name(id : int):

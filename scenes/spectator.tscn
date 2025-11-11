@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ci7uqeytx4o21"]
+[gd_scene load_steps=6 format=3 uid="uid://ci7uqeytx4o21"]
 
 [ext_resource type="Script" uid="uid://crpp754v8oajd" path="res://scripts/spectatorMaster.gd" id="1_jjbhc"]
 [ext_resource type="Script" uid="uid://cl1a3kta53iac" path="res://scripts/Spectator_multiplayer_spawner.gd" id="2_t4j2n"]
+[ext_resource type="Script" uid="uid://b8wpbvxiqathh" path="res://scripts/spectator_ui.gd" id="3_43pd5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t4j2n"]
 properties/0/path = NodePath("Spectator:requestedTrack")
@@ -20,11 +21,18 @@ properties/4/path = NodePath("Spectator:has_spawned")
 properties/4/spawn = true
 properties/4/replication_mode = 1
 
+[sub_resource type="LabelSettings" id="LabelSettings_t4j2n"]
+font_size = 21
+font_color = Color(0, 1, 1, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Spectator" type="Node3D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_jjbhc")
 camera = NodePath("Camera")
 
 [node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.29745)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_t4j2n")
@@ -34,8 +42,178 @@ spawn_path = NodePath("..")
 script = ExtResource("2_t4j2n")
 parent = NodePath("..")
 
-[node name="Spectator_ui" type="Control" parent="."]
+[node name="Spectator_ui" type="Control" parent="." node_paths=PackedStringArray("player_placement_labels")]
+visible = false
 layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_43pd5")
+player_placement_labels = [NodePath("Leaderboard/ColorRect/Slots/Place_1"), NodePath("Leaderboard/ColorRect/Slots/Place_2"), NodePath("Leaderboard/ColorRect/Slots/Place_3"), NodePath("Leaderboard/ColorRect/Slots/Place_4"), NodePath("Leaderboard/ColorRect/Slots/Place_5"), NodePath("Leaderboard/ColorRect/Slots/Place_6"), NodePath("Leaderboard/ColorRect/Slots/Place_7"), NodePath("Leaderboard/ColorRect/Slots/Place_8"), NodePath("Leaderboard/ColorRect/Slots/Place_9"), NodePath("Leaderboard/ColorRect/Slots/Place_10"), NodePath("Leaderboard/ColorRect/Slots/Place_11"), NodePath("Leaderboard/ColorRect/Slots/Place_12"), NodePath("Leaderboard/ColorRect/Slots/Place_13"), NodePath("Leaderboard/ColorRect/Slots/Place_14"), NodePath("Leaderboard/ColorRect/Slots/Place_15"), NodePath("Leaderboard/ColorRect/Slots/Place_16")]
+
+[node name="Leaderboard" type="Control" parent="Spectator_ui"]
+layout_mode = 1
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 195.0
+offset_bottom = 647.0
+
+[node name="ColorRect2" type="ColorRect" parent="Spectator_ui/Leaderboard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.6745098, 0.07450981, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Spectator_ui/Leaderboard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.415
+offset_top = 4.645
+offset_right = -3.4650116
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 0.07450981, 1)
+
+[node name="Slots" type="VBoxContainer" parent="Spectator_ui/Leaderboard/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Place_1" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_2" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_3" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_4" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_5" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_6" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_7" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_8" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_9" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_10" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_11" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_12" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_13" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_14" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_15" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Place_16" type="Label" parent="Spectator_ui/Leaderboard/ColorRect/Slots"]
+layout_mode = 2
+text = "CYLONSPY - 10000"
+label_settings = SubResource("LabelSettings_t4j2n")
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 3

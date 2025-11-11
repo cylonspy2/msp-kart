@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=28 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_3yda7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="4_3yda7"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="4_6mdqg"]
 [ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="5_fn2mn"]
+[ext_resource type="Script" uid="uid://bmgxu6yv7p8cr" path="res://scripts/Checkpoint.gd" id="9_1nnrc"]
 [ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="10_3yda7"]
 [ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_fn2mn"]
 
@@ -79,7 +80,7 @@ map_icon = ExtResource("2_3yda7")
 MAX_LAPS = 3
 Car_Root = [NodePath("Car_Container"), NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")]
 TrackPath = NodePath("Environment/Path3D")
-checkpoints = [NodePath("CheckpointSystem/Checkpoint1"), NodePath("CheckpointSystem/Checkpoint2")]
+checkpoints = [NodePath("Checkpoints/Checkpoint1"), NodePath("Checkpoints/Checkpoint2")]
 
 [node name="Minimap" type="Control" parent="."]
 layout_mode = 3
@@ -253,14 +254,21 @@ path_u_distance = 10.0
 path_joined = true
 material = SubResource("StandardMaterial3D_qgo1d")
 
-[node name="CheckpointSystem" type="Area3D" parent="."]
-monitorable = false
+[node name="Checkpoints" type="Node3D" parent="."]
 
-[node name="Checkpoint1" type="CollisionShape3D" parent="CheckpointSystem"]
+[node name="Checkpoint1" type="Area3D" parent="Checkpoints"]
+monitorable = false
+script = ExtResource("9_1nnrc")
+
+[node name="Checkpoint1" type="CollisionShape3D" parent="Checkpoints/Checkpoint1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -324.81973, 151.55254, -116.83089)
 shape = SubResource("SphereShape3D_u2cnu")
 
-[node name="Checkpoint2" type="CollisionShape3D" parent="CheckpointSystem"]
+[node name="Checkpoint2" type="Area3D" parent="Checkpoints"]
+monitorable = false
+script = ExtResource("9_1nnrc")
+
+[node name="Checkpoint2" type="CollisionShape3D" parent="Checkpoints/Checkpoint2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 294.5843, 275.4573, -250.30795)
 shape = SubResource("SphereShape3D_u2cnu")
 

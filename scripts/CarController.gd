@@ -12,7 +12,7 @@ extends Node3D
 @export var leaderboard_placement : int = 0
 @export var laps_made : int = 0
 @export var track_pos : float = 0.0
-@export var crossed_checkpoints : Array[Node3D]
+@export var crossed_checkpoints : Array[Area3D]
 
 @onready var MS = $CarParent_Logic/ControlSynchronizer
 @onready var UI = $Car/CarLogic/Camera/Car_UI

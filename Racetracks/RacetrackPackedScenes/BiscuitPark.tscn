@@ -1,7 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://kif2ptjo2qt1"]
+[gd_scene load_steps=28 format=3 uid="uid://kif2ptjo2qt1"]
 
-[ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_234m1"]
-[ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_j5pbr"]
+[ext_resource type="Script" uid="uid://cgofr0rrngnbe" path="res://Racetracks/RacetrackAssets/biscuit_park.gd" id="1_unlcg"]
+[ext_resource type="Texture2D" uid="uid://c63ltgulxkp4p" path="res://ExternalAssets/Screenshot 2025-11-11 095949.png" id="2_dh4jp"]
 [ext_resource type="LabelSettings" uid="uid://bxtirqcglt8on" path="res://Racetracks/RacetrackAssets/BP_Rank_Label_Settings.tres" id="3_w7pp3"]
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="4_5o45a"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="5_cygye"]
@@ -9,7 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="7_43y5v"]
 [ext_resource type="Curve3D" uid="uid://cp1buban01ehq" path="res://Racetracks/RacetrackAssets/BP_Path.tres" id="8_dh4jp"]
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="8_x10nv"]
-[ext_resource type="Script" uid="uid://bsouafnlm2buy" path="res://scripts/finish_line.gd" id="9_tvu4j"]
+[ext_resource type="Script" uid="uid://ne0nmeu3qgj3" path="res://Racetracks/RacetrackAssets/BP_finish_line.gd" id="10_dh4jp"]
+[ext_resource type="Script" uid="uid://bmgxu6yv7p8cr" path="res://scripts/Checkpoint.gd" id="10_w7pp3"]
 [ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_dh4jp"]
 
 [sub_resource type="Curve2D" id="Curve2D_dh4jp"]
@@ -71,12 +72,13 @@ length = 5.8505406
 [sub_resource type="BoxShape3D" id="BoxShape3D_unlcg"]
 size = Vector3(3195.1882, 66.705, 4215.8047)
 
-[node name="BiscuitPark" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath")]
-script = ExtResource("1_234m1")
-map_icon = ExtResource("2_j5pbr")
-MAX_LAPS = 6
-Car_Root = [NodePath("Car_Container"), NodePath("Car_Container/P_1"), NodePath("Car_Container/P_2"), NodePath("Car_Container/P_3"), NodePath("Car_Container/P_4"), NodePath("Car_Container/P_5"), NodePath("Car_Container/P_6"), NodePath("Car_Container/P_7"), NodePath("Car_Container/P_8"), NodePath("Car_Container/P_9"), NodePath("Car_Container/P_10"), NodePath("Car_Container/P_11"), NodePath("Car_Container/P_12"), NodePath("Car_Container/P_13"), NodePath("Car_Container/P_14"), NodePath("Car_Container/P_15"), NodePath("Car_Container/P_16")]
+[node name="BiscuitPark" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath", "checkpoints")]
+script = ExtResource("1_unlcg")
+map_icon = ExtResource("2_dh4jp")
+MAX_LAPS = 4
+Car_Root = [NodePath("Car_Container")]
 TrackPath = NodePath("Environment/master_path")
+checkpoints = [NodePath("Checkpoints/Checkpoint_1"), NodePath("Checkpoints/Checkpoint_2")]
 
 [node name="Minimap" type="Control" parent="."]
 layout_mode = 3
@@ -284,19 +286,26 @@ size = Vector3(1, 18.66, 1)
 transform = Transform3D(0.99409825, 0, -0.10848519, 0, 1, 0, 0.10848519, 0, 0.99409825, -5.1796875, 18.035301, 16.60839)
 size = Vector3(40.882008, 3.97, 1)
 
-[node name="CheckpointSystem" type="Area3D" parent="."]
-monitorable = false
+[node name="Checkpoints" type="Node3D" parent="."]
 
-[node name="Checkpoint1" type="CollisionShape3D" parent="CheckpointSystem"]
+[node name="Checkpoint_1" type="Area3D" parent="Checkpoints"]
+monitorable = false
+script = ExtResource("10_w7pp3")
+
+[node name="Checkpoint1" type="CollisionShape3D" parent="Checkpoints/Checkpoint_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -186.289, 113.15283, -106.49429)
 shape = SubResource("SphereShape3D_u2cnu")
 
-[node name="Checkpoint2" type="CollisionShape3D" parent="CheckpointSystem"]
+[node name="Checkpoint_2" type="Area3D" parent="Checkpoints"]
+monitorable = false
+script = ExtResource("10_w7pp3")
+
+[node name="Checkpoint2" type="CollisionShape3D" parent="Checkpoints/Checkpoint_2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 286.31903, 136.23337, -27.902504)
 shape = SubResource("SphereShape3D_u2cnu")
 
 [node name="Finish_Line" type="Area3D" parent="."]
-script = ExtResource("9_tvu4j")
+script = ExtResource("10_dh4jp")
 
 [node name="FINISH_LINE" type="CollisionShape3D" parent="Finish_Line"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.87492, 43.496307, 205.79659)

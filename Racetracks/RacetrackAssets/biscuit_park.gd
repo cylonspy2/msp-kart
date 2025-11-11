@@ -1,11 +1,5 @@
 extends Node3D
 
-## For your own tracks: There are two kinds of path: the TrackPath (also called master_path), and true_paths. 
-### The TrackPath is a complete loop of the track, and used for things like leaderboard placement and minimap
-### True_paths are discreet strips of path used as reference for when a kart needs to be returned to the course
-#### When deciding a location to return it to, the TrackPath is referenced alongside each true_path,
-####  and then the kart is moved to the true_path whose closest point is nearest to the TrackPath's closest point
-##(For simple loop courses with no split paths, the TrackPath can be the true_path too)
 
 @export var map_icon : Texture2D
 
@@ -129,9 +123,9 @@ func get_track_placement(global_loc : Vector3, path : Path3D) -> float:
 func _on_checkpoint_crossed(checkpoint : Area3D, kart : Node3D):
 	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		return
-	if not kart.crossed_checkpoints.find(kart):
+	if not kart.get_parent().crossed_checkpoints.find(kart):
 		checkpoint.passed_cars.append(kart)
-		kart.crossed_checkpoints.append(checkpoint)
+		kart.get_parent().crossed_checkpoints.append(checkpoint)
 	pass
 
 func _on_finish_line_body_entered(body: Node3D) -> void:
