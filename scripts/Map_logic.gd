@@ -11,6 +11,7 @@ extends Node3D
 
 @export var MAX_LAPS : int
 
+@onready var animplayer = $Minimap/NewLap
 @onready var finish_line = $Finish_Line
 @export var Car_Root : Array[Node3D]
 @export var TrackPath : Path3D
@@ -25,6 +26,7 @@ extends Node3D
 var doneRacers : Dictionary[int, int]
 
 var yourAuthority : int
+var youCar : Node3D
 
 func _ready() -> void:
 	$Minimap/Minimap_road/Line2D.clear_points()
@@ -135,10 +137,8 @@ func _on_checkpoint_crossed(checkpoint : Area3D, kart : Node3D):
 	pass
 
 func _on_finish_line_body_entered(body: Node3D) -> void:
-	var boolio = false
 	if (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		if body.has_node("CarParent_Logic"):
-			boolio = true
 			
 			var updatd_lap_count = update_lapcount(body.crossed_checkpoints, body.laps_made)
 			
@@ -151,10 +151,22 @@ func _on_finish_line_body_entered(body: Node3D) -> void:
 				for checkp in checkpoints:
 					checkp.passed_cars.erase(body)
 				body.laps_made = updatd_lap_count
+				
+				if body.player_id != yourAuthority:
+					if body.laps_made >= MAX_LAPS:
+						finish_line.finished_race(body)
+					return
+				else:
+					youCar = body
+				
+				if body.laps_made >= MAX_LAPS:
+					animplayer.play("VICTORY")
+				else:
+					if body.laps_made == MAX_LAPS - 1:
+						animplayer.play("Final Lap")
+					else:
+						animplayer.play("New Lap")
 				print("%s lapped" % body.name)
-	if boolio:
-		if body.laps_made >= MAX_LAPS:
-			finish_line.finished_race(body)
 
 func _on_all_done(id : int, score : int):
 	var bogo = doneRacers.get_or_add(id, score)
@@ -165,3 +177,9 @@ func _on_all_done(id : int, score : int):
 
 func _on_finishline_delay_timeout() -> void:
 	HighLevelNetwork.exit_race.emit()
+
+
+func _on_new_lap_animation_finished(_anim_name: StringName) -> void:
+	
+	if youCar.laps_made >= MAX_LAPS:
+		finish_line.finished_race(youCar)

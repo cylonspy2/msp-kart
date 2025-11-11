@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://kif2ptjo2qt1"]
+[gd_scene load_steps=45 format=3 uid="uid://kif2ptjo2qt1"]
 
 [ext_resource type="Script" uid="uid://cgofr0rrngnbe" path="res://Racetracks/RacetrackAssets/biscuit_park.gd" id="1_unlcg"]
 [ext_resource type="Texture2D" uid="uid://c63ltgulxkp4p" path="res://ExternalAssets/Screenshot 2025-11-11 095949.png" id="2_dh4jp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="4_5o45a"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="5_cygye"]
 [ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="6_8a5b3"]
+[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer.png" id="6_ncw4q"]
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="7_43y5v"]
 [ext_resource type="Curve3D" uid="uid://cp1buban01ehq" path="res://Racetracks/RacetrackAssets/BP_Path.tres" id="8_dh4jp"]
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="8_x10nv"]
@@ -27,6 +28,309 @@ outline_color = Color(1, 1, 0, 1)
 shadow_size = 36
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(4.745, 3.46)
+
+[sub_resource type="Animation" id="Animation_w7pp3"]
+resource_name = "VICTORY"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ncw4q"]
+resource_name = "New Lap"
+length = 3.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NewLapAnimtd:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.32, 0.7, 0.8, 0.92, 0.96, 1, 1.99, 3.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(426, -189.34), Vector2(426, 107), Vector2(426, 531.496), Vector2(426, 397.8036), Vector2(426, 461.927), Vector2(426, 489.394), Vector2(426, 482.99408), Vector2(426, 482.99408), Vector2(426, -189.34)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NewLapAnimtd:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4407469, 0.7, 0.81, 1.0333333, 1.2, 1.3666667, 1.98, 2.05, 2.5, 3.0333333, 3.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.15882497, -0.31764993, 0.0, 0.24434609527920614, 0.034906585, -0.06632251157578473, -0.06632251157578473, 0.09250245, 0.425860337486616, 0.5864306286700951, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("NewLapAnimtd/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6333333, 0.71, 0.83, 0.97, 1.01, 1.2, 1.98, 2.1666667, 3.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.86, 1), Vector2(1.021, 0.895), Vector2(1, 0.94), Vector2(1, 0.879), Vector2(1, 0.9), Vector2(1, 1), Vector2(1, 1), Vector2(1.185, 0.84), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bm3a1"]
+resource_name = "Final Lap"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FINALAP:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.04, 3.1666667, 3.3666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6kym2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FINALAP:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("NewLapAnimtd:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(426, -157)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("NewLapAnimtd:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("NewLapAnimtd/Sprite2D:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bm3a1"]
+_data = {
+&"Final Lap": SubResource("Animation_bm3a1"),
+&"New Lap": SubResource("Animation_ncw4q"),
+&"RESET": SubResource("Animation_6kym2"),
+&"VICTORY": SubResource("Animation_w7pp3")
+}
+
+[sub_resource type="FontFile" id="FontFile_ncw4q"]
+cache/0/66/0/ascent = 0.0
+cache/0/66/0/descent = 0.0
+cache/0/66/0/underline_position = 0.0
+cache/0/66/0/underline_thickness = 0.0
+cache/0/66/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/41/0/ascent = 0.0
+cache/0/41/0/descent = 0.0
+cache/0/41/0/underline_position = 0.0
+cache/0/41/0/underline_thickness = 0.0
+cache/0/41/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+cache/0/31/0/ascent = 0.0
+cache/0/31/0/descent = 0.0
+cache/0/31/0/underline_position = 0.0
+cache/0/31/0/underline_thickness = 0.0
+cache/0/31/0/scale = 1.0
+cache/0/26/0/ascent = 0.0
+cache/0/26/0/descent = 0.0
+cache/0/26/0/underline_position = 0.0
+cache/0/26/0/underline_thickness = 0.0
+cache/0/26/0/scale = 1.0
+cache/0/21/0/ascent = 0.0
+cache/0/21/0/descent = 0.0
+cache/0/21/0/underline_position = 0.0
+cache/0/21/0/underline_thickness = 0.0
+cache/0/21/0/scale = 1.0
+cache/0/11/0/ascent = 0.0
+cache/0/11/0/descent = 0.0
+cache/0/11/0/underline_position = 0.0
+cache/0/11/0/underline_thickness = 0.0
+cache/0/11/0/scale = 1.0
+cache/0/6/0/ascent = 0.0
+cache/0/6/0/descent = 0.0
+cache/0/6/0/underline_position = 0.0
+cache/0/6/0/underline_thickness = 0.0
+cache/0/6/0/scale = 1.0
+cache/0/61/0/ascent = 0.0
+cache/0/61/0/descent = 0.0
+cache/0/61/0/underline_position = 0.0
+cache/0/61/0/underline_thickness = 0.0
+cache/0/61/0/scale = 1.0
+cache/0/71/0/ascent = 0.0
+cache/0/71/0/descent = 0.0
+cache/0/71/0/underline_position = 0.0
+cache/0/71/0/underline_thickness = 0.0
+cache/0/71/0/scale = 1.0
+cache/0/76/0/ascent = 0.0
+cache/0/76/0/descent = 0.0
+cache/0/76/0/underline_position = 0.0
+cache/0/76/0/underline_thickness = 0.0
+cache/0/76/0/scale = 1.0
+cache/0/81/0/ascent = 0.0
+cache/0/81/0/descent = 0.0
+cache/0/81/0/underline_position = 0.0
+cache/0/81/0/underline_thickness = 0.0
+cache/0/81/0/scale = 1.0
+cache/0/86/0/ascent = 0.0
+cache/0/86/0/descent = 0.0
+cache/0/86/0/underline_position = 0.0
+cache/0/86/0/underline_thickness = 0.0
+cache/0/86/0/scale = 1.0
+cache/0/91/0/ascent = 0.0
+cache/0/91/0/descent = 0.0
+cache/0/91/0/underline_position = 0.0
+cache/0/91/0/underline_thickness = 0.0
+cache/0/91/0/scale = 1.0
+cache/0/96/0/ascent = 0.0
+cache/0/96/0/descent = 0.0
+cache/0/96/0/underline_position = 0.0
+cache/0/96/0/underline_thickness = 0.0
+cache/0/96/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ncw4q"]
+font = SubResource("FontFile_ncw4q")
+font_size = 76
+font_color = Color(1, 0, 1, 1)
+outline_size = 15
+outline_color = Color(0, 1, 0, 1)
+shadow_size = 46
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.36, -6.1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bm3a1"]
+font = SubResource("FontFile_ncw4q")
+font_size = 66
+font_color = Color(1, 1, 0, 1)
+outline_size = 15
+outline_color = Color(1, 0.30588236, 0, 1)
+shadow_size = 46
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.36, -6.1)
+
+[sub_resource type="Curve" id="Curve_y48j7"]
+_limits = [0.0, 0.3, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0060606003, 0.3), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_d1k1m"]
+curve = SubResource("Curve_y48j7")
+
+[sub_resource type="Curve" id="Curve_irovd"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 2.4101133, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_tl0qg"]
+curve = SubResource("Curve_irovd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncw4q"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 131.43
+emission_ring_radius = 276.36
+emission_ring_inner_radius = 188.41
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, -1, 0)
+spread = 36.906
+initial_velocity_min = 110.18
+initial_velocity_max = 256.78
+gravity = Vector3(0, 196.77, 0)
+tangential_accel_min = 17.999998
+tangential_accel_max = 17.999998
+scale_min = 0.19999999
+scale_max = 0.19999999
+scale_curve = SubResource("CurveTexture_d1k1m")
+scale_over_velocity_curve = SubResource("CurveTexture_tl0qg")
+hue_variation_min = -1.0
+hue_variation_max = 0.99999994
+
+[sub_resource type="LabelSettings" id="LabelSettings_6kym2"]
+font_size = 96
+font_color = Color(0, 1, 0, 1)
+outline_size = 20
+outline_color = Color(0.97700685, 0.5205113, 0, 1)
+shadow_size = 31
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_f7uto"]
 panorama = ExtResource("6_8a5b3")
@@ -58,8 +362,14 @@ uv1_scale = Vector3(0.5, 7.038, 0)
 uv1_offset = Vector3(0, 0.475, 0)
 texture_filter = 0
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_u2cnu"]
-radius = 39.903
+[sub_resource type="SphereShape3D" id="SphereShape3D_ncw4q"]
+radius = 56.63195
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bm3a1"]
+radius = 69.10349
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6kym2"]
+radius = 61.541
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dedrg"]
 size = Vector3(2, 2, 2)
@@ -217,6 +527,67 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.11764706, 0.11764706, 0.11764706, 0.63529414)
 
+[node name="NewLap" type="AnimationPlayer" parent="Minimap"]
+libraries = {
+&"": SubResource("AnimationLibrary_bm3a1")
+}
+
+[node name="NewLapAnimtd" type="Control" parent="Minimap"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = -157.0
+offset_right = 150.0
+offset_bottom = -116.999756
+grow_horizontal = 2
+pivot_offset = Vector2(150, 20)
+
+[node name="Sprite2D" type="Sprite2D" parent="Minimap/NewLapAnimtd"]
+position = Vector2(150, -86)
+texture = ExtResource("6_ncw4q")
+
+[node name="Label2" type="Label" parent="Minimap/NewLapAnimtd"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 74.0
+offset_right = 329.0
+offset_bottom = 163.0
+text = "0/2"
+label_settings = SubResource("LabelSettings_ncw4q")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Minimap/NewLapAnimtd"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "NEW LAP!!!"
+label_settings = SubResource("LabelSettings_bm3a1")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Minimap"]
+position = Vector2(569.845, 321)
+emitting = false
+amount = 64
+texture = ExtResource("6_ncw4q")
+lifetime = 4.1499999999999995
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ncw4q")
+
+[node name="FINALAP" type="Label" parent="Minimap"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "FINAL LAP"
+label_settings = SubResource("LabelSettings_6kym2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
@@ -294,22 +665,22 @@ script = ExtResource("10_w7pp3")
 
 [node name="Checkpoint1" type="CollisionShape3D" parent="Checkpoints/Checkpoint_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -186.289, 113.15283, -106.49429)
-shape = SubResource("SphereShape3D_u2cnu")
+shape = SubResource("SphereShape3D_ncw4q")
 
 [node name="Checkpoint_2" type="Area3D" parent="Checkpoints"]
 monitorable = false
 script = ExtResource("10_w7pp3")
 
 [node name="Checkpoint2" type="CollisionShape3D" parent="Checkpoints/Checkpoint_2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 286.31903, 136.23337, -27.902504)
-shape = SubResource("SphereShape3D_u2cnu")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 298.93054, 141.03003, -27.902489)
+shape = SubResource("SphereShape3D_bm3a1")
 
 [node name="Finish_Line" type="Area3D" parent="."]
 script = ExtResource("10_dh4jp")
 
 [node name="FINISH_LINE" type="CollisionShape3D" parent="Finish_Line"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.87492, 43.496307, 205.79659)
-shape = SubResource("SphereShape3D_u2cnu")
+shape = SubResource("SphereShape3D_6kym2")
 
 [node name="finishline_delay" type="Timer" parent="Finish_Line"]
 wait_time = 2.0
@@ -624,6 +995,7 @@ drop_height = 6.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.10852, 124.43819, -38.02881)
 shape = SubResource("BoxShape3D_unlcg")
 
+[connection signal="animation_finished" from="Minimap/NewLap" to="." method="_on_new_lap_animation_finished"]
 [connection signal="body_entered" from="Finish_Line" to="." method="_on_finish_line_body_entered"]
 [connection signal="timeout" from="Finish_Line/finishline_delay" to="." method="_on_finishline_delay_timeout"]
 [connection signal="body_entered" from="KillBox/Area3D" to="KillBox/Area3D" method="_on_body_entered"]

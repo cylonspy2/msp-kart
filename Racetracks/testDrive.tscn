@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dq731ts5mb6ri"]
+[gd_scene load_steps=32 format=3 uid="uid://dq731ts5mb6ri"]
 
 [ext_resource type="Script" uid="uid://drmj2hodqy3g7" path="res://scripts/Map_logic.gd" id="1_vqjdx"]
 [ext_resource type="Texture2D" uid="uid://3ej33qyej6qn" path="res://ExternalAssets/Screenshot 2025-11-03 151727.png" id="2_3yda7"]
@@ -21,6 +21,22 @@ outline_color = Color(1, 0.53333336, 0, 1)
 shadow_size = 26
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2.48, 2.89)
+
+[sub_resource type="Animation" id="Animation_1nnrc"]
+resource_name = "New Lap"
+
+[sub_resource type="Animation" id="Animation_0boms"]
+resource_name = "Final Lap"
+
+[sub_resource type="Animation" id="Animation_35t4j"]
+resource_name = "VICTORY"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0awk8"]
+_data = {
+&"Final Lap": SubResource("Animation_0boms"),
+&"New Lap": SubResource("Animation_1nnrc"),
+&"VICTORY": SubResource("Animation_35t4j")
+}
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_f7uto"]
 panorama = ExtResource("2_rwgo1")
@@ -217,6 +233,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.11764706, 0.11764706, 0.11764706, 0.63529414)
+
+[node name="NewLap" type="AnimationPlayer" parent="Minimap"]
+libraries = {
+&"": SubResource("AnimationLibrary_0awk8")
+}
 
 [node name="Environment" type="Node3D" parent="."]
 
