@@ -4,6 +4,7 @@ extends VBoxContainer
 
 func _ready() -> void:
 	HighLevelNetwork.hosted_lobby.connect(add_name)
+	HighLevelNetwork.leave_lobby.connect(func(): for chilld in cont.get_children(): chilld.queue_free())
 	multiplayer.peer_connected.connect(func(id) : add_name(id))
 	multiplayer.peer_disconnected.connect(func(id) : lose_name(id))
 

@@ -24,11 +24,11 @@ func spawn_kart(ind : int, kartpath : Node3D) -> void :
 	#print(indt)
 	#print(get_multiplayer_authority())
 	
-	var peer_ind = multiplayer.get_peers().find(ind)
+	#var peer_ind = multiplayer.get_peers().find(ind)
 	Steam.getNumLobbyMembers(SteamManager.lobby_id)
 	var id = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, ind-1)
 	var userID = Steam.getFriendPersonaName(id)
-	print ("Spawning Kart from %s, if it matches user %s %s %s" % [parent.name, id, userID, peer_ind])
+	#print ("Spawning Kart from %s, if it matches user %s %s %s" % [parent.name, id, userID, peer_ind])
 	if not parent.name.to_int() == id: return
 	
 	set_multiplayer_authority(multiplayer.get_unique_id())
@@ -45,7 +45,7 @@ func spawn_kart(ind : int, kartpath : Node3D) -> void :
 	spawn_path = get_path_to(spawnpathNodes[chosenSlot], true)
 	#print(spawn_path)
 	
-	print(str(get_multiplayer_authority()) + " " + str(parent.name.to_int()))
+	#print(str(get_multiplayer_authority()) + " " + str(parent.name.to_int()))
 	
 	if not is_inside_tree():
 		print("not in tree")
@@ -64,8 +64,8 @@ func spawn_kart(ind : int, kartpath : Node3D) -> void :
 		player.username = HighLevelNetwork.userName
 	player.Racer = _spawn_Racer
 	
-	var track = kartpath.get_parent()
-	track.Cars.append(player)
+	#var track = kartpath.get_parent()
+	#track.Cars.append(player)
 	
 	var camcam : Camera3D = player.get_child(2).get_child(0).get_child(0)
 	camcam.make_current()

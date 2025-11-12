@@ -22,7 +22,7 @@ func _enter_tree() -> void:
 		haveAuthority = true
 		UI.visible = true
 		UI.mouse_filter = UI.MOUSE_FILTER_PASS
-	HighLevelNetwork.spawn_racers.connect(func(id, kart) : _on_toggle_control())
+	HighLevelNetwork.spawn_racers.connect(func(_id, _kart) : _on_toggle_control())
 	multiplayer.peer_disconnected.connect(func(id): despawn_player(id))
 	HighLevelNetwork.end_race.connect(func(id, scoree): finish_race(id, scoree))
 	HighLevelNetwork.exit_race.connect(reset_lobby)
@@ -36,13 +36,14 @@ func _ready() -> void:
 	print("%s entered lobby" % name)
 	if haveAuthority:
 		camera.make_current()
+	UI.visible = false
+	var masterhud = masterCam.get_child(0)
+	requestedKart = masterhud.default_kart
+	requestedRacer = masterhud.default_racer
 
 func _process(_delta : float):
 	if not haveAuthority or not is_controlled: 
-		UI.visible = false
 		return
-	
-	UI.visible = true
 	
 	if viewing_kart != null:
 		var inputRot = Input.get_action_strength("SteerLeft") - Input.get_action_strength("SteerRight")
@@ -67,6 +68,8 @@ func _process(_delta : float):
 
 func reset_lobby():
 	is_controlled = false
+	UI.visible = false
+	print("set mastercam: " + str(masterCam.name))
 	masterCam.make_current()
 	pass
 
@@ -91,12 +94,18 @@ func enter_race():
 		has_spawned = true
 
 func finish_race(id : int, scoree : int):
-	if name.to_int() == id:
+	var idd = id
+	if HighLevelNetwork.steam_active:
+		Steam.getNumLobbyMembers(SteamManager.lobby_id)
+		idd = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, id-1)
+	if name.to_int() == idd:
 		camera.make_current()
-	$MultiplayerSpawner.despawn_kart(id)
+		HighLevelNetwork.despawn_player.emit(name.to_int())
 	has_spawned = false
 	is_controlled = true
 	score += scoree
+	print(score)
+	UI.visible = true
 
 func set_kart(id : PackedScene):
 	requestedKart = id

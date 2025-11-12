@@ -24,23 +24,29 @@ func _process(delta: float) -> void:
 	if parrent.start_drift:
 		for sparky : GPUParticles3D in sparks:
 			sparky.emitting = true
-	if parrent.drifting:
+	if parrent.minimumDrift:
+		print("parrent.boostTiering")
 		match parrent.boostTiering:
 			1:
 				sparkMat.albedo_color = tier_1_color
 				sparkMat.emission = tier_1_color
+				print(tier_1_color)
 			2:
 				sparkMat.albedo_color = tier_2_color
 				sparkMat.emission = tier_2_color
+				print(tier_2_color)
 			3:
 				sparkMat.albedo_color = tier_3_color
 				sparkMat.emission = tier_3_color
+				print(tier_3_color)
 			4:
 				sparkMat.albedo_color = tier_4_color
 				sparkMat.emission = tier_4_color
+				print(tier_4_color)
 			_:
 				sparkMat.albedo_color = base_color
 				sparkMat.emission = base_color
-	if parrent.end_drift:
+				print(base_color)
+	else:
 		for sparky : GPUParticles3D in sparks:
 			sparky.emitting = false

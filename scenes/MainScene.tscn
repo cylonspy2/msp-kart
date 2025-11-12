@@ -54,13 +54,19 @@ transform = Transform3D(-0.72778475, 0, -0.6858056, 0, 1, 0, 0.6858056, 0, -0.72
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment3D"]
 transform = Transform3D(0.9417119, -0.04050074, 0.33397374, -0.30174276, 0.33728987, 0.8917325, -0.1487618, -0.9405292, 0.30540907, 1.9606417, -5.9604645e-08, -3.2162223)
+visible = false
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Environment3D"]
+transform = Transform3D(1, 0, 0, 0, -0.5245656, 0.85137004, 0, -0.85137004, -0.5245656, 0.6870756, 4.274386, 9.161609)
+light_energy = 2.674
+spot_range = 9.113957
 
 [node name="MainMenuCam" type="Camera3D" parent="."]
 transform = Transform3D(-0.96296054, 0.11224705, -0.24516873, 8.920547e-09, 0.90923613, 0.41628087, 0.26964256, 0.40086204, -0.87555844, -0.88435745, 1.959545, 7.18235)
 
 [node name="HLMultUI" parent="MainMenuCam" instance=ExtResource("1_x4av3")]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("trackSlot")]
 _spawnable_scenes = PackedStringArray("uid://ci7uqeytx4o21")
 spawn_path = NodePath("../RaceSlot")
 script = ExtResource("2_rpqi1")
@@ -71,7 +77,7 @@ trackSlot = NodePath("../RaceSlot")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ygjfp")
 
-[node name="RaceSlot" type="Node" parent="."]
+[node name="RaceSlot" type="Node3D" parent="."]
 
 [node name="LevelChooser" type="AnimationPlayer" parent="."]
 libraries = {

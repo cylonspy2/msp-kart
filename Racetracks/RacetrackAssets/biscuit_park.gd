@@ -12,6 +12,7 @@ extends Node3D
 @export var checkpoints : Array[Area3D]
 @export var Cars : Array[Node3D]
 @export var RacerIcons : Array[TextureRect]
+@onready var UI = $Minimap
 @onready var Path = $Minimap/Minimap_road/Path2D
 @onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/ItemIcon
 @onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon
@@ -38,6 +39,7 @@ func _ready() -> void:
 
 func setup(car : Node3D):
 	Cars.append(car)
+	print("kart attached to racetrack: "+ car.name)
 	var racee = car.Racer.instantiate()
 	var carIcon = racee.RacerIcon
 	var racer: TextureRect = TextureRect.new()
@@ -57,12 +59,18 @@ func setup(car : Node3D):
 	for point in pointCol:
 		$Minimap/Minimap_road/Line2D.add_point(point)
 		$Minimap/Minimap_road/Line2D2.add_point(point)
+	print(Cars.size())
 
 func _process(_delta: float) -> void:
 	if not (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
 		return
 	
+	var prev_freed_cars = false
+	
 	for car in Cars:
+		if car == null: 
+			prev_freed_cars = true
+			continue
 		car.track_pos = get_track_placement(car.Ball.global_position, TrackPath)
 		#print(car.track_pos)
 		var indec = RacerIcons.find_custom(func(a): return car.name == a.name)
@@ -70,9 +78,11 @@ func _process(_delta: float) -> void:
 		icon.position = Path.curve.sample_baked(car.track_pos * Path.curve.get_baked_length()) + Vector2(-16,-16)
 		#print(indec)
 	
-	Cars.sort_custom(func(a, b): return a.track_pos + a.laps_made > b.track_pos + b.laps_made)
+	if not prev_freed_cars:
+		Cars.sort_custom(func(a, b): return a.track_pos + a.laps_made > b.track_pos + b.laps_made)
 	
 	for car in Cars:
+		if car == null: continue
 		var placement = Cars.find(car) + 1
 		car.leaderboard_placement = placement
 		
@@ -168,14 +178,17 @@ func _on_finish_line_body_entered(boddy: Node3D) -> void:
 
 func _on_all_done(id : int, score : int):
 	var bogo = doneRacers.get_or_add(id, score)
-	if bogo != score:
+	if bogo == score:
 		HighLevelNetwork.end_race.emit(id, score)
-		if doneRacers.size() >= RacerIcons.size():
-			victorTime.start()
+		print(str(Cars.size()) + " <=> " + str(doneRacers.size()))
+		if doneRacers.size() >= Cars.size():
+			print("start victortime!")
+			UI.visible = false
+			victorTime.start(2)
 
 func _on_finishline_delay_timeout() -> void:
+	print("exit race!")
 	HighLevelNetwork.exit_race.emit()
-
 
 func _on_new_lap_animation_finished(_anim_name: StringName) -> void:
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://kif2ptjo2qt1"]
+[gd_scene load_steps=46 format=3 uid="uid://kif2ptjo2qt1"]
 
 [ext_resource type="Script" uid="uid://cgofr0rrngnbe" path="res://Racetracks/RacetrackAssets/biscuit_park.gd" id="1_unlcg"]
 [ext_resource type="Texture2D" uid="uid://c63ltgulxkp4p" path="res://ExternalAssets/Screenshot 2025-11-11 095949.png" id="2_dh4jp"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://ne0nmeu3qgj3" path="res://Racetracks/RacetrackAssets/BP_finish_line.gd" id="10_dh4jp"]
 [ext_resource type="Script" uid="uid://bmgxu6yv7p8cr" path="res://scripts/Checkpoint.gd" id="10_w7pp3"]
 [ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_dh4jp"]
+[ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="13_bm3a1"]
 
 [sub_resource type="Curve2D" id="Curve2D_dh4jp"]
 _data = {
@@ -28,62 +29,6 @@ outline_color = Color(1, 1, 0, 1)
 shadow_size = 36
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(4.745, 3.46)
-
-[sub_resource type="Animation" id="Animation_w7pp3"]
-resource_name = "VICTORY"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GPUParticles2D:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.02, 2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_ncw4q"]
-resource_name = "New Lap"
-length = 3.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("NewLapAnimtd:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.32, 0.7, 0.8, 0.92, 0.96, 1, 1.99, 3.0333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(426, -189.34), Vector2(426, 107), Vector2(426, 531.496), Vector2(426, 397.8036), Vector2(426, 461.927), Vector2(426, 489.394), Vector2(426, 482.99408), Vector2(426, 482.99408), Vector2(426, -189.34)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("NewLapAnimtd:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4407469, 0.7, 0.81, 1.0333333, 1.2, 1.3666667, 1.98, 2.05, 2.5, 3.0333333, 3.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, -0.15882497, -0.31764993, 0.0, 0.24434609527920614, 0.034906585, -0.06632251157578473, -0.06632251157578473, 0.09250245, 0.425860337486616, 0.5864306286700951, 0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("NewLapAnimtd/Sprite2D:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.6333333, 0.71, 0.83, 0.97, 1.01, 1.2, 1.98, 2.1666667, 3.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.86, 1), Vector2(1.021, 0.895), Vector2(1, 0.94), Vector2(1, 0.879), Vector2(1, 0.9), Vector2(1, 1), Vector2(1, 1), Vector2(1.185, 0.84), Vector2(1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_bm3a1"]
 resource_name = "Final Lap"
@@ -111,6 +56,46 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ncw4q"]
+resource_name = "New Lap"
+length = 3.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NewLapAnimtd:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.32, 0.7, 0.8, 0.92, 0.96, 1, 1.99, 3.0333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(426, -189.34), Vector2(426, 107), Vector2(426, 531.496), Vector2(426, 397.8036), Vector2(426, 461.927), Vector2(426, 489.394), Vector2(426, 482.99408), Vector2(426, 482.99408), Vector2(426, -189.34)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NewLapAnimtd:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4407469, 0.7, 0.81, 1.0333333, 1.2, 1.3666667, 1.98, 2.05, 2.5, 3.0333333, 3.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.15882497, -0.31764993, 0.0, 0.24434609527920617, 0.034906585, -0.06632251157578473, -0.06632251157578473, 0.09250245, 0.425860337486616, 0.5864306286700951, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("NewLapAnimtd/Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6333333, 0.71, 0.83, 0.97, 1.01, 1.2, 1.98, 2.1666667, 3.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.86, 1), Vector2(1.021, 0.895), Vector2(1, 0.94), Vector2(1, 0.879), Vector2(1, 0.9), Vector2(1, 1), Vector2(1, 1), Vector2(1.185, 0.84), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_6kym2"]
@@ -174,6 +159,22 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_w7pp3"]
+resource_name = "VICTORY"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bm3a1"]
@@ -385,7 +386,7 @@ size = Vector3(3195.1882, 66.705, 4215.8047)
 [node name="BiscuitPark" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath", "checkpoints")]
 script = ExtResource("1_unlcg")
 map_icon = ExtResource("2_dh4jp")
-MAX_LAPS = 4
+MAX_LAPS = 5
 Car_Root = [NodePath("Car_Container")]
 TrackPath = NodePath("Environment/master_path")
 checkpoints = [NodePath("Checkpoints/Checkpoint_1"), NodePath("Checkpoints/Checkpoint_2")]
@@ -980,6 +981,24 @@ shape = SubResource("SeparationRayShape3D_unlcg")
 replication_config = SubResource("SceneReplicationConfig_rkyhk")
 
 [node name="Gadgets" type="Node3D" parent="."]
+
+[node name="ItemContainer" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.030642278, 0.71107197, -0.7024513, -0.21758936, 0.6906724, 0.689657, 0.9755596, 0.13171317, 0.17588545, -222.06178, 79.18249, 20.429657)
+
+[node name="ItemContainer2" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.039510958, 0.68977, -0.7229494, -0.2348122, 0.70966285, 0.6642602, 0.97123766, 0.14351167, 0.19000593, -226.30688, 83.079285, 20.429657)
+
+[node name="ItemContainer3" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(-0.018627698, 0.84712946, -0.53106016, -0.2189454, 0.51480436, 0.8288786, 0.9755597, 0.1317132, 0.17588547, -241.07051, 100.50212, 20.429657)
+
+[node name="ItemContainer4" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(-0.013820979, 0.83059615, -0.55670327, -0.23771173, 0.53806496, 0.8086895, 0.9712376, 0.14351167, 0.19000591, -244.34027, 105.24709, 20.429657)
+
+[node name="ItemContainer5" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(-0.008733973, 0.823049, -0.5679034, -0.21956272, 0.55248725, 0.8040835, 0.97555965, 0.13171317, 0.17588544, -231.45436, 90.249214, 20.429657)
+
+[node name="ItemContainer6" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(-0.0030857704, 0.80548346, -0.5926099, -0.23809315, 0.57497853, 0.7827585, 0.97123754, 0.14351164, 0.19000588, -234.9348, 94.84189, 20.429657)
 
 [node name="KillBox" type="Node3D" parent="."]
 

@@ -38,6 +38,9 @@ extends Node3D
 @export var CarBody = MeshInstance3D
 @export var CarModel = MeshInstance3D
 @export var ModelOffset = Vector3(0.0, -0.5, 0.0)
+@export var drift_particles_right : Array[GPUParticles3D]
+@export var drift_particles_left : Array[GPUParticles3D]
+@export var boost_particles : Array[GPUParticles3D]
 
 @export_group("Car Stats")
 @export var maxSpeed = 100.0
@@ -64,6 +67,13 @@ var correctivey = 0.0
 @export var carTwistRate = 5.0
 var carTwist = 0.0
 var faceForce = Vector3(0.0, 0.0, 1.0)
+@export_group("Car Drift Particle coloring")
+@export var sparkMat : BaseMaterial3D
+@export var base_color : Color
+@export var tier_1_color : Color
+@export var tier_2_color : Color
+@export var tier_3_color : Color
+@export var tier_4_color : Color
 @export_group("Car Drift Data")
 @export var drifting = false
 @export var startedDrifting = false
@@ -105,6 +115,7 @@ var hurtAccel : float
 var camStartPos : Vector3
 var camStartRot : Basis
 var camLocked = false
+var is_touching_ground = true
 
 @export var player_id := 1:
 	set(id):
@@ -115,6 +126,7 @@ func _enter_tree():
 	fireItem.connect(ThrowItem)
 	altFireItem.connect(TriggerRacerAbility)
 	gainItem.connect(func(id) : PickupItem(id))
+	HighLevelNetwork.leave_lobby.connect(func(): queue_free())
 
 func _ready():
 	print("%s ready, with controller %s" % [name, player_id])
@@ -143,8 +155,15 @@ func _ready():
 	hurtAccel = acceleration
 	camStartPos = Cam.position
 	camStartRot = Cam.basis
+	
+	for part in drift_particles_right:
+		part.emitting = false
+	for part in drift_particles_left:
+		part.emitting = false
 
 func _physics_process(_delta):
+	if is_queued_for_deletion():
+		return
 	
 	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		time_since_last_update += _delta
@@ -159,6 +178,9 @@ func _physics_process(_delta):
 	var hitr = Ball.move_and_collide(gravDir * _delta, true)
 	if not hitr:
 		forceForce *= airControl
+		is_touching_ground = false
+	else:
+		is_touching_ground = true
 	
 	var lerpForce : Vector3
 	if drifting :
@@ -172,15 +194,15 @@ func _physics_process(_delta):
 		var hitted = hitS.get_collider(0)
 		if hitted.name != "Rim":
 			if hitted.name != "CarHitBox":
-				print("%s Hit a Gadget or Item, which should have its own things to say about this" % username)
+				#print("%s Hit a Gadget or Item, which should have its own things to say about this" % username)
 				pass
 			else:
-				print("%s Hit another car" % username)
+				#print("%s Hit another car" % username)
 				_process_kart_collision(hitS, lerpForce, wallBounce / weight)
 				pass
 			pass
 		else:
-			print("%s Hit track guardrail" % username)
+			#print("%s Hit track guardrail" % username)
 			_process_kart_collision(hitS, lerpForce, wallBounce)
 			pass
 		pass
@@ -190,7 +212,10 @@ func _physics_process(_delta):
 		prevForce = lerpForce
 		pass
 	
-	hitr = Ball.move_and_collide(gravDir * _delta, true)
+	if is_touching_ground:
+		hitr = Ball.move_and_collide(gravDir * weight * _delta, true)
+	else:
+		hitr = Ball.move_and_collide(gravDir * _delta, true)
 	if hitr:
 		Ball.gravity_scale = 0.0
 		var avgHitPos = Vector3(0.0, 0.0, 0.0)
@@ -210,7 +235,7 @@ func _physics_process(_delta):
 		notify_property_list_changed()
 		Ball.apply_central_force(gravForce * 9.81 * weight)
 		pass
-	gravDir = gravForce * weight
+	gravDir = gravForce * weight * 3
 	Ball.move_and_collide(gravDir * _delta)
 	
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
@@ -290,18 +315,6 @@ func _process(delta):
 	RightWheel.rotation.y = lerp(RightWheel.rotation.y, rotateInput, 5 * delta)
 	LeftWheel.rotation.y = lerp(LeftWheel.rotation.y, rotateInput, 5 * delta)
 	
-	#if not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled: 
-		###Only do the bare necessity to figure out what animations to play
-		#if start_drift and not drifting and rotateInput != 0 and speedInput > 0:
-			#if rotateInput > 0:
-				#Anim.play("Hop")
-			#else: if rotateInput < 0:
-				#Anim.play("HopRight")
-			#else:
-				#Anim.play("HopCenter")
-		#
-		#return
-	
 	if multiplayer.is_server() or not HighLevelNetwork.multiplayer_enabled: 
 		## serverwork + singleplayer work
 		pass
@@ -333,8 +346,24 @@ func _process(delta):
 		driftAmount += startDriftDirection
 		driftAmount *= deg_to_rad(steering * steeringDrift)
 		rotateInput += driftDirection + driftAmount
+		match boostTiering:
+			1:
+				sparkMat.albedo_color = tier_1_color
+				sparkMat.emission = tier_1_color
+			2:
+				sparkMat.albedo_color = tier_2_color
+				sparkMat.emission = tier_2_color
+			3:
+				sparkMat.albedo_color = tier_3_color
+				sparkMat.emission = tier_3_color
+			4:
+				sparkMat.albedo_color = tier_4_color
+				sparkMat.emission = tier_4_color
+			_:
+				sparkMat.albedo_color = base_color
+				sparkMat.emission = base_color
 	
-	if drifting and (end_drift or speedInput < 1):
+	if (drifting and (end_drift or speedInput < 1)) or not is_touching_ground:
 		startedDrifting = false
 		StopDrift()
 		end_drift = false
@@ -391,20 +420,34 @@ func StartDrift():
 	drifting = true
 	if rotateInput > 0:
 		Anim.play("Hop")
+		for part in drift_particles_left:
+			part.emitting = true
 	else: if rotateInput < 0:
 		Anim.play("HopRight")
+		for part in drift_particles_right:
+			part.emitting = true
 	else:
 		Anim.play("HopCenter")
+		for part in drift_particles_right:
+			part.emitting = true
+		for part in drift_particles_left:
+			part.emitting = true
 	minimumDrift = false
 	CarModel.rotation.y = lerp(CarModel.rotation.y, carTwist, 0.2)
 	driftDirection = rotateInput
 	driftTimer.start()
 
 func StopDrift():
-	if minimumDrift:
+	if minimumDrift and is_touching_ground:
 		boost = 1 + (driftBoost * boostTiering)
 		boostTimer.start()
 		camAnim.play("ZoomOut")
+		for part in boost_particles:
+			part.emitting = true
+	for part in drift_particles_right:
+		part.emitting = false
+	for part in drift_particles_left:
+		part.emitting = false
 	drifting = false
 	minimumDrift = false
 

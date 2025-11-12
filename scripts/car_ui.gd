@@ -9,7 +9,7 @@ func _ready() -> void:
 	mouse_filter = MOUSE_FILTER_PASS
 	HighLevelNetwork.end_race.connect(close_racer_ui)
 
-func close_racer_ui():
+func close_racer_ui(_id : int, _score : int):
 	visible = false
 	mouse_filter = MOUSE_FILTER_IGNORE
 	pass

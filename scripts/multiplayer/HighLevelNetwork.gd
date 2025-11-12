@@ -9,6 +9,7 @@ var lobbyName = "BADDIE343"
 var lobby_search = ""
 
 signal enter_lobby(id : int)
+signal leave_lobby
 signal hosted_lobby(id : int)
 signal enter_race
 signal end_race (id : int, score : int)

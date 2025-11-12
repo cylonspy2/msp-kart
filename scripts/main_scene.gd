@@ -92,10 +92,11 @@ func _ending_race(id : int, score : int):
 	pass
 
 func end_level():
-	for blabla : Node3D in get_node(MainSpawner.trackSlot).get_children():
+	for blabla : Node3D in MainSpawner.trackSlot.get_children():
 		blabla.queue_free()
 	Environ.visible = true
 	MainUI.visible = true
-	if HighLevelNetwork.host_mode_enabled && %NetworkManager.MULTIPLAYER_NETWORK_TYPE == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM:
+	
+	if HighLevelNetwork.host_mode_enabled && %NetworkManager.active_network_type == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM:
 		pass
 	pass

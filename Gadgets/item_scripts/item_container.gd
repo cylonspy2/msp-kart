@@ -35,7 +35,7 @@ func _on_restock_timer_timeout() -> void:
 
 func _on_collider_body_entered(body: Node3D) -> void:
 	print("item box hit! " + str(body.name))
-	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		##client deferring to server data
 		pass
 	else:

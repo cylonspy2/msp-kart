@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://c3ywrjpbr02ay"]
+[gd_scene load_steps=54 format=4 uid="uid://c3ywrjpbr02ay"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
@@ -9,14 +9,15 @@
 [ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://scripts/car_hitbox.gd" id="5_v44p8"]
 [ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="6_hprm1"]
 [ext_resource type="Material" uid="uid://dmwlh2dqy0vcg" path="res://Karts/KartAssets/BakerDozen/BD_FRAME.tres" id="7_1hcuc"]
-[ext_resource type="Script" uid="uid://do7enh7rf11n3" path="res://scripts/bd_particles.gd" id="7_gychf"]
 [ext_resource type="Material" uid="uid://dnwcnfrjhxwws" path="res://Karts/KartAssets/BakerDozen/BakerDozenFlame.tres" id="7_tkt8u"]
 [ext_resource type="Material" uid="uid://ls1u6neao7es" path="res://Karts/KartAssets/BakerDozen/BakerDozenSparks.tres" id="8_robuc"]
 [ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="8_rsk53"]
 [ext_resource type="Material" uid="uid://cdc2ymtpxi2l4" path="res://Karts/KartAssets/BakerDozen/BD_DOOR.tres" id="8_yywgk"]
 [ext_resource type="Material" uid="uid://b7rcxmjw32e6j" path="res://Karts/KartAssets/BakerDozen/BD_ROCKETS.tres" id="9_0x8ti"]
+[ext_resource type="Material" uid="uid://bo6mwogbaon7m" path="res://Karts/KartAssets/BakerDozen/BakerDozenBoost.tres" id="11_h7byv"]
 [ext_resource type="Material" uid="uid://jpxo73d1dcle" path="res://Karts/KartAssets/BakerDozen/BD_particle_process_material.tres" id="11_q8enl"]
 [ext_resource type="CapsuleMesh" uid="uid://bssljnc03yk3p" path="res://Karts/KartAssets/BakerDozen/BD_flame_trail.tres" id="12_dfca3"]
+[ext_resource type="Material" uid="uid://cjddmcsvj52nf" path="res://Karts/KartAssets/BakerDozen/BD_boost.tres" id="15_227g8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_50v30"]
 properties/0/path = NodePath(".:player_id")
@@ -560,24 +561,31 @@ emission_shape_scale = Vector3(0.03, 0.055, 0.355)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 inherit_velocity_ratio = 1.0
-direction = Vector3(0, 1, -1)
+direction = Vector3(0, 2.47, -1)
 spread = 7.759
-initial_velocity_min = 0.95
-initial_velocity_max = 4.7
+initial_velocity_min = 4.2
+initial_velocity_max = 7.75
 scale_over_velocity_max = 120.329994
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_tkt8u"]
+[sub_resource type="PrismMesh" id="PrismMesh_227g8"]
 material = ExtResource("8_robuc")
-size = Vector2(0.05, 0.05)
-orientation = 0
+size = Vector3(0.065, 0.15, 0.035)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1hcuc"]
+[sub_resource type="PrismMesh" id="PrismMesh_d6kcc"]
 material = ExtResource("8_robuc")
-flip_faces = true
-size = Vector2(0.05, 0.05)
-orientation = 0
+size = Vector3(0.065, 0.15, 0.035)
 
-[node name="BakerDozen" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel")]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_227g8"]
+material = ExtResource("11_h7byv")
+radius = 0.15
+height = 0.3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_d6kcc"]
+material = ExtResource("11_h7byv")
+radius = 0.15
+height = 0.3
+
+[node name="BakerDozen" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "boost_particles")]
 script = ExtResource("1_8ri5e")
 username = "USERNAME"
 Racer = ExtResource("2_hwo32")
@@ -586,6 +594,9 @@ RightWheel = NodePath("Car/ModelParent/Model/RightThrustCorrection")
 LeftWheel = NodePath("Car/ModelParent/Model/LeftThrustCorrection")
 CarBody = NodePath("Car/ModelParent/Model")
 CarModel = NodePath("Car/ModelParent")
+drift_particles_right = [NodePath("Car/ModelParent/Model/BD_Particles/groundSparks2")]
+drift_particles_left = [NodePath("Car/ModelParent/Model/BD_Particles/groundSparks")]
+boost_particles = [NodePath("Car/ModelParent/Model/BD_BParticles/GPUParticles3D"), NodePath("Car/ModelParent/Model/BD_BParticles/GPUParticles3D2")]
 maxSpeed = 900.0
 acceleration = 900.0
 steering = 7.415
@@ -594,6 +605,12 @@ weight = 15.49
 airControl = 0.9
 kart_icon = ExtResource("3_us48a")
 bodytilt = 8.435
+sparkMat = ExtResource("8_robuc")
+base_color = Color(1, 0, 0, 1)
+tier_1_color = Color(1, 0.5176471, 0, 1)
+tier_2_color = Color(1, 0, 1, 1)
+tier_3_color = Color(0, 1, 0, 1)
+tier_4_color = Color(1, 1, 1, 1)
 
 [node name="CarParent_Logic" type="Node" parent="."]
 
@@ -781,30 +798,40 @@ local_coords = true
 process_material = ExtResource("11_q8enl")
 draw_pass_1 = SubResource("CapsuleMesh_txg0j")
 
-[node name="BD_Particles" type="Node3D" parent="Car/ModelParent/Model" node_paths=PackedStringArray("sparks")]
-script = ExtResource("7_gychf")
-sparkMat = ExtResource("8_robuc")
-base_color = Color(1, 0.59544575, 0.3405859, 1)
-tier_1_color = Color(0.56389815, 0.2611246, 3.85046e-07, 1)
-tier_2_color = Color(0.80045265, 0, 0.053247802, 1)
-tier_3_color = Color(0.8921811, 3.465414e-06, 0.5335998, 1)
-tier_4_color = Color(0.22795212, 0.24541023, 1, 1)
-sparks = [NodePath("groundSparks"), NodePath("groundSparks2")]
+[node name="BD_Particles" type="Node3D" parent="Car/ModelParent/Model"]
 
 [node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 1.4039049, 0.108854555, -0.67884797)
 amount = 12
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_robuc")
-draw_passes = 2
-draw_pass_1 = SubResource("PlaneMesh_tkt8u")
-draw_pass_2 = SubResource("PlaneMesh_1hcuc")
+draw_pass_1 = SubResource("PrismMesh_227g8")
 
 [node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, -1.404, 0.109, -0.679)
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_robuc")
-draw_passes = 2
-draw_pass_1 = SubResource("PlaneMesh_tkt8u")
-draw_pass_2 = SubResource("PlaneMesh_1hcuc")
+draw_pass_1 = SubResource("PrismMesh_d6kcc")
+
+[node name="BD_BParticles" type="Node3D" parent="Car/ModelParent/Model"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_BParticles"]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0.55914533, 1.2910511, -1.4504336)
+emitting = false
+lifetime = 0.11
+one_shot = true
+local_coords = true
+process_material = ExtResource("15_227g8")
+draw_pass_1 = SubResource("CapsuleMesh_227g8")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_BParticles"]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, -0.55903333, 1.2908102, -1.4502417)
+emitting = false
+lifetime = 0.11
+one_shot = true
+local_coords = true
+process_material = ExtResource("15_227g8")
+draw_pass_1 = SubResource("CapsuleMesh_d6kcc")
 
 [node name="Items" type="Node3D" parent="."]
 

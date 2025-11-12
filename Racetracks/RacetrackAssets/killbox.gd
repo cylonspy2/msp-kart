@@ -49,6 +49,6 @@ func _on_finished_timer(naeme : String):
 				print(item.name + " " + str((Vector3(0.0, drop_height, 0.0) * (struth))))
 				item._recover()
 				return
-			print(itemn.name)
+			#print(itemn.name)
 	else:
 		print("wait, what?")

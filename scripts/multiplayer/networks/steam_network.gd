@@ -14,6 +14,7 @@ const LOBBY_MODE = "STEAM_SERVER"
 func _ready() -> void:
 	#peer.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_created.connect(_on_lobby_created.bind())
+	HighLevelNetwork.leave_lobby.connect(leave_lobby)
 	pass
 
 func retarget_server(_IPA : String, PRT : int) -> void:
@@ -42,7 +43,6 @@ func become_host() -> void :
 		2:
 			Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, MAX_PLAYERS)
 	host_mode_enabled = true
-	
 
 func _on_lobby_created(connectt : int, lobby_id):
 	if connectt == 1:
@@ -57,9 +57,12 @@ func _on_lobby_created(connectt : int, lobby_id):
 		Steam.setLobbyData(_hosted_lobby_id, "has password", str(HighLevelNetwork.passwordReq))
 		Steam.setLobbyData(_hosted_lobby_id, "password", HighLevelNetwork.pwrd)
 		
+		print("set lobby at: " + str(_hosted_lobby_id))
+		
 		_create_host(Steam.getLobbyOwner(_hosted_lobby_id))
 
 func _create_host(id : int = 0):
+	#peer = SteamMultiplayerPeer.new()
 	var error = peer.create_host(0)
 	if error == OK:
 		if not OS.has_feature("dedicated_server"):
@@ -67,7 +70,7 @@ func _create_host(id : int = 0):
 			multiplayer.set_multiplayer_peer(peer)
 			HighLevelNetwork.hosted_lobby.emit(id)
 	else:
-		print("error creating host: %s" % str(error))
+		print("error creating host: %s" % error)
 
 func become_client(id : int) -> void :
 	targ_id = id
@@ -118,3 +121,9 @@ func list_lobbies():
 	else:
 		Steam.addRequestLobbyListStringFilter("name", HighLevelNetwork.lobby_search, Steam.LOBBY_COMPARISON_EQUAL_TO_GREATER_THAN)
 	Steam.requestLobbyList()
+
+func leave_lobby():
+	Steam.lobby_joined.disconnect(_on_lobby_joined.bind())
+	peer.close()
+	peer.clear_all_configs()
+	peer = SteamMultiplayerPeer.new()

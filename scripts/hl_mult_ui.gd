@@ -20,13 +20,17 @@ extends Control
 @export var useSteam = true
 var haveAuthority = false
 var buttonArray : Array
+@export var default_racer : PackedScene
+@export var default_kart : PackedScene
 
 func _ready() -> void:
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
 	HighLevelNetwork.enter_race.connect(_starting_game)
 	HighLevelNetwork.select_track.connect(_back_to_lobby)
-	HighLevelNetwork.select_kart.connect(_back_to_lobby)
-	HighLevelNetwork.select_racer.connect(_back_to_lobby)
+	HighLevelNetwork.select_kart.connect(_kart_chosen)
+	HighLevelNetwork.select_racer.connect(_racer_chosen)
+	HighLevelNetwork.exit_race.connect(func(): _back_to_lobby(null))
+	HighLevelNetwork.hosted_lobby.connect(func(_id): host_lobby())
 	ServerBroswer.visible = false
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
 	ServerLobby.visible = false
@@ -43,10 +47,17 @@ func _process(_delta: float) -> void:
 	lobbyName.text = HighLevelNetwork.lobbyName
 	if lobby_search_bar.visible:
 		HighLevelNetwork.lobby_search = lobby_search_bar.text
-	if  (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
-		startGameButton.visible = false
-	else:
-		startGameButton.visible = true
+	if ServerLobby.visible:
+		if  (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
+			startGameButton.visible = false
+		else:
+			startGameButton.visible = true
+
+func host_lobby():
+	ServerLobby.visible = true
+	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
+	HighLevelNetwork.select_kart.emit(default_kart)
+	HighLevelNetwork.select_racer.emit(default_racer)
 
 func list_lobbies():
 	print("finding all the Steam Lobbies")
@@ -180,8 +191,6 @@ func _on_make_lobby_pressed() -> void:
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
 	MainMenu.visible = false
 	MainMenu.mouse_filter = MOUSE_FILTER_IGNORE
-	ServerLobby.visible = true
-	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
 	LobbyCreate.visible = false
 	LobbyCreate.mouse_filter = MOUSE_FILTER_IGNORE
 	become_host()
@@ -206,9 +215,22 @@ func leave_lobby():
 	MainMenu.mouse_filter = MOUSE_FILTER_PASS
 	
 	if %NetworkManager.is_host:
+		var userInd = multiplayer.get_peers()
+		Steam.getNumLobbyMembers(SteamManager.lobby_id)
+		var userID = 0
+		if userInd.size() > 1:
+			userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd.get(randi() % userInd.size()))
+			Steam.setLobbyOwner(%NetworkManager.targ_id, userID)
+			print(userID)
+		else:
+			#Steam.deleteLobbyData(%NetworkManager.targ_id)
+			#multiplayer.set_multiplayer_peer(SteamMultiplayerPeer.new())
+			pass
 		Steam.leaveLobby(%NetworkManager.targ_id)
 	else:
 		Steam.leaveLobby(%NetworkManager.targ_id)
+	
+	HighLevelNetwork.leave_lobby.emit()
 
 
 func _on_settings_pressed() -> void:
@@ -282,6 +304,14 @@ func _on_choose_racer_pressed() -> void:
 	selectMenuName.text = "CHOOSE RACER"
 	populate_choose_menu(2)
 
+
+func _racer_chosen(scee : PackedScene):
+	default_racer = scee
+	_back_to_lobby(PackedScene.new())
+
+func _kart_chosen(scee : PackedScene):
+	default_kart = scee
+	_back_to_lobby(PackedScene.new())
 
 func _back_to_lobby(_selectedElement : PackedScene):
 	ServerLobby.visible = true

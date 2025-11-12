@@ -23,6 +23,7 @@ func update_leaderboard(id: int, scoree: int):
 	
 	var count = 0
 	for labl in player_placement_labels:
+		#print(str(count) + " " + str(finished_racers.size()) + " " + str(id))
 		if count < finished_racers.size():
 			labl.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			if finished_racers[count] == id:
@@ -35,8 +36,10 @@ func update_leaderboard(id: int, scoree: int):
 
 func add_to_leaderboard(id : int, scoree : int):
 	var usernamee = HighLevelNetwork.userName
-	if HighLevelNetwork.multiplayer_enabled and HighLevelNetwork.steam_active == true:
-		usernamee = Steam.getFriendPersonaName(id)
+	if HighLevelNetwork.multiplayer_enabled and HighLevelNetwork.steam_active:
+		var ind = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, id-1)
+		usernamee = Steam.getFriendPersonaName(ind)
+	#print(str(HighLevelNetwork.multiplayer_enabled) + " " + str(HighLevelNetwork.steam_active) + " " + usernamee)
 	#var usernamee = Steam.getFriendPersonaName(id)
 	player_placement_labels[finished_racers.size() - 1].text = String(usernamee + " - " + str(scoree))
 	pass

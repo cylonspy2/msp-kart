@@ -704,6 +704,7 @@ sparks = [NodePath("groundSparks"), NodePath("groundSparks2")]
 [node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
 amount = 16
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2hfgr")
 draw_passes = 2
 draw_pass_1 = SubResource("PlaneMesh_lb1tj")
@@ -712,6 +713,7 @@ draw_pass_2 = SubResource("PlaneMesh_btiea")
 [node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, -0.694, 0.109, -0.5174992)
 amount = 16
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2hfgr")
 draw_passes = 2
 draw_pass_1 = SubResource("PlaneMesh_lb1tj")

@@ -14,6 +14,7 @@ var kartChosen : Node3D
 var kartChosenScene : PackedScene
 var racerChosen : PackedScene
 @export var placeholderRacer : PackedScene
+@export var placeholderKart : PackedScene
 
 func _ready() -> void:
 	HighLevelNetwork.select_kart.connect(func(id) : update_kart(id))
@@ -28,6 +29,8 @@ func clear_out():
 			nodd.use_collision = false
 
 func update_kart(track : PackedScene):
+	if track == null:
+		track = placeholderKart
 	for nodd : Node3D in subViewie.get_children():
 		if nodd.name != "CSGBox3D":
 			nodd.visible = true
@@ -59,11 +62,13 @@ func update_kart(track : PackedScene):
 	stat_air_control.value = kartChosen.airControl
 
 func update_racer(track : PackedScene):
+	if track == null:
+		track = placeholderRacer
 	racerChosen = track
 	update_kart(kartChosenScene)
 	var trac = track.instantiate()
 	var raceItem = trac.RacerItem.instantiate()
 	skill_item.texture = raceItem.inventory_icon
 	raceItem.queue_free()
-	namekart.text = trac.name
+	nameracer.text = trac.name
 	trac.queue_free()
