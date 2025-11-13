@@ -271,8 +271,7 @@ point_count = 3
 curve = SubResource("Curve_hlr74")
 
 [sub_resource type="Curve" id="Curve_3xfl4"]
-_limits = [0.0, 6.0, 0.0, 1.0]
-_data = [Vector2(0, 2.7640452), 0.0, 0.0, 0, 0, Vector2(0.64344263, 2.6966295), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.65024626, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_n2vib"]
@@ -291,7 +290,7 @@ emission_shape_scale = Vector3(0.4, 0.4, 0.4)
 emission_shape = 1
 emission_sphere_radius = 1.0
 direction = Vector3(0, 0, -1)
-spread = 180.0
+spread = 0.0
 initial_velocity_min = 1.0
 initial_velocity_max = 1.0
 angular_velocity_min = -67.73001
@@ -305,7 +304,7 @@ turbulence_initial_displacement_min = -3.1999986
 turbulence_initial_displacement_max = 4.0000014
 turbulence_influence_over_life = SubResource("CurveTexture_3xfl4")
 collision_mode = 1
-collision_friction = 0.62
+collision_friction = 0.0
 collision_bounce = 0.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_3xfl4"]
@@ -648,8 +647,7 @@ script = ExtResource("1_yc3qi")
 replication_config = SubResource("SceneReplicationConfig_x7qcx")
 
 [node name="RestockTimer" type="Timer" parent="."]
-wait_time = 12.0
-one_shot = true
+wait_time = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -675,17 +673,14 @@ lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
 collision_base_size = 0.2
-local_coords = true
 process_material = SubResource("ParticleProcessMaterial_rneaa")
 draw_pass_1 = SubResource("SphereMesh_qq6ip")
 
 [node name="Goo" type="GPUParticles3D" parent="Particles"]
 emitting = false
 amount = 30
-lifetime = 3.65
 one_shot = true
 explosiveness = 1.0
-local_coords = true
 trail_lifetime = 9.76
 process_material = SubResource("ParticleProcessMaterial_mgn2h")
 draw_passes = 2
@@ -699,7 +694,6 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 collision_base_size = 0.2
-local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qo42h")
 draw_passes = 2
 draw_pass_1 = SubResource("QuadMesh_tuclp")

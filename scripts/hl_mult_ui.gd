@@ -22,6 +22,7 @@ var haveAuthority = false
 var buttonArray : Array
 @export var default_racer : PackedScene
 @export var default_kart : PackedScene
+var chosen_items : Array[PackedScene]
 
 func _ready() -> void:
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
@@ -48,10 +49,11 @@ func _process(_delta: float) -> void:
 	if lobby_search_bar.visible:
 		HighLevelNetwork.lobby_search = lobby_search_bar.text
 	if ServerLobby.visible:
-		if  (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
-			startGameButton.visible = false
-		else:
+		###alternate inverse formula for this: (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled
+		if HighLevelNetwork.get_hosting():
 			startGameButton.visible = true
+		else:
+			startGameButton.visible = false
 
 func host_lobby():
 	ServerLobby.visible = true
@@ -214,6 +216,8 @@ func leave_lobby():
 	MainMenu.visible = true
 	MainMenu.mouse_filter = MOUSE_FILTER_PASS
 	
+	chosen_items.clear()
+	
 	if %NetworkManager.is_host:
 		var userInd = multiplayer.get_peers()
 		Steam.getNumLobbyMembers(SteamManager.lobby_id)
@@ -269,11 +273,24 @@ func _on_exit_lobby_pressed() -> void:
 
 
 func _on_start_game_pressed() -> void:
+	if HighLevelNetwork.get_hosting():
+		enter_race.rpc()
+
+@rpc("call_local")
+func enter_race():
 	HighLevelNetwork.enter_race.emit()
-	
-
-
-
+	if not chosen_items.is_empty():
+		HighLevelNetwork._set_available_items(chosen_items)
+	else:
+		var path : PackedStringArray = ResourceLoader.list_directory(HighLevelNetwork.ItemPath)
+		var hostDir = HighLevelNetwork.ItemPath
+		
+		for element in path:
+			var count = path.find(element)
+			var mucho : PackedScene = ResourceLoader.load(hostDir + "/" + path[count])
+			chosen_items.append(mucho)
+		
+		HighLevelNetwork._set_available_items(chosen_items)
 
 
 

@@ -183,6 +183,11 @@ func _on_finish_line_body_entered(boddy: Node3D) -> void:
 				print("%s lapped" % body.name)
 
 func _on_all_done(id : int, score : int):
+	if HighLevelNetwork.get_hosting():
+		doning.rpc(id, score)
+
+@rpc("call_local")
+func doning(id : int, score : int):
 	var bogo = doneRacers.get_or_add(id, score)
 	if bogo == score:
 		HighLevelNetwork.end_race.emit(id, score)

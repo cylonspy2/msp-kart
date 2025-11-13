@@ -100,6 +100,8 @@ signal gainItem(item : PackedScene)
 @export var end_drift = false
 @export var firedItem = false
 @export var altFiredItem = false
+@export var cam_looking_back = false
+@export var cam_looking_front = false
 @export var server_Pos : Vector3
 @export var server_Rot : Basis
 @export var server_Pos_Offset : Vector3
@@ -116,6 +118,7 @@ var camStartPos : Vector3
 var camStartRot : Basis
 var camLocked = false
 var is_touching_ground = true
+var can_look_back = true
 
 @export var player_id := 1:
 	set(id):
@@ -124,7 +127,7 @@ var is_touching_ground = true
 
 func _enter_tree():
 	fireItem.connect(ThrowItem)
-	altFireItem.connect(TriggerRacerAbility)
+	altFireItem.connect(ThrowItem)
 	gainItem.connect(func(id) : PickupItem(id))
 	HighLevelNetwork.leave_lobby.connect(func(): queue_free())
 
@@ -165,7 +168,7 @@ func _physics_process(_delta):
 	if is_queued_for_deletion():
 		return
 	
-	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if not HighLevelNetwork.get_hosting(): 
 		time_since_last_update += _delta
 	else:
 		server_Pos_Offset = Vector3()
@@ -188,8 +191,12 @@ func _physics_process(_delta):
 	else :
 		lerpForce = lerp(((forceForce * boost)), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
 	
+	
+	var true_vel = ((lerpForce * _delta) + (_delta * Ball.linear_velocity))
+	#print(true_vel)
+	
 	##code for when the kart's own hitbox detects collisions
-	var hitS : KinematicCollision3D = CarHitBox.move_and_collide(_delta * (lerpForce * 0.01 + Ball.linear_velocity), true)
+	var hitS : KinematicCollision3D = CarHitBox.move_and_collide(true_vel * _delta, true, 0.01, true)
 	if hitS != null:
 		var hitted = hitS.get_collider(0)
 		if hitted.name != "Rim":
@@ -203,7 +210,7 @@ func _physics_process(_delta):
 			pass
 		else:
 			#print("%s Hit track guardrail" % username)
-			_process_kart_collision(hitS, lerpForce, wallBounce)
+			_process_kart_collision(hitS, true_vel, wallBounce)
 			pass
 		pass
 	else:
@@ -213,9 +220,9 @@ func _physics_process(_delta):
 		pass
 	
 	if is_touching_ground:
-		hitr = Ball.move_and_collide(gravDir * weight * _delta, true)
+		hitr = Ball.move_and_collide(gravDir * weight * _delta, true, 0.01, true)
 	else:
-		hitr = Ball.move_and_collide(gravDir * _delta, true)
+		hitr = Ball.move_and_collide(gravDir * _delta, true, 0.01, true)
 	if hitr:
 		Ball.gravity_scale = 0.0
 		var avgHitPos = Vector3(0.0, 0.0, 0.0)
@@ -252,26 +259,24 @@ func _physics_process(_delta):
 
 func _process_kart_collision(hitter : KinematicCollision3D, force : Vector3, bounce : float) -> Vector3:
 	var avgHitShellPos = Vector3(0.0, 0.0, 0.0)
+	var avgHitNorm = Vector3(0.0, 0.0, 0.0)
 	var b = 0
 	while b < hitter.get_collision_count():
 		avgHitShellPos += hitter.get_position(b)
+		avgHitNorm += hitter.get_normal(b)
 		b += 1
 	avgHitShellPos /= b
-	var newForce = (-(CarHitBox.global_position - avgHitShellPos)).normalized()
-	var rotat : float
-	var chec = Car.global_basis.x.cross(newForce)
-	if chec.dot(Car.global_basis.x) > chec.y:
-		#print("car up vector greater than hit_cross %s" % chec)
-		rotat = acos(chec.dot(Car.global_basis.x)) + deg_to_rad(90)
-		pass
-	else:
-		#print("car up vector less than or equal to hit_cross %s" % chec)
-		rotat = -acos(chec.dot(Car.global_basis.x)) - deg_to_rad(90)
-		pass
+	avgHitNorm /= b
+	var newForce = ((CarHitBox.global_position.direction_to(avgHitShellPos))).normalized()
+	var newCross = avgHitNorm.cross(CarHitBox.global_basis.z)
+	var newDot = avgHitNorm.dot(CarHitBox.global_basis.z)
+	
 	Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
-	newForce = (newForce * Ball.linear_velocity.length() * bounce * force.length()) + force
-	newForce = newForce.rotated(Car.global_basis.y, rotat) + force
-	#Ball.linear_velocity = Vector3.ZERO
+	
+	newForce = ((force) * 0.5 * bounce)
+	newForce = newForce.rotated(newCross.normalized(), -0.5 * PI)
+	
+	Ball.linear_velocity = (newForce * force.length()) + (Ball.linear_velocity * (1 - absf(newDot)))
 	Ball.apply_central_force(newForce)
 	prevForce = newForce
 	return newForce
@@ -368,12 +373,25 @@ func _process(delta):
 		StopDrift()
 		end_drift = false
 	
-	if Ball.linear_velocity.length() > 0.75 :
+	if Ball.linear_velocity.length() > 0.7 :
 		turnable = true
 	else:
 		turnable = false
 	RotateCar(delta)
 	
+	if camLocked and hasControl:
+		#print(str(can_look_back) + " " + str(cam_looking_back) + " " + str(cam_looking_front))
+		if cam_looking_back and can_look_back:
+			camAnim.play("LookBack")
+			cam_looking_back = false
+		else:
+			cam_looking_back = false
+		if cam_looking_front and can_look_back:
+			camAnim.play("LookFront")
+			cam_looking_front = false
+	else:
+		cam_looking_back = false
+		cam_looking_front = false
 	
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		##client deferring to server data
@@ -393,6 +411,7 @@ func RotateCar(delta):
 	Car.transform.basis = Car.transform.basis.orthonormalized().slerp(newBasis, turnspeed * delta)
 	Car.transform.basis = Car.transform.basis.orthonormalized()
 	carBasis = Car.global_transform.basis.orthonormalized()
+	#var veloc_modif = clampf(Ball.linear_velocity.length(), 0.0, 100.0) * 0.01
 	
 	if Vector3(0.0, 1.0, 0.0) != antiGrav:
 		#var gravCross = antiGrav.cross(Vector3(0.0, 1.0, 0.0)).normalized()
@@ -401,13 +420,17 @@ func RotateCar(delta):
 		var gravDiffDot = Car.global_transform.basis.y.dot(antiGrav)
 		if acos(gravDiffDot) != 0.0:
 			var rotatedBasis = carBasis.rotated(gravDiffCross, acos(gravDiffDot))
-			Car.global_transform.basis = lerp(Car.global_transform.basis, rotatedBasis, angular_smooth * delta)
+			#var rotat_For = veloc_modif * angular_smooth * delta
+			var rotat_For = angular_smooth * delta
+			Car.global_transform.basis = lerp(Car.global_transform.basis, rotatedBasis, rotat_For)
 	else:
 		var gravDiffCross = Car.global_transform.basis.y.cross(Vector3(0.0, 1.0, 0.0)).normalized()
 		var gravDiffDot = Car.global_transform.basis.y.dot(Vector3(0.0, 1.0, 0.0))
 		if acos(gravDiffDot) != 0.0:
 			var rotatedBasis = carBasis.rotated(gravDiffCross, acos(gravDiffDot))
-			Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, angular_smooth * delta)
+			#var rotat_For = veloc_modif * angular_smooth * delta
+			var rotat_For = angular_smooth * delta
+			Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, rotat_For)
 	
 	var t = -rotari * (Ball.linear_velocity.length()/maxSpeed) * bodytilt
 	CarBody.rotation.z = lerp(CarBody.rotation.z, t, 10 * delta)
@@ -441,6 +464,7 @@ func StopDrift():
 	if minimumDrift and is_touching_ground:
 		boost = 1 + (driftBoost * boostTiering)
 		boostTimer.start()
+		can_look_back = false
 		camAnim.play("ZoomOut")
 		for part in boost_particles:
 			part.emitting = true
@@ -467,20 +491,11 @@ func GetHit(strength : float):
 func PickupItem(item : PackedScene):
 	if hasItem:
 		return
-	itemHeld = item
-	hasItem = true
+	if item != null:
+		itemHeld = item
+		hasItem = true
 
-func ThrowItem():
-	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
-		##client deferring to server data
-		pass
-	else:
-		fireDisabled = true
-		$CarParent_Logic/itemTimer.start()
-		pass
-	pass
-
-func TriggerRacerAbility():
+func ThrowItem(_item : PackedScene):
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		##client deferring to server data
 		pass
@@ -509,6 +524,7 @@ func _on_boost_timer_timeout() -> void:
 	boost = 1.0
 	boostTiering = 0
 	camAnim.play("ZoomIn")
+	can_look_back = true
 
 func _on_hurt_timer_timeout() -> void:
 	acceleration = hurtAccel

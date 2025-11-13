@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4lf6mqid4l3"]
+[gd_scene load_steps=11 format=3 uid="uid://c4lf6mqid4l3"]
 
 [ext_resource type="Script" uid="uid://daygg40j43bio" path="res://scripts/main_scene.gd" id="1_k24pf"]
 [ext_resource type="PackedScene" uid="uid://ce4l45pg5pfxb" path="res://scenes/hl_mult_ui.tscn" id="1_x4av3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bc5ff5nyrprfc" path="res://scripts/multiplayer/networks/network_manager.gd" id="2_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://bq4bbfhb2b6wx" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/ambulance.glb" id="3_c6dvc"]
 [ext_resource type="PackedScene" uid="uid://ci7uqeytx4o21" path="res://scenes/spectator.tscn" id="4_611at"]
+[ext_resource type="Script" uid="uid://dcrb4cyyffx8r" path="res://scripts/MainLobbySync.gd" id="7_1wiy7"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ygjfp"]
 properties/0/path = NodePath(".:trackListPos")
@@ -76,6 +77,7 @@ trackSlot = NodePath("../RaceSlot")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ygjfp")
+script = ExtResource("7_1wiy7")
 
 [node name="RaceSlot" type="Node3D" parent="."]
 

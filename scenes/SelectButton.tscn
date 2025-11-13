@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://gfcgbjrr8f5x"]
 
-[ext_resource type="Script" uid="uid://03a8m5e3bhh6" path="res://scenes/select_button.gd" id="1_okds2"]
+[ext_resource type="Script" uid="uid://03a8m5e3bhh6" path="res://scripts/select_button.gd" id="1_okds2"]
 [ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="1_ubw1l"]
 
 [node name="Control" type="Control"]

@@ -42,6 +42,9 @@ var ItemPath = "res://Items/ItemPackedScenes"
 var available_items : Array[PackedScene]
 var available_ranges : Array[Vector3]
 
+func get_hosting():
+	return ((multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled)
+
 func _set_username(namey : String):
 	userName = namey
 
@@ -59,18 +62,19 @@ func _set_available_items(items : Array[PackedScene]):
 		available_ranges.append(ranger)
 		count += 1
 		itemn.queue_free()
+	print("Setting up available items ", available_items.size())
 	pass
 
 func _grab_item(placementy : float) -> PackedScene:
 	var possible_picks : Array[PackedScene]
 	for itemm : Vector3 in available_ranges:
-		if itemm.x > placementy and itemm.y < placementy:
+		if itemm.x >= placementy and itemm.y <= placementy:
 			possible_picks.append(available_items[itemm.z])
 	if possible_picks.size() > 0:
 		var picked = possible_picks.pick_random()
 		return picked
 	else:
-		return possible_picks[0]
+		return null
 
 #
 #func retarget_server(IPA : String, PRT : int) -> void:

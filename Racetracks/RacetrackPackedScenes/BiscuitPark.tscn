@@ -1011,8 +1011,8 @@ CarContainer = NodePath("../../Car_Container")
 drop_height = 6.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="KillBox/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.10852, 124.43819, -38.02881)
 shape = SubResource("BoxShape3D_unlcg")
+debug_color = Color(0, 0.6, 0.69803923, 1)
 
 [connection signal="animation_finished" from="Minimap/NewLap" to="." method="_on_new_lap_animation_finished"]
 [connection signal="body_entered" from="Finish_Line" to="." method="_on_finish_line_body_entered"]

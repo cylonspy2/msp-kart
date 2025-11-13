@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://c3ywrjpbr02ay"]
+[gd_scene load_steps=57 format=4 uid="uid://c3ywrjpbr02ay"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
@@ -396,13 +396,136 @@ tracks/0/keys = {
 "values": [75.0, 96.4]
 }
 
+[sub_resource type="Animation" id="Animation_h7byv"]
+resource_name = "LookBack"
+length = 0.41
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Car/CarLogic/Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 2.627013, -2.9686177), Vector3(0, 2.193, 2.969)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Car/CarLogic/Camera:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.38618904, -3.1415925, -3.5546705e-08), Vector3(-0.19198622, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CarParent_Logic/CamAnimationPlayer:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.36, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_227g8"]
+resource_name = "LookFront"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Car/CarLogic/Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 2.193, 2.969), Vector3(0, 2.627013, -2.9686177)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Car/CarLogic/Camera:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.19198622, 0, 0), Vector3(-0.38618904, -3.1415925, -3.5546705e-08)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CarParent_Logic/CamAnimationPlayer:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_d6kcc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Car/CarLogic/Camera:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2.627013, -2.9686177)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Car/CarLogic/Camera:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.38618904, -3.1415925, -3.5546705e-08)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CarParent_Logic/CamAnimationPlayer:speed_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u5era"]
 _data = {
+&"LookBack": SubResource("Animation_h7byv"),
+&"LookFront": SubResource("Animation_227g8"),
+&"RESET": SubResource("Animation_d6kcc"),
 &"ZoomIn": SubResource("Animation_mjudg"),
 &"ZoomOut": SubResource("Animation_lpol0")
 }
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_24jkt"]
+rough = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7822p"]
 
@@ -603,6 +726,7 @@ steering = 7.415
 turnspeed = 4.95
 weight = 15.49
 airControl = 0.9
+wallBounce = 0.05
 kart_icon = ExtResource("3_us48a")
 bodytilt = 8.435
 sparkMat = ExtResource("8_robuc")
@@ -670,7 +794,7 @@ Ball = NodePath("../../Ball")
 processMat = ExtResource("11_q8enl")
 
 [node name="Camera" type="Camera3D" parent="Car/CarLogic"]
-transform = Transform3D(-1, 3.5527137e-15, -8.742277e-08, -3.2928735e-08, 0.92635125, 0.37666088, 8.0984194e-08, 0.37666088, -0.92635125, 0, 2.627013, -2.9686177)
+transform = Transform3D(-1, 2.1327507e-08, -1.3987514e-07, -3.2928735e-08, 0.9263512, 0.37666085, 1.3760675e-07, 0.37666085, -0.9263512, 0, 2.627013, -2.9686177)
 
 [node name="Car_UI" type="Control" parent="Car/CarLogic/Camera"]
 layout_mode = 3
@@ -701,8 +825,8 @@ polygon = PackedVector2Array(1, 0, 1, 1.431, -1, 1.431, -1, 0)
 margin = 0.001
 
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.56398773, 0.006678164)
-size = Vector3(1.4758301, 1.080307, 1.5122681)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.5812645, 0.033152163)
+size = Vector3(1.4758301, 1.1148605, 1.5652161)
 
 [node name="Car_Marker" type="Node" parent="Car/CarLogic/CarHitbox"]
 

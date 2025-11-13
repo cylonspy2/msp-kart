@@ -32,11 +32,17 @@ func _process(delta: float) -> void:
 			item_used.rpc()
 		if Input.is_action_just_pressed("Altfire"):
 			ability_used.rpc()
+		if Input.is_action_just_pressed("Look Back"):
+			Car.cam_looking_back = true
+		if Input.is_action_just_released("Look Back"):
+			Car.cam_looking_front = true
 	else:
 		Car.start_drift = Input.is_action_just_pressed("Drift")
 		Car.end_drift = Input.is_action_just_released("Drift")
 		Car.firedItem = Input.is_action_just_pressed("Fire")
 		Car.altFiredItem = Input.is_action_just_pressed("Altfire")
+		Car.cam_looking_back = Input.is_action_just_pressed("Look Back")
+		Car.cam_looking_front = Input.is_action_just_released("Look Back")
 
 @rpc("call_local")
 func drift():

@@ -45,7 +45,7 @@ func _build_available_items_list():
 	pass
 
 func _choose_level() -> void :
-	if not (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
+	if not HighLevelNetwork.get_hosting():
 		return
 	var trackArray : Array
 	for playeh : Node3D in spectatorLobby.get_children(false):
