@@ -1,5 +1,6 @@
 extends Node3D
 
+@export var in_match = false
 @export var levelChosen = false
 @export var trackListPos = -1
 @export var chosenTrack : PackedScene
@@ -75,6 +76,10 @@ func _on_level_chooser_animation_finished(_anim_name: StringName) -> void:
 
 func start_level() -> void:
 	print("Starting Level")
+	if HighLevelNetwork.host_mode_enabled && %NetworkManager.active_network_type == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM:
+		in_match = true
+		var targ_lobby = %NetworkManager.get_client_target()
+		Steam.setLobbyJoinable(targ_lobby, false)
 	Environ.visible = false
 	MainUI.visible = false
 	_build_available_items_list()
@@ -98,5 +103,7 @@ func end_level():
 	MainUI.visible = true
 	
 	if HighLevelNetwork.host_mode_enabled && %NetworkManager.active_network_type == %NetworkManager.MULTIPLAYER_NETWORK_TYPE.STEAM:
-		pass
+		in_match = false
+		var targ_lobby = %NetworkManager.get_client_target()
+		Steam.setLobbyJoinable(targ_lobby, true)
 	pass

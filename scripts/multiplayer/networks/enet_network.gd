@@ -35,3 +35,6 @@ func become_client(id : int) -> void :
 
 func list_lobbies():
 	pass
+
+func get_client_target() -> int:
+	return 0

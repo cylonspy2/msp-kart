@@ -58,7 +58,6 @@ extends Node3D
 var speedInput = 0.0
 var rotateInput = 0.0
 var minimumDriftRotation = 2.0
-var gravForce = Vector3(0.0, -1.0, 0.0)
 var correctivey = 0.0
 @export_group("Car Visual Tweaks")
 @export var kart_icon : Texture2D
@@ -108,6 +107,7 @@ signal gainItem(item : PackedScene)
 @export var time_since_last_update : float
 @export var fireDisabled = false
 @export var hasControl = true
+@export var gravForce = Vector3(0.0, -1.0, 0.0)
 
 var lockedCamPos = Vector3(0.0, 0.0, 0.0)
 var lockedCamRot : Basis
@@ -270,12 +270,16 @@ func _process_kart_collision(hitter : KinematicCollision3D, force : Vector3, bou
 	var newForce = ((CarHitBox.global_position.direction_to(avgHitShellPos))).normalized()
 	var newCross = avgHitNorm.cross(CarHitBox.global_basis.z)
 	var newDot = avgHitNorm.dot(CarHitBox.global_basis.z)
+	var dirDot = force.normalized().dot(CarHitBox.global_basis.z)
 	
 	Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
 	
 	newForce = ((force) * 0.5 * bounce)
-	newForce = newForce.rotated(newCross.normalized(), -0.5 * PI)
 	
+	if dirDot > 0:
+		newForce = newForce.rotated(newCross.normalized(), -0.5 * PI)
+	else:
+		newForce = newForce.rotated(newCross.normalized(), PI)
 	Ball.linear_velocity = (newForce * force.length()) + (Ball.linear_velocity * (1 - absf(newDot)))
 	Ball.apply_central_force(newForce)
 	prevForce = newForce

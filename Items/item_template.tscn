@@ -19,8 +19,9 @@ inventory_icon = ExtResource("2_wwut3")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_wwut3")
 
-[node name="ItemEffect" type="Node3D" parent="."]
+[node name="ItemEffect" type="Node3D" parent="." node_paths=PackedStringArray("parent")]
 script = ExtResource("3_oh33p")
+parent = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="ItemEffect"]
 replication_config = SubResource("SceneReplicationConfig_oh33p")

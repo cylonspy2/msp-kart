@@ -1000,6 +1000,24 @@ transform = Transform3D(-0.008733973, 0.823049, -0.5679034, -0.21956272, 0.55248
 [node name="ItemContainer6" parent="Gadgets" instance=ExtResource("13_bm3a1")]
 transform = Transform3D(-0.0030857704, 0.80548346, -0.5926099, -0.23809315, 0.57497853, 0.7827585, 0.97123754, 0.14351164, 0.19000588, -234.9348, 94.84189, 20.429657)
 
+[node name="ItemContainer7" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.11048566, -0.6995965, -0.7059444, 0.19974948, -0.68016946, 0.70531565, -0.97359806, -0.21893923, 0.06459504, -225.73874, 75.96543, 21.906721)
+
+[node name="ItemContainer8" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.09172406, -0.6786342, -0.72872627, 0.20715338, -0.7027969, 0.6805613, -0.9739991, -0.21338177, 0.07611796, -229.86201, 79.93683, 21.249174)
+
+[node name="ItemContainer9" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.06524075, -0.7956168, -0.6022769, 0.1567073, -0.587905, 0.793606, -0.9854884, -0.14615658, 0.08632364, -243.60358, 95.78392, 19.492146)
+
+[node name="ItemContainer10" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.049825653, -0.7763633, -0.62831247, 0.16440947, -0.6141362, 0.77188456, -0.98513335, -0.14176008, 0.097041756, -247.13655, 100.30477, 18.95734)
+
+[node name="ItemContainer11" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.08023677, -0.7813256, -0.6189447, 0.16619612, -0.6017682, 0.78118753, -0.9828233, -0.16554609, 0.08156937, -236.56091, 85.95478, 20.728043)
+
+[node name="ItemContainer12" parent="Gadgets" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.06385708, -0.76192427, -0.64451027, 0.17390727, -0.6274506, 0.7589873, -0.9826897, -0.16055177, 0.09243704, -240.18915, 90.39621, 20.166222)
+
 [node name="KillBox" type="Node3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="KillBox" node_paths=PackedStringArray("master_path", "true_paths", "CarContainer")]

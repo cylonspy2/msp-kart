@@ -127,3 +127,6 @@ func leave_lobby():
 	peer.close()
 	peer.clear_all_configs()
 	peer = SteamMultiplayerPeer.new()
+
+func get_client_target() -> int:
+	return _hosted_lobby_id

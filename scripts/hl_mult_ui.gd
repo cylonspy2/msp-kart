@@ -23,6 +23,7 @@ var buttonArray : Array
 @export var default_racer : PackedScene
 @export var default_kart : PackedScene
 var chosen_items : Array[PackedScene]
+var lobby_idd : int
 
 func _ready() -> void:
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
@@ -120,6 +121,7 @@ func _serverr_joined(targ_lobby_id = 0) -> void:
 func _lobby_joined(targ_lobby_id = 0) -> void:
 	print("joined lobby %s" % targ_lobby_id)
 	#%NetworkManager.become_client(targ_lobby_id)
+	#lobby_idd = targ_lobby_id
 	
 	buttonArray.clear()
 	var sBBC = get_node(serverBrowserBoxContainer)
@@ -278,6 +280,7 @@ func _on_start_game_pressed() -> void:
 
 @rpc("call_local")
 func enter_race():
+	
 	HighLevelNetwork.enter_race.emit()
 	if not chosen_items.is_empty():
 		HighLevelNetwork._set_available_items(chosen_items)

@@ -14,16 +14,14 @@ func _spawn_item(altFired : bool, item : PackedScene):
 	else:
 		##server producing data for clients
 		if altFired:
-			var itemn: Node = spawn(item)
+			var itemn: Node3D = item.instantiate()
 			itemn.name = str(CarParent.player_id)
 			itemn.define_caster(CarParent)
 			get_node(spawn_path).call_deferred("add_child", itemn)
-			itemn.cast_item()
 		else:
-			var itemn: Node = spawn(item)
+			var itemn: Node3D = item.instantiate()
 			itemn.name = str(CarParent.player_id)
 			itemn.define_caster(CarParent)
 			get_node(spawn_path).call_deferred("add_child", itemn)
-			itemn.cast_item()
 		pass
 	pass

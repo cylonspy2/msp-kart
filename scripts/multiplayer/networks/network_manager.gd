@@ -64,3 +64,6 @@ func become_client(lobby_id = 0):
 func list_lobbies():
 	_build_multiplayer_network()
 	active_network.list_lobbies()
+
+func get_client_target() -> int:
+	return active_network.get_client_target()

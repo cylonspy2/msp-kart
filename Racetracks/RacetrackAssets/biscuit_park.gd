@@ -135,9 +135,13 @@ func get_track_placement(global_loc : Vector3, path : Path3D) -> float:
 	#return ((curvy.get_baked_points().find(curvy.get_closest_point(curv_space_pos))) / curvy.get_baked_length()) + curvy.get_closest_offset(curv_space_pos)
 
 func _on_checkpoint_crossed(checkpoint : Area3D, kart : Node3D):
-	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if not HighLevelNetwork.get_hosting(): 
 		return
 	#print("checkpoint crossed")
+	
+	if kart.name != "Ball":
+		return
+	
 	if kart.get_parent().crossed_checkpoints.find(checkpoint) == -1:
 		checkpoint.passed_cars.append(kart)
 		kart.get_parent().crossed_checkpoints.append(checkpoint)

@@ -1,0 +1,225 @@
+[gd_scene load_steps=15 format=3 uid="uid://bocg6mtnl572u"]
+
+[ext_resource type="Script" uid="uid://4ch5qxld3wda" path="res://Items/ItemAssets/item_brain.gd" id="1_nlsgd"]
+[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer.png" id="2_xheh0"]
+[ext_resource type="Script" uid="uid://blslch1coqsf5" path="res://Items/ItemAssets/bowlingBall_effect.gd" id="3_xheh0"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wwut3"]
+properties/0/path = NodePath(".:job_done")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oh33p"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("RigidBody3D:linear_velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("RigidBody3D:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("RigidBody3D:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xheh0"]
+radius = 0.73
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xheh0"]
+particle_flag_align_y = true
+emission_shape = 1
+emission_sphere_radius = 0.73
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, -1, 0)
+spread = 87.523
+initial_velocity_min = 0.39999998
+initial_velocity_max = 1.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xheh0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_wgik8"]
+material = SubResource("StandardMaterial3D_xheh0")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wgik8"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xheh0"]
+material = SubResource("StandardMaterial3D_wgik8")
+radius = 0.73
+height = 1.46
+
+[sub_resource type="Animation" id="Animation_xheh0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:job_done")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RigidBody3D/CollisionShape3D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RigidBody3D/MeshInstance3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_23yey"]
+resource_name = "break"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RigidBody3D/GPUParticles3D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:job_done")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.96666664),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RigidBody3D/CollisionShape3D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RigidBody3D/MeshInstance3D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.033333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iugff"]
+_data = {
+&"RESET": SubResource("Animation_xheh0"),
+&"break": SubResource("Animation_23yey")
+}
+
+[node name="ItemTemplate" type="Node3D" node_paths=PackedStringArray("ItemEffect")]
+script = ExtResource("1_nlsgd")
+leaderboard_max = 1.0
+inventory_icon = ExtResource("2_xheh0")
+ItemEffect = NodePath("ItemEffect")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wwut3")
+
+[node name="ItemEffect" type="Node3D" parent="." node_paths=PackedStringArray("parent", "hitbox", "ball", "anim")]
+script = ExtResource("3_xheh0")
+parent = NodePath("..")
+hitbox = NodePath("RigidBody3D/CollisionShape3D")
+ball = NodePath("RigidBody3D")
+anim = NodePath("AnimationPlayer")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="ItemEffect"]
+replication_config = SubResource("SceneReplicationConfig_oh33p")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="ItemEffect"]
+transform = Transform3D(-0.9976581, 0, 0.06839835, 0, 1, 0, -0.06839835, 0, -0.9976581, 0, 0.66428983, -2.4992385)
+collision_layer = 3
+collision_mask = 3
+mass = 30.0
+gravity_scale = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemEffect/RigidBody3D"]
+shape = SubResource("SphereShape3D_xheh0")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="ItemEffect/RigidBody3D"]
+emitting = false
+amount = 12
+one_shot = true
+explosiveness = 1.0
+randomness = 0.54
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_xheh0")
+draw_pass_1 = SubResource("PrismMesh_wgik8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ItemEffect/RigidBody3D"]
+mesh = SubResource("SphereMesh_xheh0")
+
+[node name="Label3D" type="Label3D" parent="ItemEffect/RigidBody3D/MeshInstance3D"]
+transform = Transform3D(-4.371139e-08, -1.0000001, -3.5959395e-15, 0.67882633, -2.9672444e-08, 0.7342987, -0.73429877, 3.2097226e-08, 0.6788262, -0.113665015, 0.5708784, 0.47859716)
+modulate = Color(0, 0, 0, 1)
+text = ":"
+font_size = 182
+
+[node name="Label3D2" type="Label3D" parent="ItemEffect/RigidBody3D/MeshInstance3D"]
+transform = Transform3D(-4.3711385e-08, -1.0000001, -3.2362298e-15, 0.8616821, -3.766533e-08, 0.5074481, -0.5074481, 2.2181268e-08, 0.861682, -0.28953388, 0.376575, 0.641961)
+modulate = Color(0, 0, 0, 1)
+text = "."
+font_size = 182
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ItemEffect"]
+libraries = {
+&"": SubResource("AnimationLibrary_iugff")
+}
+
+[connection signal="body_entered" from="ItemEffect/RigidBody3D" to="ItemEffect" method="_on_rigid_body_3d_body_entered"]

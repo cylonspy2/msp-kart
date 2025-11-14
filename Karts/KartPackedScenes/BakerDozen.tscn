@@ -366,36 +366,6 @@ _data = {
 &"recover": SubResource("Animation_us48a")
 }
 
-[sub_resource type="Animation" id="Animation_mjudg"]
-resource_name = "ZoomIn"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Car/CarLogic/Camera:fov")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [96.4, 75.0]
-}
-
-[sub_resource type="Animation" id="Animation_lpol0"]
-resource_name = "ZoomOut"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Car/CarLogic/Camera:fov")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.23333333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [75.0, 96.4]
-}
-
 [sub_resource type="Animation" id="Animation_h7byv"]
 resource_name = "LookBack"
 length = 0.41
@@ -513,6 +483,36 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_mjudg"]
+resource_name = "ZoomIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Car/CarLogic/Camera:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [96.4, 75.0]
+}
+
+[sub_resource type="Animation" id="Animation_lpol0"]
+resource_name = "ZoomOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Car/CarLogic/Camera:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [75.0, 96.4]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u5era"]
