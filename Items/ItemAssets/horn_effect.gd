@@ -26,6 +26,7 @@ func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 		hitbox.disabled = true
 		parent.job_done = true
 
-func _on_area_3d_body_entered(body: Node3D) -> void:
+func _on_area_3d_body_entered(body: Node) -> void:
 	if body != parent.caster.CarHitBox:
-		body.GetHit(strength)
+		if body.has_node("Car_Marker"):
+			body.get_parent().get_parent().get_parent().GetHit(strength)

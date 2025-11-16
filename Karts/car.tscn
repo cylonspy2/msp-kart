@@ -656,10 +656,12 @@ LeftWheel = NodePath("Car/ModelParent/Model/wheel-front-left")
 CarBody = NodePath("Car/ModelParent/Model/body")
 CarModel = NodePath("Car/ModelParent")
 maxSpeed = 900.0
+hurtSpeed = 10.0
 acceleration = 700.0
 steering = 6.365
 turnspeed = 4.065
 weight = 15.49
+wallBounce = 1.0
 bodytilt = 15.0
 
 [node name="CarParent_Logic" type="Node" parent="."]

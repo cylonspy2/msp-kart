@@ -30,10 +30,14 @@ func _physics_process(_delta):
 func _process(delta: float) -> void:
 	pass
 
-func _on_rigid_body_3d_body_entered(body: Node) -> void:
-	if body.get_child(-1).name != "Car_Marker":
-		return
-	else: if body != parent.caster.CarHitBox:
-		body.Ball.linear_velocity = Vector3.ZERO
-		body.GetHit(strength)
-		parent.job_done = true
+func _on_rigid_body_3d_body_entered(body: Node3D) -> void:
+	if body.has_node("Car_Marker"):
+		print("car hit")
+		if body != parent.caster.CarHitBox:
+			body.get_parent().get_parent().get_parent().Ball.linear_velocity = Vector3.ZERO
+			body.get_parent().get_parent().get_parent().GetHit(strength)
+			parent.job_done = true
+		else:
+			body.get_parent().get_parent().get_parent().Ball.linear_velocity = Vector3.ZERO
+			body.get_parent().get_parent().get_parent().GetHit(strength)
+			parent.job_done = true

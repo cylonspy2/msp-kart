@@ -23,6 +23,7 @@ extends Node3D
 @onready var BallCollisionShape = $Ball/CollisionShape3D
 @onready var driftTimer = $CarParent_Logic/driftTimer
 @onready var boostTimer = $CarParent_Logic/boostTimer
+@onready var hurtTimer = $CarParent_Logic/hurtTimer
 @onready var Anim = $CarParent_Logic/AnimationPlayer
 @onready var camAnim = $CarParent_Logic/CamAnimationPlayer
 @onready var groundRay1 = $Car/CarLogic/RayCast3D1
@@ -205,12 +206,12 @@ func _physics_process(_delta):
 				pass
 			else:
 				#print("%s Hit another car" % username)
-				_process_kart_collision(hitS, lerpForce, wallBounce / weight)
+				_process_kart_collision(hitS, wallBounce / weight)
 				pass
 			pass
 		else:
 			#print("%s Hit track guardrail" % username)
-			_process_kart_collision(hitS, true_vel, wallBounce)
+			_process_kart_collision(hitS, wallBounce)
 			pass
 		pass
 	else:
@@ -257,33 +258,24 @@ func _physics_process(_delta):
 	
 	#print(Ball.angular_velocity.length())
 
-func _process_kart_collision(hitter : KinematicCollision3D, force : Vector3, bounce : float) -> Vector3:
-	var avgHitShellPos = Vector3(0.0, 0.0, 0.0)
+func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> Vector3:
+	var _avgHitShellPos = Vector3(0.0, 0.0, 0.0)
 	var avgHitNorm = Vector3(0.0, 0.0, 0.0)
 	var b = 0
 	while b < hitter.get_collision_count():
-		avgHitShellPos += hitter.get_position(b)
+		_avgHitShellPos += hitter.get_position(b)
 		avgHitNorm += hitter.get_normal(b)
 		b += 1
-	avgHitShellPos /= b
+	_avgHitShellPos /= b
 	avgHitNorm /= b
-	var newForce = ((CarHitBox.global_position.direction_to(avgHitShellPos))).normalized()
-	var newCross = avgHitNorm.cross(CarHitBox.global_basis.z)
-	var newDot = avgHitNorm.dot(CarHitBox.global_basis.z)
-	var dirDot = force.normalized().dot(CarHitBox.global_basis.z)
 	
-	Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
-	
-	newForce = ((force) * 0.5 * bounce)
-	
-	if dirDot > 0:
-		newForce = newForce.rotated(newCross.normalized(), -0.5 * PI)
-	else:
-		newForce = newForce.rotated(newCross.normalized(), PI)
-	Ball.linear_velocity = (newForce * force.length()) + (Ball.linear_velocity * (1 - absf(newDot)))
-	Ball.apply_central_force(newForce)
-	prevForce = newForce
-	return newForce
+	var boonce = hitter.get_remainder().bounce(avgHitNorm) * bounce
+	var foonce = Ball.linear_velocity.bounce(avgHitNorm) * bounce
+	Ball.linear_velocity = foonce
+	Ball.apply_central_force(-avgHitNorm)
+	Ball.apply_central_force(boonce)
+	prevForce = boonce
+	return boonce
 
 func _process(delta):
 	
@@ -331,15 +323,17 @@ func _process(delta):
 	if haveAuthority && usernameBox != null:
 		usernameBox.text = username
 	
-	if (firedItem && itemHeld != null) && not fireDisabled:
-		fireItem.emit(itemHeld)
-		itemHeld = null
-		hasItem = false
+	if firedItem:
+		if (itemHeld != null) && not fireDisabled:
+			fireItem.emit(itemHeld)
+			itemHeld = null
+			hasItem = false
 		firedItem = false
-	if (altFiredItem && altItem != null && itemHeld != null) && not fireDisabled:
-		altFireItem.emit(altItem)
-		itemHeld = null
-		hasItem = false
+	if altFiredItem:
+		if (altItem != null && itemHeld != null) && not fireDisabled:
+			altFireItem.emit(altItem)
+			itemHeld = null
+			hasItem = false
 		altFiredItem = false
 	
 	if start_drift and not drifting and rotateInput != 0 and speedInput > 0:
@@ -480,15 +474,19 @@ func StopDrift():
 	minimumDrift = false
 
 func GetHit(strength : float):
-	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if not HighLevelNetwork.get_hosting(): 
 		Anim.play("Hop")
 		pass
 	else:
 		Anim.play("Hop")
 		fireDisabled = true
-		Ball.angular_velocity = Vector3(0.0, 0.0, 0.0)
-		$CarParent_Logic/hurtTimer.start(strength)
 		acceleration = hurtSpeed
+		speedInput = (MS.inputDir) * acceleration
+		Ball.linear_velocity = Vector3.ZERO
+		#Ball.axis_lock_linear_x = true
+		#Ball.axis_lock_linear_y = true
+		#Ball.axis_lock_linear_z = true
+		hurtTimer.start(strength)
 		pass
 	pass
 
@@ -531,6 +529,9 @@ func _on_boost_timer_timeout() -> void:
 	can_look_back = true
 
 func _on_hurt_timer_timeout() -> void:
+	#Ball.axis_lock_linear_x = false
+	#Ball.axis_lock_linear_y = false
+	#Ball.axis_lock_linear_z = false
 	acceleration = hurtAccel
 	fireDisabled = false
 
