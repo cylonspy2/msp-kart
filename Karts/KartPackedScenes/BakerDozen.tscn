@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=4 uid="uid://c3ywrjpbr02ay"]
+[gd_scene load_steps=67 format=4 uid="uid://c3ywrjpbr02ay"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
@@ -18,6 +18,7 @@
 [ext_resource type="Material" uid="uid://jpxo73d1dcle" path="res://Karts/KartAssets/BakerDozen/BD_particle_process_material.tres" id="11_q8enl"]
 [ext_resource type="CapsuleMesh" uid="uid://bssljnc03yk3p" path="res://Karts/KartAssets/BakerDozen/BD_flame_trail.tres" id="12_dfca3"]
 [ext_resource type="Material" uid="uid://cjddmcsvj52nf" path="res://Karts/KartAssets/BakerDozen/BD_boost.tres" id="15_227g8"]
+[ext_resource type="Texture2D" uid="uid://bb4vsogl4uxa0" path="res://ExternalAssets/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png" id="18_227g8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_50v30"]
 properties/0/path = NodePath(".:player_id")
@@ -708,7 +709,67 @@ material = ExtResource("11_h7byv")
 radius = 0.15
 height = 0.3
 
-[node name="BakerDozen" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "boost_particles")]
+[sub_resource type="Curve" id="Curve_d6kcc"]
+_data = [Vector2(0, 0), 0.0, 5.825844, 0, 0, Vector2(0.1557377, 0.57303375), 1.6754057, 1.6754057, 0, 0, Vector2(0.45081967, 0.61797756), -0.8869799, -0.8869799, 0, 0, Vector2(0.8237705, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_2hfgr"]
+curve = SubResource("Curve_d6kcc")
+
+[sub_resource type="Curve" id="Curve_skdrs"]
+_data = [Vector2(0.5040984, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.70786524), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_btiea"]
+curve = SubResource("Curve_skdrs")
+
+[sub_resource type="Curve" id="Curve_yujcp"]
+_data = [Vector2(0.4492187, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ytfi8"]
+curve = SubResource("Curve_yujcp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_227g8"]
+lifetime_randomness = 0.42
+emission_shape_scale = Vector3(1, 2.11, 0.825)
+emission_shape = 3
+emission_box_extents = Vector3(0.53, 0.04, 0.17)
+direction = Vector3(0, 1, -0.335)
+spread = 13.431
+initial_velocity_min = 0.84999996
+initial_velocity_max = 1.15
+gravity = Vector3(0, 0.5, 0)
+radial_accel_min = -2.2351742e-06
+radial_accel_max = 1.5499977
+scale_curve = SubResource("CurveTexture_btiea")
+alpha_curve = SubResource("CurveTexture_2hfgr")
+turbulence_enabled = true
+turbulence_noise_strength = 4.78
+turbulence_noise_scale = 2.797
+turbulence_noise_speed = Vector3(0.05, 0.035, 0.05)
+turbulence_influence_min = 0.0
+turbulence_influence_over_life = SubResource("CurveTexture_ytfi8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d6kcc"]
+transparency = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("18_227g8")
+albedo_texture_force_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_skdrs"]
+material = SubResource("StandardMaterial3D_d6kcc")
+
+[node name="BakerDozen" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "boost_particles", "hurt_particles")]
 script = ExtResource("1_8ri5e")
 username = "USERNAME"
 Racer = ExtResource("2_hwo32")
@@ -720,15 +781,19 @@ CarModel = NodePath("Car/ModelParent")
 drift_particles_right = [NodePath("Car/ModelParent/Model/BD_Particles/groundSparks2")]
 drift_particles_left = [NodePath("Car/ModelParent/Model/BD_Particles/groundSparks")]
 boost_particles = [NodePath("Car/ModelParent/Model/BD_BParticles/GPUParticles3D"), NodePath("Car/ModelParent/Model/BD_BParticles/GPUParticles3D2")]
-maxSpeed = 900.0
-acceleration = 900.0
-steering = 7.415
-turnspeed = 4.95
-weight = 15.49
+hurt_particles = NodePath("Car/ModelParent/Model/Hurt_Particles/GPUParticles3D")
+maxSpeed = 3000.0
+acceleration = 1000.0
+steering = 34.44
+steeringAccelMod = 1.0
+turnspeed = 0.785
+weight = 16
 airControl = 0.9
-wallBounce = 0.73
+wallBounce = 0.77
 kart_icon = ExtResource("3_us48a")
-bodytilt = 8.435
+bodytilt = 5.01
+wheelTwist = 0.365
+maxCarTwist = 10.775
 sparkMat = ExtResource("8_robuc")
 base_color = Color(1, 0, 0, 1)
 tier_1_color = Color(1, 0.5176471, 0, 1)
@@ -775,7 +840,7 @@ libraries = {
 }
 
 [node name="Ball" type="RigidBody3D" parent="."]
-mass = 10.0
+mass = 15.44
 physics_material_override = SubResource("PhysicsMaterial_24jkt")
 gravity_scale = 0.0
 contact_monitor = true
@@ -956,6 +1021,17 @@ one_shot = true
 local_coords = true
 process_material = ExtResource("15_227g8")
 draw_pass_1 = SubResource("CapsuleMesh_d6kcc")
+
+[node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1.62, 0, 0, 0, 1.546, 0, 0, 0, 1.62, 0, 0, -0.5142805)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles"]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0.525, -0.906)
+amount = 28
+lifetime = 1.33
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_227g8")
+draw_pass_1 = SubResource("QuadMesh_skdrs")
 
 [node name="Items" type="Node3D" parent="."]
 

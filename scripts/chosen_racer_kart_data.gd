@@ -4,6 +4,7 @@ extends HBoxContainer
 @onready var nameracer = $Kart/VBoxContainer/Names/Label2
 @onready var subViewie = $Kart/VBoxContainer/SubViewportContainer/SubViewport
 @onready var stat_weight = $Stats/STATS/Weight
+@onready var stat_maxspeed = $Stats/STATS/MaxSpd
 @onready var stat_accel = $Stats/STATS/Acceleration
 @onready var stat_steer = $Stats/STATS/Steering
 @onready var stat_drift = $"Stats/STATS/Drift Control"
@@ -56,10 +57,11 @@ func update_kart(track : PackedScene):
 	trac.player_id = -20
 	stat_weight.value = kartChosen.weight
 	stat_accel.value = kartChosen.acceleration
-	stat_steer.value = kartChosen.steering
-	stat_drift.value = kartChosen.steeringDrift
+	stat_steer.value = kartChosen.steering + (kartChosen.turnspeed * kartChosen.steering) + (kartChosen.steeringDrift * kartChosen.steering)
+	stat_drift.value = kartChosen.steeringAccelMod
 	stat_boost.value = kartChosen.driftBoost
 	stat_air_control.value = kartChosen.airControl
+	stat_maxspeed.value = kartChosen.maxSpeed
 
 func update_racer(track : PackedScene):
 	if track == null:

@@ -42,19 +42,20 @@ extends Node3D
 @export var drift_particles_right : Array[GPUParticles3D]
 @export var drift_particles_left : Array[GPUParticles3D]
 @export var boost_particles : Array[GPUParticles3D]
+@export var hurt_particles : GPUParticles3D
 
 @export_group("Car Stats")
-@export var maxSpeed = 100.0
+@export var maxSpeed = 15000.0
 @export var hurtSpeed = 100.0
-@export var acceleration = 70.0
-@export var steering = 12.0
+@export var acceleration = 900.0
+@export var steering = 50.0
 @export var steeringDrift = 0.55
-@export var steeringAccelMod = 0.8
-@export var turnspeed = 5.0
-@export var weight = 10.0
+@export var steeringAccelMod = 0.4
+@export var turnspeed = 0.01
+@export var weight = 15
 @export var driftBoost = 1.75
 @export var airControl = 0.1
-@export var wallBounce = 0.2
+@export var wallBounce = 0.8
 
 var speedInput = 0.0
 var rotateInput = 0.0
@@ -63,6 +64,7 @@ var correctivey = 0.0
 @export_group("Car Visual Tweaks")
 @export var kart_icon : Texture2D
 @export var bodytilt = 30.0
+@export var wheelTwist = 0.5
 @export var maxCarTwist = 30.0
 @export var carTwistRate = 5.0
 var carTwist = 0.0
@@ -136,6 +138,8 @@ func _ready():
 	print("%s ready, with controller %s" % [name, player_id])
 	
 	$Car/CarLogic/CarHitbox.name = str(player_id)
+	weight = Ball.mass
+	hurt_particles.emitting = false
 	
 	if Racer != null:
 		SpawnRacer(Racer)
@@ -175,6 +179,10 @@ func _physics_process(_delta):
 		server_Pos_Offset = Vector3()
 		time_since_last_update = 0.0
 	
+	if Ball.linear_velocity.length() > maxSpeed and boost <= 1:
+		var cappa = (Ball.linear_velocity / maxSpeed).normalized()
+		Ball.linear_velocity = cappa * maxSpeed
+	
 	Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin + ModelOffset, velocity_smooth)
 	
 	var forceForce = (Car.global_transform.basis.z * speedInput)
@@ -186,15 +194,11 @@ func _physics_process(_delta):
 	else:
 		is_touching_ground = true
 	
-	var lerpForce : Vector3
-	if drifting :
-		lerpForce = lerp(((forceForce * boost) * steeringAccelMod), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
-	else :
-		lerpForce = lerp(((forceForce * boost)), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
-	
-	
+	var lerpForce = lerp(((forceForce * boost)), prevForce, clamp(prevForce.length(), 0.0, 1.0) * _delta)
 	var true_vel = ((lerpForce * _delta) + (_delta * Ball.linear_velocity))
-	#print(true_vel)
+	if drifting :
+		lerpForce = lerp(lerpForce, prevForce, steeringAccelMod)
+		true_vel = lerp(true_vel, (_delta * Ball.linear_velocity) * 2, steeringAccelMod)
 	
 	##code for when the kart's own hitbox detects collisions
 	var hitS : KinematicCollision3D = CarHitBox.move_and_collide(true_vel * _delta, true, 0.01, true)
@@ -269,10 +273,10 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	_avgHitShellPos /= b
 	avgHitNorm /= b
 	
-	var boonce = hitter.get_remainder().bounce(avgHitNorm) * bounce
-	var foonce = Ball.linear_velocity.bounce(avgHitNorm) * bounce
+	var boonce = (hitter.get_remainder().bounce(avgHitNorm) * bounce) + avgHitNorm
+	var foonce = (Ball.linear_velocity.bounce(avgHitNorm) * bounce) + avgHitNorm
 	Ball.linear_velocity = foonce
-	Ball.apply_central_force(-avgHitNorm)
+	#Ball.apply_central_force(avgHitNorm)
 	Ball.apply_central_force(boonce)
 	prevForce = boonce
 	return boonce
@@ -285,6 +289,8 @@ func _process(delta):
 		else:
 			speedInput = (MS.inputDir) * acceleration
 			rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+			if speedInput < 0.0:
+				rotateInput *= -1
 			lockedCamPos = null
 			Cam.position = camStartPos
 			Cam.basis = camStartRot
@@ -313,8 +319,8 @@ func _process(delta):
 	if not hiter:
 		rotateInput *= airControl
 	
-	RightWheel.rotation.y = lerp(RightWheel.rotation.y, rotateInput, 5 * delta)
-	LeftWheel.rotation.y = lerp(LeftWheel.rotation.y, rotateInput, 5 * delta)
+	RightWheel.rotation.y = lerp(RightWheel.rotation.y, rotateInput * wheelTwist, 5 * delta)
+	LeftWheel.rotation.y = lerp(LeftWheel.rotation.y, rotateInput * wheelTwist, 5 * delta)
 	
 	if multiplayer.is_server() or not HighLevelNetwork.multiplayer_enabled: 
 		## serverwork + singleplayer work
@@ -336,19 +342,19 @@ func _process(delta):
 			hasItem = false
 		altFiredItem = false
 	
-	if start_drift and not drifting and rotateInput != 0 and speedInput > 0:
-		boostTiering = 0
-		startDriftDirection = MS.inputRot
-		carTwist = deg_to_rad(maxCarTwist * startDriftDirection)
-		startedDrifting = true
-		StartDrift()
+	if start_drift:
 		start_drift = false
+		if not drifting and rotateInput != 0 and (speedInput > 0.0 and Ball.linear_velocity.length() > 1):
+			boostTiering = 0
+			startDriftDirection = MS.inputRot
+			carTwist = deg_to_rad(maxCarTwist * startDriftDirection)
+			startedDrifting = true
+			StartDrift()
 	
 	if drifting:
-		var driftAmount = 0.0
-		driftAmount += startDriftDirection
-		driftAmount *= deg_to_rad(steering * steeringDrift)
-		rotateInput += driftDirection + driftAmount
+		var driftAmount = lerp(rotateInput,(deg_to_rad(steering * (1 + steeringDrift)) * startDriftDirection), steeringDrift)
+		rotateInput = lerp(rotateInput, driftAmount, steeringAccelMod)
+		#rotateInput += driftDirection + driftAmount
 		match boostTiering:
 			1:
 				sparkMat.albedo_color = tier_1_color
@@ -366,12 +372,16 @@ func _process(delta):
 				sparkMat.albedo_color = base_color
 				sparkMat.emission = base_color
 	
-	if (drifting and (end_drift or speedInput < 1)) or not is_touching_ground:
-		startedDrifting = false
-		StopDrift()
+	if end_drift or ((speedInput <= 0.1) or not is_touching_ground or Ball.linear_velocity.length() <= 1):
 		end_drift = false
+		if drifting:
+			start_drift = false
+			startedDrifting = false
+			driftTimer.stop()
+			drifting = false
+			StopDrift()
 	
-	if Ball.linear_velocity.length() > 0.7 :
+	if Ball.linear_velocity.length() > 0.1 :
 		turnable = true
 	else:
 		turnable = false
@@ -401,12 +411,13 @@ func _process(delta):
 func RotateCar(delta):
 	var antiGrav = -gravForce
 	var rotari = rotateInput
+	var speedModif = clampf(turnspeed * Ball.linear_velocity.length(), 0.0, 1.0) 
 	
 	var carBasis = Car.global_transform.basis.orthonormalized()
 	if not turnable :
 		rotari = 0.0
 	var newBasis = Car.transform.basis.rotated(Car.transform.basis.y, rotari).get_rotation_quaternion()
-	Car.transform.basis = Car.transform.basis.orthonormalized().slerp(newBasis, turnspeed * delta)
+	Car.transform.basis = Car.transform.basis.orthonormalized().slerp(newBasis, speedModif * delta)
 	Car.transform.basis = Car.transform.basis.orthonormalized()
 	carBasis = Car.global_transform.basis.orthonormalized()
 	#var veloc_modif = clampf(Ball.linear_velocity.length(), 0.0, 100.0) * 0.01
@@ -476,10 +487,26 @@ func StopDrift():
 func GetHit(strength : float):
 	if not HighLevelNetwork.get_hosting(): 
 		Anim.play("Hop")
+		hurt_particles.emitting = true
 		pass
 	else:
 		Anim.play("Hop")
+		hurt_particles.emitting = true
 		fireDisabled = true
+		acceleration = hurtSpeed
+		speedInput = (MS.inputDir) * acceleration
+		Ball.linear_velocity = Vector3.ZERO
+		#Ball.axis_lock_linear_x = true
+		#Ball.axis_lock_linear_y = true
+		#Ball.axis_lock_linear_z = true
+		hurtTimer.start(strength)
+		pass
+	pass
+
+func GetSlowed(strength : float):
+	if not HighLevelNetwork.get_hosting(): 
+		pass
+	else:
 		acceleration = hurtSpeed
 		speedInput = (MS.inputDir) * acceleration
 		Ball.linear_velocity = Vector3.ZERO
@@ -532,6 +559,7 @@ func _on_hurt_timer_timeout() -> void:
 	#Ball.axis_lock_linear_x = false
 	#Ball.axis_lock_linear_y = false
 	#Ball.axis_lock_linear_z = false
+	hurt_particles.emitting = false
 	acceleration = hurtAccel
 	fireDisabled = false
 

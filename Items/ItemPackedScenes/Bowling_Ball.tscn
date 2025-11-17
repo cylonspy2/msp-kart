@@ -215,7 +215,7 @@ text = ":"
 font_size = 182
 
 [node name="Label3D2" type="Label3D" parent="ItemEffect/RigidBody3D/MeshInstance3D"]
-transform = Transform3D(-4.3711385e-08, -1.0000001, -3.2362298e-15, 0.8616821, -3.766533e-08, 0.5074481, -0.5074481, 2.2181268e-08, 0.861682, -0.28953388, 0.376575, 0.641961)
+transform = Transform3D(-4.4703484e-08, -1.0000004, 0, 0.8616821, -3.766533e-08, 0.5074481, -0.5074482, 2.2351742e-08, 0.86168224, -0.28980273, 0.36710203, 0.63804245)
 modulate = Color(0, 0, 0, 1)
 text = "."
 font_size = 182
