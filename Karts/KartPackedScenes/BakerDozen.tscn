@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://c3ywrjpbr02ay"]
+[gd_scene load_steps=75 format=4 uid="uid://c3ywrjpbr02ay"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
@@ -121,10 +121,10 @@ tracks/3/path = NodePath("Car/ModelParent/Model/Lid:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.11, 0.23333333, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.11, 0.23, 0.23333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 2.5985155, 1.6289612), Vector3(-0.002, 2.366, 1.754), Vector3(-0.002, 2.611, 1.464), Vector3(0, 2.5985155, 1.6289612)]
+"values": [Vector3(0, 1.7695861, 1.2719653), Vector3(-0.10874531, 1.6266266, 1.513202), Vector3(0.03119923, 1.7888758, 1.1107281), Vector3(-0.002, 1.881, 1.254), Vector3(0, 1.7695861, 1.2719653)]
 }
 
 [sub_resource type="Animation" id="Animation_06lh1"]
@@ -177,10 +177,10 @@ tracks/2/path = NodePath("Car/ModelParent/Model/Lid:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.09, 0.18, 0.23, 0.4),
+"times": PackedFloat32Array(0, 0.09, 0.18, 0.3, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 2.5985155, 1.6289612), Vector3(0.05, 2.519, 1.679), Vector3(0.05, 2.624, 1.524), Vector3(0.050000004, 2.6240003, 1.5240002), Vector3(0, 2.5985155, 1.6289612)]
+"values": [Vector3(0, 1.7695861, 1.2719653), Vector3(0.11725727, 1.5621724, 1.5844443), Vector3(0.12703943, 1.8474215, 1.168271), Vector3(-0.1583757, 1.8226557, 1.150083), Vector3(0, 1.7695861, 1.2719653)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -255,7 +255,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 2.5985155, 1.6289612)]
+"values": [Vector3(0, 1.7695861, 1.2719653)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -377,10 +377,10 @@ tracks/0/path = NodePath("Car/CarLogic/Camera:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
+"times": PackedFloat32Array(0, 0.41),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 2.627013, -2.9686177), Vector3(0, 2.193, 2.969)]
+"values": [Vector3(0, 2.9837027, -3.6065478), Vector3(0, 2.9401774, 2.969)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -420,7 +420,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 2.193, 2.969), Vector3(0, 2.627013, -2.9686177)]
+"values": [Vector3(0, 2.9401774, 2.969), Vector3(0, 2.9837027, -3.6065478)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -459,7 +459,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 2.627013, -2.9686177)]
+"values": [Vector3(0, 2.9837027, -3.6065478)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -533,7 +533,7 @@ rough = true
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_50v30"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_us48a"]
-size = Vector3(2.21, 1.159, 1.878)
+size = Vector3(3.2385302, 1.6608437, 3.4964032)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iu6dd"]
 resource_name = "Material"
@@ -680,16 +680,60 @@ material = ExtResource("7_tkt8u")
 radius = 0.15
 height = 0.3
 
+[sub_resource type="Curve" id="Curve_nkuvu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.03278689, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_slcrc"]
+curve = SubResource("Curve_nkuvu")
+
+[sub_resource type="Curve" id="Curve_227g8"]
+_limits = [0.0, 32.75, 0.0, 1.0]
+_data = [Vector2(0.15163934, 32.75), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_d6kcc"]
+curve = SubResource("Curve_227g8")
+
+[sub_resource type="Curve" id="Curve_8co32"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8wxgi"]
+curve = SubResource("Curve_8co32")
+
+[sub_resource type="Curve" id="Curve_8wxgi"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nkuvu"]
+curve = SubResource("Curve_8wxgi")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_robuc"]
-emission_shape_scale = Vector3(0.03, 0.055, 0.355)
+particle_flag_rotate_y = true
+emission_shape_scale = Vector3(0.03, 0.055, 0.665)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 inherit_velocity_ratio = 1.0
 direction = Vector3(0, 2.47, -1)
 spread = 7.759
-initial_velocity_min = 4.2
-initial_velocity_max = 7.75
+initial_velocity_min = 0.84999996
+initial_velocity_max = 2.8
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -0.7500022
+linear_accel_max = -0.10000224
+radial_accel_min = -1.7000022
+radial_accel_max = 1.4499978
+damping_max = 0.23
+scale_curve = SubResource("CurveTexture_8wxgi")
 scale_over_velocity_max = 120.329994
+alpha_curve = SubResource("CurveTexture_slcrc")
+emission_curve = SubResource("CurveTexture_d6kcc")
+turbulence_enabled = true
+turbulence_noise_strength = 1.7
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.115
+turbulence_influence_over_life = SubResource("CurveTexture_nkuvu")
 
 [sub_resource type="PrismMesh" id="PrismMesh_227g8"]
 material = ExtResource("8_robuc")
@@ -717,7 +761,7 @@ point_count = 4
 curve = SubResource("Curve_d6kcc")
 
 [sub_resource type="Curve" id="Curve_skdrs"]
-_data = [Vector2(0.5040984, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.70786524), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.5122951, 0.82022476), 0.0, 0.0, 0, 0, Vector2(1, 0.47191018), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_btiea"]
@@ -737,8 +781,8 @@ emission_shape = 3
 emission_box_extents = Vector3(0.53, 0.04, 0.17)
 direction = Vector3(0, 1, -0.335)
 spread = 13.431
-initial_velocity_min = 0.84999996
-initial_velocity_max = 1.15
+initial_velocity_min = 0.29999998
+initial_velocity_max = 0.7
 gravity = Vector3(0, 0.5, 0)
 radial_accel_min = -2.2351742e-06
 radial_accel_max = 1.5499977
@@ -840,7 +884,7 @@ libraries = {
 }
 
 [node name="Ball" type="RigidBody3D" parent="."]
-mass = 15.44
+mass = 14.155
 physics_material_override = SubResource("PhysicsMaterial_24jkt")
 gravity_scale = 0.0
 contact_monitor = true
@@ -859,7 +903,7 @@ Ball = NodePath("../../Ball")
 processMat = ExtResource("11_q8enl")
 
 [node name="Camera" type="Camera3D" parent="Car/CarLogic"]
-transform = Transform3D(-1, 2.1327507e-08, -1.3987514e-07, -3.2928735e-08, 0.9263512, 0.37666085, 1.3760675e-07, 0.37666085, -0.9263512, 0, 2.627013, -2.9686177)
+transform = Transform3D(-1, 2.1327509e-08, -1.3987516e-07, -3.2928735e-08, 0.92635125, 0.37666088, 1.3760675e-07, 0.37666088, -0.92635125, 0, 2.9837027, -3.6065478)
 
 [node name="Car_UI" type="Control" parent="Car/CarLogic/Camera"]
 layout_mode = 3
@@ -880,7 +924,7 @@ script = ExtResource("5_v44p8")
 parentCar = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Car/CarLogic/CarHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6465874, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019167423, 0.8975092, -0.3845629)
 shape = SubResource("BoxShape3D_us48a")
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox"]
@@ -890,8 +934,8 @@ polygon = PackedVector2Array(1, 0, 1, 1.431, -1, 1.431, -1, 0)
 margin = 0.001
 
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00061035156, 0.5812645, 0.033152163)
-size = Vector3(1.4758301, 1.1148605, 1.5652161)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01687622, 0.6770611, -0.030175626)
+size = Vector3(2.2376099, 1.3064537, 2.1989212)
 
 [node name="Car_Marker" type="Node" parent="Car/CarLogic/CarHitbox"]
 
@@ -908,7 +952,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.517, 1, -0.719)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517, 1, -0.719)
 
 [node name="UsernameHolder" type="Node3D" parent="Car/CarLogic"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6855315, -0.34393528)
+transform = Transform3D(2.175, 0, 0, 0, 2.175, 0, 0, 0, 2.175, 0, 3.202903, -0.009198427)
 script = ExtResource("6_hprm1")
 
 [node name="Username" type="Label3D" parent="Car/CarLogic/UsernameHolder"]
@@ -919,34 +963,33 @@ text = "USERNAME"
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
-transform = Transform3D(0.549, 0, 0, 0, 0.524, 0, 0, 0, 0.549, 0, 0, 0)
 
 [node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1.8214935, 0, 0, 0, 1.9083967, 0, 0, 0, 1.8214935, 0, 1.6349049, -0.054238)
+transform = Transform3D(1.8214935, 0, 0, 0, 1.9083967, 0, 0, 0, 1.8214935, 0, 0.6545358, 0.1574625)
 
 [node name="Body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1.3406076, 0, 0, 0, 1, 0, 0, 0, 1.3341691, 0, 1.0798104, 0)
+transform = Transform3D(1.0744498, 0, 0, 0, 0.602724, 0, 0, 0, 1.0704895, 0, 0.66044235, 0)
 material_override = ExtResource("7_1hcuc")
 mesh = SubResource("ArrayMesh_slq7g")
 skeleton = NodePath("")
 
 [node name="Lid" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1.0910004, 0, 0, 0, 0.51746, -0.02852865, 0, 0.33050188, 0.04466672, 0, 2.5985155, 1.6289612)
+transform = Transform3D(0.89954466, 0, 0, 0, 0.5174602, -0.02852866, 0, 0.33050203, 0.044666737, 0, 1.7695861, 1.2719653)
 material_override = ExtResource("8_yywgk")
 mesh = SubResource("ArrayMesh_gychf")
 skeleton = NodePath("")
 
 [node name="RightThrustCorrection" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.575, 1.174, -0.679)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3400601, 0.9211564, -0.67900026)
 
 [node name="RightThrust" type="MeshInstance3D" parent="Car/ModelParent/Model/RightThrustCorrection"]
-transform = Transform3D(0.2416869, 0, 0, 0, 0.060944315, -0.24817917, 0, 0.99643123, 0.01517928, 3.15, 0, 0)
+transform = Transform3D(0.15, 0, 0, 0, 0.0450538, -0.14972022, 0, 0.73662347, 0.009157277, 2.0377786, 0, 0)
 material_override = ExtResource("9_0x8ti")
 mesh = SubResource("ArrayMesh_robuc")
 skeleton = NodePath("")
 
 [node name="flame" type="GPUParticles3D" parent="Car/ModelParent/Model/RightThrustCorrection"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000303, 0.000166893, -0.063183546, -1.1108549)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000303, 0.10200119, -0.05154842, -0.8728503)
 amount = 24
 fixed_fps = 0
 local_coords = true
@@ -955,7 +998,7 @@ process_material = ExtResource("11_q8enl")
 draw_pass_1 = ExtResource("12_dfca3")
 
 [node name="flame2" type="GPUParticles3D" parent="Car/ModelParent/Model/RightThrustCorrection"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000303, 0.000166893, 0.4417063, -1.1385878)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000303, 0.10200119, 0.29178047, -0.90058315)
 amount = 24
 fixed_fps = 0
 local_coords = true
@@ -963,16 +1006,16 @@ process_material = ExtResource("11_q8enl")
 draw_pass_1 = ExtResource("12_dfca3")
 
 [node name="LeftThrustCorrection" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 1.5746157, 1.1741221, -0.6791842)
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 1.2791629, 0.921, -0.679)
 
 [node name="LeftThrust" type="MeshInstance3D" parent="Car/ModelParent/Model/LeftThrustCorrection"]
-transform = Transform3D(0.2416869, 0, 0, 0, 0.06094431, -0.24817918, 0, 0.9964312, 0.015179281, 0, 0, 0)
+transform = Transform3D(0.15, 0, 0, 0, 0.0450538, -0.14972022, 0, 0.73662347, 0.009157277, 0, 0, 0)
 material_override = ExtResource("9_0x8ti")
 mesh = SubResource("ArrayMesh_tkt8u")
 skeleton = NodePath("")
 
 [node name="flame3" type="GPUParticles3D" parent="Car/ModelParent/Model/LeftThrustCorrection"]
-transform = Transform3D(1, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000299, 1.1920929e-07, -0.06318319, -1.1108551)
+transform = Transform3D(1, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000299, 1.1920929e-07, -0.05154842, -0.8728503)
 amount = 24
 fixed_fps = 0
 local_coords = true
@@ -980,7 +1023,7 @@ process_material = ExtResource("11_q8enl")
 draw_pass_1 = SubResource("CapsuleMesh_txg0j")
 
 [node name="flame4" type="GPUParticles3D" parent="Car/ModelParent/Model/LeftThrustCorrection"]
-transform = Transform3D(1, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000299, 1.1920929e-07, 0.44170666, -1.138588)
+transform = Transform3D(1, 0, 0, 0, 1.0000002, 0, 0, 0, 1.0000299, 1.1920929e-07, 0.29178047, -0.90058315)
 amount = 24
 fixed_fps = 0
 local_coords = true
@@ -988,21 +1031,25 @@ process_material = ExtResource("11_q8enl")
 draw_pass_1 = SubResource("CapsuleMesh_txg0j")
 
 [node name="BD_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(0.795, 0, 0, 0, 0.795, 0, 0, 0, 0.795, 0, 0, 0)
 
 [node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
-transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 1.4039049, 0.108854555, -0.67884797)
-amount = 12
+transform = Transform3D(0.22690584, 1.8935319, 0, -1.8073055, 0.23773152, 0, 0, 0, 1.8214937, 1.4039049, 0.108854555, -0.14442262)
+amount = 47
 local_coords = true
+transform_align = 3
 process_material = SubResource("ParticleProcessMaterial_robuc")
 draw_pass_1 = SubResource("PrismMesh_227g8")
 
 [node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_Particles"]
-transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, -1.404, 0.109, -0.679)
+transform = Transform3D(0.22829369, -1.8933488, 0, 1.8071307, 0.23918557, 0, 0, 0, 1.8214936, -1.4039999, 0.109, -0.14457466)
+amount = 47
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_robuc")
 draw_pass_1 = SubResource("PrismMesh_d6kcc")
 
 [node name="BD_BParticles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(0.825, 0, 0, 0, 0.825, 0, 0, 0, 0.825, 0, 0, 0)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/BD_BParticles"]
 transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0.55914533, 1.2910511, -1.4504336)
@@ -1026,7 +1073,7 @@ draw_pass_1 = SubResource("CapsuleMesh_d6kcc")
 transform = Transform3D(1.62, 0, 0, 0, 1.546, 0, 0, 0, 1.62, 0, 0, -0.5142805)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles"]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0.525, -0.906)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -1.4717195e-07, 0.24774908, -0.6877073)
 amount = 28
 lifetime = 1.33
 local_coords = true

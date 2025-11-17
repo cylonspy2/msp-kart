@@ -138,7 +138,7 @@ func _ready():
 	print("%s ready, with controller %s" % [name, player_id])
 	
 	$Car/CarLogic/CarHitbox.name = str(player_id)
-	weight = Ball.mass
+	#weight = Ball.mass
 	hurt_particles.emitting = false
 	
 	if Racer != null:
@@ -225,9 +225,9 @@ func _physics_process(_delta):
 		pass
 	
 	if is_touching_ground:
-		hitr = Ball.move_and_collide(gravDir * weight * _delta, true, 0.01, true)
+		hitr = Ball.move_and_collide(gravDir * weight * _delta * boost, true, 0.01, true)
 	else:
-		hitr = Ball.move_and_collide(gravDir * _delta, true, 0.01, true)
+		hitr = Ball.move_and_collide(gravDir * _delta * boost, true, 0.01, true)
 	if hitr:
 		Ball.gravity_scale = 0.0
 		var avgHitPos = Vector3(0.0, 0.0, 0.0)
@@ -273,7 +273,8 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	_avgHitShellPos /= b
 	avgHitNorm /= b
 	
-	var boonce = (hitter.get_remainder().bounce(avgHitNorm) * bounce) + avgHitNorm
+	var boo = hitter.get_remainder().normalized() * Ball.linear_velocity.length()
+	var boonce = (boo.bounce(avgHitNorm) * bounce) + avgHitNorm
 	var foonce = (Ball.linear_velocity.bounce(avgHitNorm) * bounce) + avgHitNorm
 	Ball.linear_velocity = foonce
 	#Ball.apply_central_force(avgHitNorm)
