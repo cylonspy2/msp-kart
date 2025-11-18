@@ -1,7 +1,7 @@
 [gd_scene load_steps=32 format=3 uid="uid://rdfs1h0nn3vf"]
 
 [ext_resource type="Script" uid="uid://dd64iyelwg5c2" path="res://scripts/racer.gd" id="1_n251x"]
-[ext_resource type="PackedScene" uid="uid://6a327nhpgdjl" path="res://Items/ItemPackedScenes/Horn.tscn" id="2_gry0m"]
+[ext_resource type="PackedScene" uid="uid://bocg6mtnl572u" path="res://Items/ItemPackedScenes/Bowling_Ball.tscn" id="2_6p3rt"]
 [ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer.png" id="3_6p3rt"]
 [ext_resource type="Texture2D" uid="uid://d1sgfymsfdxyu" path="res://ExternalAssets/ref_Racer/Timeline 1_0001.png" id="4_ua8bi"]
 [ext_resource type="Texture2D" uid="uid://dfdykvii0wyrq" path="res://ExternalAssets/ref_Racer/Timeline 1_0005.png" id="5_fmpry"]
@@ -284,10 +284,9 @@ animations = [{
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gq0vh"]
 
-[node name="MSPReader" type="Node3D"]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+[node name="MSPR" type="Node3D"]
 script = ExtResource("1_n251x")
-RacerItem = ExtResource("2_gry0m")
+RacerItem = ExtResource("2_6p3rt")
 RacerIcon = ExtResource("3_6p3rt")
 
 [node name="RacerSkin" type="Node3D" parent="."]

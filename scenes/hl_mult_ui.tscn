@@ -44,6 +44,7 @@ offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a1sbk")
+select_menu_width_count = 7
 serverBrowserBoxContainer = NodePath("ServerBrowser/Container/ServBrow_Color/ScrollContainer/ServerBrowser")
 server_button = ExtResource("2_puhv1")
 select_button = ExtResource("3_rk2t1")
@@ -624,7 +625,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
-max_value = 300.0
+max_value = 150.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Steering"]
@@ -656,7 +657,8 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
-max_value = 4.0
+max_value = 1.0
+value = 1.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Boost"]

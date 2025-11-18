@@ -526,6 +526,7 @@ _data = {
 }
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_24jkt"]
+friction = 0.0
 rough = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7822p"]
@@ -813,13 +814,13 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_skdrs"]
 material = SubResource("StandardMaterial3D_d6kcc")
 
-[node name="BakerDozen" type="Node3D" node_paths=PackedStringArray("Car", "RightWheel", "LeftWheel", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "boost_particles", "hurt_particles")]
+[node name="Baker Dozen" type="Node3D" node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "boost_particles", "hurt_particles")]
 script = ExtResource("1_8ri5e")
 username = "USERNAME"
 Racer = ExtResource("2_hwo32")
+RacerSpawnLoc = NodePath("Car/ModelParent/Model/Body/RacerSpawn")
 Car = NodePath("Car")
-RightWheel = NodePath("Car/ModelParent/Model/RightThrustCorrection")
-LeftWheel = NodePath("Car/ModelParent/Model/LeftThrustCorrection")
+Wheelie = [NodePath("Car/ModelParent/Model/RightThrustCorrection"), NodePath("Car/ModelParent/Model/LeftThrustCorrection")]
 CarBody = NodePath("Car/ModelParent/Model")
 CarModel = NodePath("Car/ModelParent")
 drift_particles_right = [NodePath("Car/ModelParent/Model/BD_Particles/groundSparks2")]
@@ -828,15 +829,16 @@ boost_particles = [NodePath("Car/ModelParent/Model/BD_BParticles/GPUParticles3D"
 hurt_particles = NodePath("Car/ModelParent/Model/Hurt_Particles/GPUParticles3D")
 maxSpeed = 3000.0
 acceleration = 1000.0
-steering = 34.44
+steering = 34.89
+steeringDrift = 2.12
 steeringAccelMod = 1.0
-turnspeed = 0.785
-weight = 16
-airControl = 0.9
+turnspeed = 0.72
+driftBoost = 0.64
+airControl = 0.965
 wallBounce = 0.77
 kart_icon = ExtResource("3_us48a")
 bodytilt = 5.01
-wheelTwist = 0.365
+wheelTwist = 0.08
 maxCarTwist = 10.775
 sparkMat = ExtResource("8_robuc")
 base_color = Color(1, 0, 0, 1)
@@ -891,6 +893,7 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp_mode = 1
 linear_damp = 1.5
+angular_damp = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
 shape = SubResource("SphereShape3D_7822p")
@@ -964,14 +967,14 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
 
-[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1.8214935, 0, 0, 0, 1.9083967, 0, 0, 0, 1.8214935, 0, 0.6545358, 0.1574625)
-
 [node name="Body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1.0744498, 0, 0, 0, 0.602724, 0, 0, 0, 1.0704895, 0, 0.66044235, 0)
+transform = Transform3D(0.909, 0, 0, 0, 0.603, 0, 0, 0, 0.909, 0, 0.66044235, 0)
 material_override = ExtResource("7_1hcuc")
 mesh = SubResource("ArrayMesh_slq7g")
 skeleton = NodePath("")
+
+[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model/Body"]
+transform = Transform3D(1.10011, 0, 0, 0, 1.6583749, 0, 0, 0, 1.10011, 0, 0.37175083, 0.17322607)
 
 [node name="Lid" type="MeshInstance3D" parent="Car/ModelParent/Model"]
 transform = Transform3D(0.89954466, 0, 0, 0, 0.5174602, -0.02852866, 0, 0.33050203, 0.044666737, 0, 1.7695861, 1.2719653)
@@ -980,7 +983,7 @@ mesh = SubResource("ArrayMesh_gychf")
 skeleton = NodePath("")
 
 [node name="RightThrustCorrection" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3400601, 0.9211564, -0.67900026)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.216119, 0.921, -0.679)
 
 [node name="RightThrust" type="MeshInstance3D" parent="Car/ModelParent/Model/RightThrustCorrection"]
 transform = Transform3D(0.15, 0, 0, 0, 0.0450538, -0.14972022, 0, 0.73662347, 0.009157277, 2.0377786, 0, 0)
@@ -1006,7 +1009,7 @@ process_material = ExtResource("11_q8enl")
 draw_pass_1 = ExtResource("12_dfca3")
 
 [node name="LeftThrustCorrection" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 1.2791629, 0.921, -0.679)
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 1.1198903, 0.921, -0.679)
 
 [node name="LeftThrust" type="MeshInstance3D" parent="Car/ModelParent/Model/LeftThrustCorrection"]
 transform = Transform3D(0.15, 0, 0, 0, 0.0450538, -0.14972022, 0, 0.73662347, 0.009157277, 0, 0, 0)

@@ -3,6 +3,7 @@ extends Node3D
 @export var username : String = "EctoBiologist"
 
 @export var Racer : PackedScene
+@export var RacerSpawnLoc : Node3D
 
 @export var hasItem = false
 @export var itemHeld : PackedScene = null
@@ -17,7 +18,6 @@ extends Node3D
 @onready var MS = $CarParent_Logic/ControlSynchronizer
 @onready var UI = $Car/CarLogic/Camera/Car_UI
 @onready var Cam = $Car/CarLogic/Camera
-@onready var RacerSpawnLoc = $Car/ModelParent/Model/RacerSpawn
 @onready var ItemSpawner = $Items/ItemSpawner
 @onready var Ball = $Ball
 @onready var BallCollisionShape = $Ball/CollisionShape3D
@@ -34,8 +34,7 @@ extends Node3D
 @onready var usernameBox = $Car/CarLogic/UsernameHolder/Username
 @export_group("Car Model Data")
 @export var Car = Node3D
-@export var RightWheel = MeshInstance3D
-@export var LeftWheel = MeshInstance3D
+@export var Wheelie : Array[Node3D]
 @export var CarBody = MeshInstance3D
 @export var CarModel = MeshInstance3D
 @export var ModelOffset = Vector3(0.0, -0.5, 0.0)
@@ -49,10 +48,10 @@ extends Node3D
 @export var hurtSpeed = 100.0
 @export var acceleration = 900.0
 @export var steering = 50.0
-@export var steeringDrift = 0.55
+@export var steeringDrift = 0.5
 @export var steeringAccelMod = 0.4
 @export var turnspeed = 0.01
-@export var weight = 15
+@export var weight = 15.0
 @export var driftBoost = 1.75
 @export var airControl = 0.1
 @export var wallBounce = 0.8
@@ -225,9 +224,9 @@ func _physics_process(_delta):
 		pass
 	
 	if is_touching_ground:
-		hitr = Ball.move_and_collide(gravDir * weight * _delta * boost, true, 0.01, true)
+		hitr = Ball.move_and_collide(gravDir * weight * _delta, true, 0.01, true)
 	else:
-		hitr = Ball.move_and_collide(gravDir * _delta * boost, true, 0.01, true)
+		hitr = Ball.move_and_collide(gravDir * _delta * (boost * driftBoost), true, 0.01, true)
 	if hitr:
 		Ball.gravity_scale = 0.0
 		var avgHitPos = Vector3(0.0, 0.0, 0.0)
@@ -320,8 +319,8 @@ func _process(delta):
 	if not hiter:
 		rotateInput *= airControl
 	
-	RightWheel.rotation.y = lerp(RightWheel.rotation.y, rotateInput * wheelTwist, 5 * delta)
-	LeftWheel.rotation.y = lerp(LeftWheel.rotation.y, rotateInput * wheelTwist, 5 * delta)
+	for wheel : Node3D in Wheelie:
+		wheel.rotation.y = lerp(wheel.rotation.y, rotateInput * wheelTwist, 5 * delta)
 	
 	if multiplayer.is_server() or not HighLevelNetwork.multiplayer_enabled: 
 		## serverwork + singleplayer work
@@ -353,8 +352,9 @@ func _process(delta):
 			StartDrift()
 	
 	if drifting:
-		var driftAmount = lerp(rotateInput,(deg_to_rad(steering * (1 + steeringDrift)) * startDriftDirection), steeringDrift)
-		rotateInput = lerp(rotateInput, driftAmount, steeringAccelMod)
+		#var driftAmount = lerp(rotateInput,(deg_to_rad(steering * (1 + steeringDrift)) * startDriftDirection), steeringDrift)
+		var driftAmount = rotateInput + ((deg_to_rad(steering) * (startDriftDirection)) * steeringDrift)
+		rotateInput = lerp(rotateInput, driftAmount, turnspeed)
 		#rotateInput += driftDirection + driftAmount
 		match boostTiering:
 			1:
@@ -412,7 +412,7 @@ func _process(delta):
 func RotateCar(delta):
 	var antiGrav = -gravForce
 	var rotari = rotateInput
-	var speedModif = clampf(turnspeed * Ball.linear_velocity.length(), 0.0, 1.0) 
+	var speedModif = clampf(0.01 * Ball.linear_velocity.length(), 0.0, 1.0) 
 	
 	var carBasis = Car.global_transform.basis.orthonormalized()
 	if not turnable :
@@ -442,7 +442,7 @@ func RotateCar(delta):
 			var rotat_For = angular_smooth * delta
 			Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, rotat_For)
 	
-	var t = -rotari * (Ball.linear_velocity.length()/maxSpeed) * bodytilt
+	var t = clampf(-rotari * (Ball.linear_velocity.length()/maxSpeed) * bodytilt, -maxCarTwist, maxCarTwist)
 	CarBody.rotation.z = lerp(CarBody.rotation.z, t, 10 * delta)
 	if startedDrifting:
 		CarModel.rotation.y = lerp(CarModel.rotation.y, carTwist, carTwistRate * delta)
@@ -453,18 +453,21 @@ func StartDrift():
 	drifting = true
 	if rotateInput > 0:
 		Anim.play("Hop")
-		for part in drift_particles_left:
-			part.emitting = true
+		if haveAuthority:
+			for part in drift_particles_left:
+				part.emitting = true
 	else: if rotateInput < 0:
 		Anim.play("HopRight")
-		for part in drift_particles_right:
-			part.emitting = true
+		if haveAuthority:
+			for part in drift_particles_right:
+				part.emitting = true
 	else:
 		Anim.play("HopCenter")
-		for part in drift_particles_right:
-			part.emitting = true
-		for part in drift_particles_left:
-			part.emitting = true
+		if haveAuthority:
+			for part in drift_particles_right:
+				part.emitting = true
+			for part in drift_particles_left:
+				part.emitting = true
 	minimumDrift = false
 	CarModel.rotation.y = lerp(CarModel.rotation.y, carTwist, 0.2)
 	driftDirection = rotateInput
@@ -476,8 +479,9 @@ func StopDrift():
 		boostTimer.start()
 		can_look_back = false
 		camAnim.play("ZoomOut")
-		for part in boost_particles:
-			part.emitting = true
+		if haveAuthority:
+			for part in boost_particles:
+				part.emitting = true
 	for part in drift_particles_right:
 		part.emitting = false
 	for part in drift_particles_left:

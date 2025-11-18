@@ -285,7 +285,6 @@ animations = [{
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gq0vh"]
 
 [node name="Racer" type="Node3D"]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
 script = ExtResource("1_ay3fd")
 RacerItem = ExtResource("2_lnda5")
 RacerIcon = ExtResource("3_lnda5")

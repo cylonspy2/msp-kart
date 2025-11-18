@@ -1,15 +1,18 @@
-[gd_scene load_steps=59 format=4 uid="uid://vg0ts2oyhyr6"]
+[gd_scene load_steps=62 format=4 uid="uid://mxuslshp43fa"]
 
-[ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_qt2eu"]
-[ext_resource type="Texture2D" uid="uid://cdw75kjembx7r" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/Textures/colormap.png" id="2_50v30"]
-[ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="2_jtldb"]
-[ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_rq2n6"]
-[ext_resource type="Material" uid="uid://p36vy75ksln" path="res://Karts/KartAssets/DefaultSparks.tres" id="3_2hfgr"]
-[ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="3_3mrxu"]
-[ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="3_efqrk"]
-[ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="4_jtldb"]
-[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://scripts/car_hitbox.gd" id="4_ud1d0"]
-[ext_resource type="Texture2D" uid="uid://bb4vsogl4uxa0" path="res://ExternalAssets/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png" id="10_kvdoa"]
+[ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_mqsuv"]
+[ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_clmrv"]
+[ext_resource type="Material" uid="uid://p36vy75ksln" path="res://Karts/KartAssets/DefaultSparks.tres" id="3_o141v"]
+[ext_resource type="Texture2D" uid="uid://dey6d32m26ypq" path="res://Karts/KartAssets/Stump/16d2749a759415c98b051ac07702fff05e7a790ev2_hq.jpg" id="3_y2y46"]
+[ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="4_01v2b"]
+[ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="5_dsawv"]
+[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://scripts/car_hitbox.gd" id="6_w2m46"]
+[ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="7_8uyve"]
+[ext_resource type="Texture2D" uid="uid://cdw75kjembx7r" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/Textures/colormap.png" id="8_nnheq"]
+[ext_resource type="Script" uid="uid://do7enh7rf11n3" path="res://scripts/bd_particles.gd" id="9_h5gtp"]
+[ext_resource type="Material" uid="uid://ls1u6neao7es" path="res://Karts/KartAssets/BakerDozen/BakerDozenSparks.tres" id="10_wmgtj"]
+[ext_resource type="Texture2D" uid="uid://bb4vsogl4uxa0" path="res://ExternalAssets/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png" id="11_fpxjm"]
+[ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="12_xnqi3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_50v30"]
 properties/0/path = NodePath(".:player_id")
@@ -401,7 +404,7 @@ _data = {
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1l2on"]
 resource_name = "colormap"
 cull_mode = 2
-albedo_texture = ExtResource("2_50v30")
+albedo_texture = ExtResource("8_nnheq")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2dg4i"]
@@ -636,12 +639,12 @@ scale_over_velocity_max = 1000.0
 scale_over_velocity_curve = SubResource("CurveTexture_lb1tj")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lb1tj"]
-material = ExtResource("3_2hfgr")
+material = ExtResource("3_o141v")
 size = Vector2(0.05, 0.05)
 orientation = 0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_btiea"]
-material = ExtResource("3_2hfgr")
+material = ExtResource("3_o141v")
 flip_faces = true
 size = Vector2(0.05, 0.05)
 orientation = 0
@@ -694,7 +697,7 @@ disable_ambient_light = true
 disable_fog = true
 disable_specular_occlusion = true
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("10_kvdoa")
+albedo_texture = ExtResource("11_fpxjm")
 albedo_texture_force_srgb = true
 billboard_mode = 3
 billboard_keep_scale = true
@@ -705,10 +708,10 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_2hfgr"]
 material = SubResource("StandardMaterial3D_kvdoa")
 
-[node name="CarParent" type="Node3D" node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "hurt_particles")]
-script = ExtResource("1_qt2eu")
+[node name="Stump" type="Node3D" node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "hurt_particles")]
+script = ExtResource("1_mqsuv")
 username = "USERNAME"
-Racer = ExtResource("2_rq2n6")
+Racer = ExtResource("2_clmrv")
 RacerSpawnLoc = NodePath("Car/ModelParent/Model/RacerSpawn")
 Car = NodePath("Car")
 Wheelie = [NodePath("Car/ModelParent/Model/wheel-front-left"), NodePath("Car/ModelParent/Model/wheel-front-right")]
@@ -722,8 +725,9 @@ hurtSpeed = 10.0
 acceleration = 700.0
 driftBoost = 0.75
 wallBounce = 1.0
-bodytilt = 1.0
-sparkMat = ExtResource("3_2hfgr")
+kart_icon = ExtResource("3_y2y46")
+bodytilt = 15.0
+sparkMat = ExtResource("3_o141v")
 base_color = Color(1, 1, 0, 1)
 tier_1_color = Color(1, 0.44705883, 0, 1)
 tier_2_color = Color(1, 0, 0, 1)
@@ -740,7 +744,7 @@ replication_config = SubResource("SceneReplicationConfig_50v30")
 unique_name_in_owner = true
 root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_uoj53")
-script = ExtResource("2_jtldb")
+script = ExtResource("4_01v2b")
 
 [node name="hurtTimer" type="Timer" parent="CarParent_Logic"]
 one_shot = true
@@ -793,7 +797,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("3_efqrk")
+script = ExtResource("5_dsawv")
 
 [node name="CarHitbox" type="RigidBody3D" parent="Car/CarLogic" node_paths=PackedStringArray("parentCar")]
 collision_layer = 2
@@ -803,7 +807,7 @@ physics_material_override = SubResource("PhysicsMaterial_50v30")
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
-script = ExtResource("4_ud1d0")
+script = ExtResource("6_w2m46")
 parentCar = NodePath("../../..")
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox"]
@@ -838,7 +842,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517, 1, -0.719)
 
 [node name="UsernameHolder" type="Node3D" parent="Car/CarLogic"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6855315, -0.34393528)
-script = ExtResource("3_3mrxu")
+script = ExtResource("7_8uyve")
 
 [node name="Username" type="Label3D" parent="Car/CarLogic/UsernameHolder"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -881,7 +885,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0.65999997)
 mesh = SubResource("ArrayMesh_v0hk8")
 skeleton = NodePath("")
 
-[node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+[node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model" node_paths=PackedStringArray("sparks")]
+script = ExtResource("9_h5gtp")
+sparkMat = ExtResource("10_wmgtj")
+base_color = Color(0.99999994, 0.85295594, 0.64457, 1)
+tier_1_color = Color(0.733438, 0.44500756, 1.92523e-07, 1)
+tier_2_color = Color(0.9235263, 0, 0.12967843, 1)
+tier_3_color = Color(0.98134226, 0, 0.49822664, 1)
+tier_4_color = Color(1.8289685e-06, 0.5617465, 0.8190756, 1)
+sparks = [NodePath("groundSparks"), NodePath("groundSparks2")]
 
 [node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
@@ -914,7 +926,7 @@ draw_pass_1 = SubResource("QuadMesh_2hfgr")
 
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="Items" node_paths=PackedStringArray("CarParent")]
 spawn_path = NodePath("..")
-script = ExtResource("4_jtldb")
+script = ExtResource("12_xnqi3")
 CarParent = NodePath("../..")
 
 [connection signal="timeout" from="CarParent_Logic/hurtTimer" to="." method="_on_hurt_timer_timeout"]

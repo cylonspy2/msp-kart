@@ -1,15 +1,16 @@
-[gd_scene load_steps=59 format=4 uid="uid://vg0ts2oyhyr6"]
+[gd_scene load_steps=61 format=4 uid="uid://5xaop3a0p6a8"]
 
-[ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_qt2eu"]
-[ext_resource type="Texture2D" uid="uid://cdw75kjembx7r" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/Textures/colormap.png" id="2_50v30"]
-[ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="2_jtldb"]
-[ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_rq2n6"]
-[ext_resource type="Material" uid="uid://p36vy75ksln" path="res://Karts/KartAssets/DefaultSparks.tres" id="3_2hfgr"]
-[ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="3_3mrxu"]
-[ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="3_efqrk"]
-[ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="4_jtldb"]
-[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://scripts/car_hitbox.gd" id="4_ud1d0"]
-[ext_resource type="Texture2D" uid="uid://bb4vsogl4uxa0" path="res://ExternalAssets/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png" id="10_kvdoa"]
+[ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_p3kel"]
+[ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_uehor"]
+[ext_resource type="Material" uid="uid://p36vy75ksln" path="res://Karts/KartAssets/DefaultSparks.tres" id="3_8owf3"]
+[ext_resource type="Texture2D" uid="uid://dqttlhxkb3fr6" path="res://Karts/KartAssets/GreatGamblingnancy/c052e0f6e897e65ef019d19c9de6b4cfeec98f05_hq.jpg" id="3_eamxf"]
+[ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="4_dj571"]
+[ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="5_20w0k"]
+[ext_resource type="Script" uid="uid://b0vooyssxg0k8" path="res://scripts/car_hitbox.gd" id="6_epi58"]
+[ext_resource type="Script" uid="uid://cny7iuu0rinph" path="res://scripts/CarUsername.gd" id="7_ra7ik"]
+[ext_resource type="Texture2D" uid="uid://cdw75kjembx7r" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/Textures/colormap.png" id="8_hcgms"]
+[ext_resource type="Texture2D" uid="uid://bb4vsogl4uxa0" path="res://ExternalAssets/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png" id="11_1rjwn"]
+[ext_resource type="Script" uid="uid://ppnem4j35vbo" path="res://scripts/car_item_spawner.gd" id="12_lbxwf"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_50v30"]
 properties/0/path = NodePath(".:player_id")
@@ -401,7 +402,7 @@ _data = {
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1l2on"]
 resource_name = "colormap"
 cull_mode = 2
-albedo_texture = ExtResource("2_50v30")
+albedo_texture = ExtResource("8_hcgms")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2dg4i"]
@@ -621,7 +622,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_lb1tj"]
 curve = SubResource("Curve_2hfgr")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2hfgr"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6uiwh"]
 emission_shape_scale = Vector3(0.03, 0.055, 0.355)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
@@ -635,16 +636,27 @@ scale_curve = SubResource("CurveTexture_kvdoa")
 scale_over_velocity_max = 1000.0
 scale_over_velocity_curve = SubResource("CurveTexture_lb1tj")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_lb1tj"]
-material = ExtResource("3_2hfgr")
-size = Vector2(0.05, 0.05)
-orientation = 0
+[sub_resource type="PrismMesh" id="PrismMesh_7s0t1"]
+material = ExtResource("3_8owf3")
+size = Vector3(0.1, 0.1, 0.1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_btiea"]
-material = ExtResource("3_2hfgr")
-flip_faces = true
-size = Vector2(0.05, 0.05)
-orientation = 0
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o86sh"]
+emission_shape_scale = Vector3(0.03, 0.055, 0.355)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 1, -1)
+spread = 7.759
+initial_velocity_min = 0.95
+initial_velocity_max = 4.7
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_kvdoa")
+scale_over_velocity_max = 1000.0
+scale_over_velocity_curve = SubResource("CurveTexture_lb1tj")
+
+[sub_resource type="PrismMesh" id="PrismMesh_6uiwh"]
+material = ExtResource("3_8owf3")
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="Curve" id="Curve_kvdoa"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.13934427, 0.49438208), 0.0, 0.0, 0, 0, Vector2(0.39754102, 0.50561804), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -694,7 +706,7 @@ disable_ambient_light = true
 disable_fog = true
 disable_specular_occlusion = true
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("10_kvdoa")
+albedo_texture = ExtResource("11_1rjwn")
 albedo_texture_force_srgb = true
 billboard_mode = 3
 billboard_keep_scale = true
@@ -705,25 +717,31 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_2hfgr"]
 material = SubResource("StandardMaterial3D_kvdoa")
 
-[node name="CarParent" type="Node3D" node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "hurt_particles")]
-script = ExtResource("1_qt2eu")
+[node name="Great Gamblingnancy" type="Node3D" node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "hurt_particles")]
+script = ExtResource("1_p3kel")
 username = "USERNAME"
-Racer = ExtResource("2_rq2n6")
-RacerSpawnLoc = NodePath("Car/ModelParent/Model/RacerSpawn")
+Racer = ExtResource("2_uehor")
+RacerSpawnLoc = NodePath("Car/ModelParent/Model/body/RacerSpawn")
 Car = NodePath("Car")
-Wheelie = [NodePath("Car/ModelParent/Model/wheel-front-left"), NodePath("Car/ModelParent/Model/wheel-front-right")]
+Wheelie = [NodePath("Car/ModelParent/Model/Front_left/wheel-front-left"), NodePath("Car/ModelParent/Model/Front_left/wheel-back-left2"), NodePath("Car/ModelParent/Model/Front_Right/wheel-front-right"), NodePath("Car/ModelParent/Model/Front_Right/wheel-back-right2")]
 CarBody = NodePath("Car/ModelParent/Model/body")
 CarModel = NodePath("Car/ModelParent")
 drift_particles_right = [NodePath("Car/ModelParent/Model/Drift_Particles/groundSparks2")]
 drift_particles_left = [NodePath("Car/ModelParent/Model/Drift_Particles/groundSparks")]
 hurt_particles = NodePath("Car/ModelParent/Model/Hurt_Particles/GPUParticles3D")
-maxSpeed = 900.0
-hurtSpeed = 10.0
-acceleration = 700.0
-driftBoost = 0.75
+maxSpeed = 5000.0
+hurtSpeed = 0.0
+acceleration = 800.0
+steering = 22.5
+steeringAccelMod = 0.455
+turnspeed = 0.335
+weight = 32.0
+driftBoost = 0.085
+airControl = 0.06
 wallBounce = 1.0
-bodytilt = 1.0
-sparkMat = ExtResource("3_2hfgr")
+kart_icon = ExtResource("3_eamxf")
+bodytilt = 15.0
+sparkMat = ExtResource("3_8owf3")
 base_color = Color(1, 1, 0, 1)
 tier_1_color = Color(1, 0.44705883, 0, 1)
 tier_2_color = Color(1, 0, 0, 1)
@@ -740,7 +758,7 @@ replication_config = SubResource("SceneReplicationConfig_50v30")
 unique_name_in_owner = true
 root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_uoj53")
-script = ExtResource("2_jtldb")
+script = ExtResource("4_dj571")
 
 [node name="hurtTimer" type="Timer" parent="CarParent_Logic"]
 one_shot = true
@@ -793,7 +811,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("3_efqrk")
+script = ExtResource("5_20w0k")
 
 [node name="CarHitbox" type="RigidBody3D" parent="Car/CarLogic" node_paths=PackedStringArray("parentCar")]
 collision_layer = 2
@@ -803,7 +821,7 @@ physics_material_override = SubResource("PhysicsMaterial_50v30")
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
-script = ExtResource("4_ud1d0")
+script = ExtResource("6_epi58")
 parentCar = NodePath("../../..")
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox"]
@@ -825,7 +843,7 @@ size = Vector3(1.0500488, 0.37345886, 0.7046814)
 [node name="Car_Marker" type="Node" parent="Car/CarLogic/CarHitbox"]
 
 [node name="RayCast3D1" type="RayCast3D" parent="Car/CarLogic"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.517, 1, 0.719)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12373036, 0.32396555, 2.5039392)
 
 [node name="RayCast3D2" type="RayCast3D" parent="Car/CarLogic"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517, 1, 0.719)
@@ -838,7 +856,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517, 1, -0.719)
 
 [node name="UsernameHolder" type="Node3D" parent="Car/CarLogic"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6855315, -0.34393528)
-script = ExtResource("3_3mrxu")
+script = ExtResource("7_ra7ik")
 
 [node name="Username" type="Label3D" parent="Car/CarLogic/UsernameHolder"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
@@ -848,37 +866,65 @@ text = "USERNAME"
 
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
 
-[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06172, -0.20200408)
-
 [node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.025)
 mesh = SubResource("ArrayMesh_uoj53")
 skeleton = NodePath("")
 
+[node name="CSGBox3D2" type="CSGBox3D" parent="Car/ModelParent/Model/body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46122226, -0.24274978)
+size = Vector3(1.036, 0.9209922, 2.251)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Car/ModelParent/Model/body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.522, 1.691)
+size = Vector3(1.5112915, 0.99884033, 1.6548462)
+
 [node name="spoiler" type="MeshInstance3D" parent="Car/ModelParent/Model/body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, -1.0436862)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9210532, -1.0436862)
 mesh = SubResource("ArrayMesh_k61xc")
 skeleton = NodePath("")
 
+[node name="CSGBox3D3" type="CSGBox3D" parent="Car/ModelParent/Model/body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7565373, 2.6945128)
+size = Vector3(1, 1.4836426, 1)
+
+[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model/body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7683716e-07, 0.84672856, 0.5921502)
+
 [node name="wheel-back-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, -0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.3, -0.995765)
 mesh = SubResource("ArrayMesh_06lh1")
 skeleton = NodePath("")
 
 [node name="wheel-back-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, -0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5676978, 0.3, -0.99568784)
 mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
-[node name="wheel-front-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, 0.65999997)
+[node name="Front_left" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.721, 0, 1.678)
+
+[node name="wheel-front-left" type="MeshInstance3D" parent="Car/ModelParent/Model/Front_left"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105103076, 0.3, 0.29832745)
 mesh = SubResource("ArrayMesh_72krn")
 skeleton = NodePath("")
 
-[node name="wheel-front-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0.65999997)
+[node name="wheel-back-left2" type="MeshInstance3D" parent="Car/ModelParent/Model/Front_left"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07195681, 0.3, -0.3686533)
+mesh = SubResource("ArrayMesh_06lh1")
+skeleton = NodePath("")
+
+[node name="Front_Right" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7205126, 0, 1.6783922)
+
+[node name="wheel-front-right" type="MeshInstance3D" parent="Car/ModelParent/Model/Front_Right"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.066851616, 0.3, 0.29826856)
 mesh = SubResource("ArrayMesh_v0hk8")
+skeleton = NodePath("")
+
+[node name="wheel-back-right2" type="MeshInstance3D" parent="Car/ModelParent/Model/Front_Right"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.064395666, 0.3, -0.36857617)
+mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
 [node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model"]
@@ -887,19 +933,15 @@ skeleton = NodePath("")
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
 amount = 16
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_2hfgr")
-draw_passes = 2
-draw_pass_1 = SubResource("PlaneMesh_lb1tj")
-draw_pass_2 = SubResource("PlaneMesh_btiea")
+process_material = SubResource("ParticleProcessMaterial_6uiwh")
+draw_pass_1 = SubResource("PrismMesh_7s0t1")
 
 [node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, -0.694, 0.109, -0.5174992)
 amount = 16
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_2hfgr")
-draw_passes = 2
-draw_pass_1 = SubResource("PlaneMesh_lb1tj")
-draw_pass_2 = SubResource("PlaneMesh_btiea")
+process_material = SubResource("ParticleProcessMaterial_o86sh")
+draw_pass_1 = SubResource("PrismMesh_6uiwh")
 
 [node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model"]
 
@@ -914,7 +956,7 @@ draw_pass_1 = SubResource("QuadMesh_2hfgr")
 
 [node name="ItemSpawner" type="MultiplayerSpawner" parent="Items" node_paths=PackedStringArray("CarParent")]
 spawn_path = NodePath("..")
-script = ExtResource("4_jtldb")
+script = ExtResource("12_lbxwf")
 CarParent = NodePath("../..")
 
 [connection signal="timeout" from="CarParent_Logic/hurtTimer" to="." method="_on_hurt_timer_timeout"]

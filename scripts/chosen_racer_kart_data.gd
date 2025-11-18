@@ -57,7 +57,9 @@ func update_kart(track : PackedScene):
 	trac.player_id = -20
 	stat_weight.value = kartChosen.weight
 	stat_accel.value = kartChosen.acceleration
-	stat_steer.value = kartChosen.steering + (kartChosen.turnspeed * kartChosen.steering) + (kartChosen.steeringDrift * kartChosen.steering)
+	var bluh = kartChosen.steering
+	var driftAmount = bluh * kartChosen.steeringDrift
+	stat_steer.value = bluh + lerp(bluh, driftAmount, kartChosen.turnspeed)
 	stat_drift.value = kartChosen.steeringAccelMod
 	stat_boost.value = kartChosen.driftBoost
 	stat_air_control.value = kartChosen.airControl
