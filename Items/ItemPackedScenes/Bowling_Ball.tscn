@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://bocg6mtnl572u"]
 
 [ext_resource type="Script" uid="uid://4ch5qxld3wda" path="res://Items/ItemAssets/item_brain.gd" id="1_nlsgd"]
-[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer.png" id="2_xheh0"]
+[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer/MSPRacer.png" id="2_xheh0"]
 [ext_resource type="Script" uid="uid://blslch1coqsf5" path="res://Items/ItemAssets/bowlingBall_effect.gd" id="3_xheh0"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wwut3"]

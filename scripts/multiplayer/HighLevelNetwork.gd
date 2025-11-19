@@ -96,3 +96,11 @@ func _grab_item(placementy : float) -> PackedScene:
 	#peer = ENetMultiplayerPeer.new()
 	#peer.create_client(IP_ADDRESS, PORT)
 	#multiplayer.multiplayer_peer = peer
+
+func _get_player_count() -> int:
+	var blabla = 0
+	if get_hosting():
+		blabla = multiplayer.get_peers().size()
+		if not OS.has_feature("dedicated_server"):
+			blabla += 1
+	return blabla

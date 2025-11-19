@@ -37,7 +37,6 @@ extends Node3D
 @export var Wheelie : Array[Node3D]
 @export var CarBody = MeshInstance3D
 @export var CarModel = MeshInstance3D
-@export var ModelOffset = Vector3(0.0, -0.5, 0.0)
 @export var drift_particles_right : Array[GPUParticles3D]
 @export var drift_particles_left : Array[GPUParticles3D]
 @export var boost_particles : Array[GPUParticles3D]
@@ -95,7 +94,7 @@ signal altFireItem(item : PackedScene)
 signal gainItem(item : PackedScene)
 
 @export_group("Server Data")
-@export var velocity_smooth = 3.0
+@export var velocity_smooth = 1.0
 @export var angular_smooth = 3.64
 @export var start_drift = false
 @export var end_drift = false
@@ -110,6 +109,8 @@ signal gainItem(item : PackedScene)
 @export var fireDisabled = false
 @export var hasControl = true
 @export var gravForce = Vector3(0.0, -1.0, 0.0)
+@export var floorDir = Vector3(0.0, -1.0, 0.0)
+@export var antigrav_allowed = true
 
 var lockedCamPos = Vector3(0.0, 0.0, 0.0)
 var lockedCamRot : Basis
@@ -182,7 +183,11 @@ func _physics_process(_delta):
 		var cappa = (Ball.linear_velocity / maxSpeed).normalized()
 		Ball.linear_velocity = cappa * maxSpeed
 	
-	Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin + ModelOffset, velocity_smooth)
+	var bla = (Car.transform.origin - Ball.transform.origin).length()
+	if bla > velocity_smooth:
+		Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin, bla - (velocity_smooth * 0.5))
+	else:
+		Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin, (velocity_smooth * 0.5))
 	
 	var forceForce = (Car.global_transform.basis.z * speedInput)
 	gravDir = gravForce * 9.810 * weight
@@ -202,6 +207,7 @@ func _physics_process(_delta):
 	##code for when the kart's own hitbox detects collisions
 	var hitS : KinematicCollision3D = CarHitBox.move_and_collide(true_vel * _delta, true, 0.01, true)
 	if hitS != null:
+		Ball.transform.origin = Car.transform.origin#.move_toward(Car.transform.origin - ModelOffset, 100)
 		var hitted = hitS.get_collider(0)
 		if hitted.name != "Rim":
 			if hitted.name != "CarHitBox":
@@ -218,7 +224,7 @@ func _physics_process(_delta):
 			pass
 		pass
 	else:
-		Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, velocity_smooth)
+		#Ball.transform.origin = Ball.transform.origin.move_toward(Car.transform.origin - ModelOffset, _delta)
 		Ball.apply_central_force(lerpForce)
 		prevForce = lerpForce
 		pass
@@ -236,13 +242,18 @@ func _physics_process(_delta):
 			b += 1
 		avgHitPos /= b
 		var newGrav = (-(Ball.global_position - avgHitPos)).normalized()
-		gravForce = lerp(gravForce, newGrav, clamp(_delta * 20 * rad_to_deg(gravForce.dot(newGrav)), 0.0, 1.0))
+		floorDir = lerp(gravForce, newGrav, clamp(_delta * 20 * rad_to_deg(gravForce.dot(newGrav)), 0.0, 1.0))
+		if antigrav_allowed:
+			gravForce = floorDir
+		else:
+			gravForce = Vector3(0.0, -1.0, 0.0)
 		notify_property_list_changed()
 		pass
 	else:
 		Ball.gravity_scale = 3.0
-		forceForce *= 0
-		gravForce = Vector3(0.0, -1.0, 0.0)
+		#forceForce *= 0
+		floorDir = Vector3(0.0, -1.0, 0.0)
+		gravForce = floorDir
 		notify_property_list_changed()
 		Ball.apply_central_force(gravForce * 9.81 * weight)
 		pass
@@ -273,10 +284,10 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	avgHitNorm /= b
 	
 	var boo = hitter.get_remainder().normalized() * Ball.linear_velocity.length()
-	var boonce = (boo.bounce(avgHitNorm) * bounce) + avgHitNorm
-	var foonce = (Ball.linear_velocity.bounce(avgHitNorm) * bounce) + avgHitNorm
+	var boonce = (boo.bounce(avgHitNorm) * bounce)
+	var foonce = (Ball.linear_velocity.bounce(avgHitNorm))
 	Ball.linear_velocity = foonce
-	#Ball.apply_central_force(avgHitNorm)
+	Ball.apply_central_force(avgHitNorm * Ball.linear_velocity.length())
 	Ball.apply_central_force(boonce)
 	prevForce = boonce
 	return boonce
@@ -410,7 +421,7 @@ func _process(delta):
 		pass
 
 func RotateCar(delta):
-	var antiGrav = -gravForce
+	var antiGrav = -floorDir
 	var rotari = rotateInput
 	var speedModif = clampf(0.01 * Ball.linear_velocity.length(), 0.0, 1.0) 
 	
@@ -481,6 +492,7 @@ func StopDrift():
 		camAnim.play("ZoomOut")
 		if haveAuthority:
 			for part in boost_particles:
+				part.restart(false)
 				part.emitting = true
 	for part in drift_particles_right:
 		part.emitting = false
@@ -493,17 +505,16 @@ func GetHit(strength : float):
 	if not HighLevelNetwork.get_hosting(): 
 		Anim.play("Hop")
 		hurt_particles.emitting = true
+		fireDisabled = true
 		pass
 	else:
 		Anim.play("Hop")
+		RacerSpawnLoc.get_child(0).hurt = true
 		hurt_particles.emitting = true
 		fireDisabled = true
 		acceleration = hurtSpeed
 		speedInput = (MS.inputDir) * acceleration
 		Ball.linear_velocity = Vector3.ZERO
-		#Ball.axis_lock_linear_x = true
-		#Ball.axis_lock_linear_y = true
-		#Ball.axis_lock_linear_z = true
 		hurtTimer.start(strength)
 		pass
 	pass
@@ -526,10 +537,12 @@ func PickupItem(item : PackedScene):
 	if hasItem:
 		return
 	if item != null:
+		RacerSpawnLoc.get_child(0).hold_item = true
 		itemHeld = item
 		hasItem = true
 
 func ThrowItem(_item : PackedScene):
+	RacerSpawnLoc.get_child(0).hold_item = false
 	if (not multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
 		##client deferring to server data
 		pass
@@ -567,6 +580,7 @@ func _on_hurt_timer_timeout() -> void:
 	hurt_particles.emitting = false
 	acceleration = hurtAccel
 	fireDisabled = false
+	RacerSpawnLoc.get_child(0).hurt = false
 
 func _on_item_timer_timeout() -> void:
 	hasItem = false

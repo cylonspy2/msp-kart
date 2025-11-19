@@ -5,6 +5,8 @@ extends Node3D
 
 @export var MAX_LAPS : int
 
+@export var antigrav_default = false
+
 @onready var animplayer = $Minimap/NewLap
 @onready var finish_line = $Finish_Line
 @export var Car_Root : Array[Node3D]
@@ -17,7 +19,9 @@ extends Node3D
 @onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/ItemIcon
 @onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon
 @onready var victorTime = $Finish_Line/finishline_delay
+@onready var startLineAnim = $"Minimap/321Go/ReadySteadyGo"
 
+var firstFrame = true
 var doneRacers : Dictionary[int, int]
 
 var yourAuthority : int
@@ -38,6 +42,8 @@ func _ready() -> void:
 		pass
 
 func setup(car : Node3D):
+	car.hasControl = false
+	car.antigrav_allowed = antigrav_default
 	Cars.append(car)
 	print("kart attached to racetrack: "+ car.name)
 	var racee = car.Racer.instantiate()
@@ -64,6 +70,10 @@ func setup(car : Node3D):
 func _process(_delta: float) -> void:
 	if not (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled:
 		return
+	
+	if firstFrame:
+		startLineAnim.play("Start_Game")
+		firstFrame = false
 	
 	var prev_freed_cars = false
 	
@@ -203,3 +213,8 @@ func _on_new_lap_animation_finished(_anim_name: StringName) -> void:
 	
 	if youCar.laps_made >= MAX_LAPS:
 		finish_line.finished_race(youCar)
+
+func _release_racers():
+	if HighLevelNetwork.get_hosting():
+		for car in Cars:
+			car.hasControl = true

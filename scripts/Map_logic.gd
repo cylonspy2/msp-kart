@@ -11,6 +11,8 @@ extends Node3D
 
 @export var MAX_LAPS : int
 
+@export var antigrav_default = false
+
 @onready var animplayer = $Minimap/NewLap
 @onready var finish_line = $Finish_Line
 @export var Car_Root : Array[Node3D]
@@ -44,6 +46,7 @@ func _ready() -> void:
 		pass
 
 func setup(car : Node3D):
+	car.antigrav_allowed = antigrav_default
 	Cars.append(car)
 	print("kart attached to racetrack: "+ car.name)
 	var racee = car.Racer.instantiate()

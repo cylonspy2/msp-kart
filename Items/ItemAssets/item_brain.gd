@@ -21,8 +21,9 @@ func define_caster(spawner : Node3D):
 	caster = spawner
 
 func cast_item():
-	print(ItemEffect)
+	print(ItemEffect, " ", caster.username)
 	ItemEffect.activation()
 
 func despawn_item():
+	print("removing item")
 	queue_free()

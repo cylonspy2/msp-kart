@@ -802,6 +802,7 @@ shape = SubResource("SphereShape3D_7822p")
 [node name="Car" type="Node3D" parent="."]
 
 [node name="CarLogic" type="Node3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47501624, 0)
 
 [node name="Camera" type="Camera3D" parent="Car/CarLogic"]
 transform = Transform3D(-1, 2.1327509e-08, -1.3987516e-07, -3.2928735e-08, 0.92635125, 0.37666088, 1.3760675e-07, 0.37666088, -0.92635125, 0, 2.627013, -2.9686177)
@@ -867,7 +868,7 @@ text = "USERNAME"
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
 
 [node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.025)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32501623, -0.025)
 mesh = SubResource("ArrayMesh_uoj53")
 skeleton = NodePath("")
 
@@ -892,17 +893,17 @@ size = Vector3(1, 1.4836426, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7683716e-07, 0.84672856, 0.5921502)
 
 [node name="wheel-back-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.3, -0.995765)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, -0.17501622, -0.995765)
 mesh = SubResource("ArrayMesh_06lh1")
 skeleton = NodePath("")
 
 [node name="wheel-back-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5676978, 0.3, -0.99568784)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5676978, -0.17501622, -0.99568784)
 mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
 [node name="Front_left" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.721, 0, 1.678)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.721, -0.47501624, 1.678)
 
 [node name="wheel-front-left" type="MeshInstance3D" parent="Car/ModelParent/Model/Front_left"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105103076, 0.3, 0.29832745)
@@ -915,7 +916,7 @@ mesh = SubResource("ArrayMesh_06lh1")
 skeleton = NodePath("")
 
 [node name="Front_Right" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7205126, 0, 1.6783922)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7205126, -0.47501624, 1.6783922)
 
 [node name="wheel-front-right" type="MeshInstance3D" parent="Car/ModelParent/Model/Front_Right"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.066851616, 0.3, 0.29826856)
@@ -928,6 +929,7 @@ mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
 [node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47501624, 0)
 
 [node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
@@ -944,6 +946,7 @@ process_material = SubResource("ParticleProcessMaterial_o86sh")
 draw_pass_1 = SubResource("PrismMesh_6uiwh")
 
 [node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.47501624, 0)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21524662, -1.4670709)

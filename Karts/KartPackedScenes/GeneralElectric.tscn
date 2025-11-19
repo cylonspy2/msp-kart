@@ -737,6 +737,7 @@ shape = SubResource("SphereShape3D_7822p")
 [node name="Car" type="Node3D" parent="."]
 
 [node name="CarLogic" type="Node3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5180892, 0)
 
 [node name="Camera" type="Camera3D" parent="Car/CarLogic"]
 transform = Transform3D(-1, 2.1327509e-08, -1.3987516e-07, -3.2928735e-08, 0.92635125, 0.37666088, 1.3760675e-07, 0.37666088, -0.92635125, 0, 2.627013, -2.9686177)
@@ -802,10 +803,10 @@ text = "USERNAME"
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
 
 [node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.051384, 0.023244873)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5332948, 0.023244873)
 
 [node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.025)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36808917, -0.025)
 mesh = SubResource("ArrayMesh_uoj53")
 skeleton = NodePath("")
 
@@ -823,16 +824,17 @@ mesh = ExtResource("11_nxy2c")
 skeleton = NodePath("../../..")
 
 [node name="wheel-back-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, -0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.21808916, -0.65999997)
 mesh = SubResource("ArrayMesh_06lh1")
 skeleton = NodePath("")
 
 [node name="wheel-back-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, -0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.21808916, -0.65999997)
 mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
 [node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5180892, 0)
 
 [node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles"]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
@@ -849,6 +851,7 @@ process_material = SubResource("ParticleProcessMaterial_bmj2a")
 draw_pass_1 = SubResource("PrismMesh_f2qfa")
 
 [node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5180892, 0)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21524662, -1.4670709)

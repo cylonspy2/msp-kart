@@ -799,6 +799,7 @@ shape = SubResource("SphereShape3D_7822p")
 [node name="Car" type="Node3D" parent="."]
 
 [node name="CarLogic" type="Node3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45765293, 0)
 
 [node name="Camera" type="Camera3D" parent="Car/CarLogic"]
 transform = Transform3D(-1, 2.1327509e-08, -1.3987516e-07, -3.2928735e-08, 0.92635125, 0.37666088, 1.3760675e-07, 0.37666088, -0.92635125, 0, 2.627013, -2.9686177)
@@ -864,10 +865,10 @@ text = "USERNAME"
 [node name="Model" type="Node3D" parent="Car/ModelParent"]
 
 [node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06172, -0.20200408)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6040671, -0.20200408)
 
 [node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -0.025)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30765292, -0.025)
 mesh = SubResource("ArrayMesh_uoj53")
 skeleton = NodePath("")
 
@@ -877,26 +878,27 @@ mesh = SubResource("ArrayMesh_k61xc")
 skeleton = NodePath("")
 
 [node name="wheel-back-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, -0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.15765291, -0.65999997)
 mesh = SubResource("ArrayMesh_06lh1")
 skeleton = NodePath("")
 
 [node name="wheel-back-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, -0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.15765291, -0.65999997)
 mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
 [node name="wheel-front-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, 0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.15765291, 0.65999997)
 mesh = SubResource("ArrayMesh_72krn")
 skeleton = NodePath("")
 
 [node name="wheel-front-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.3, 0.65999997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.15765291, 0.65999997)
 mesh = SubResource("ArrayMesh_v0hk8")
 skeleton = NodePath("")
 
 [node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model" node_paths=PackedStringArray("sparks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45765293, 0)
 script = ExtResource("9_waaa1")
 sparkMat = ExtResource("10_gy02b")
 base_color = Color(0.99999994, 0.85295594, 0.64457, 1)
@@ -925,6 +927,7 @@ draw_pass_1 = SubResource("PlaneMesh_lb1tj")
 draw_pass_2 = SubResource("PlaneMesh_btiea")
 
 [node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45765293, 0)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21524662, -1.4670709)

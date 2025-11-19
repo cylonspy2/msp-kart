@@ -1,8 +1,8 @@
 [gd_scene load_steps=32 format=3 uid="uid://rdfs1h0nn3vf"]
 
 [ext_resource type="Script" uid="uid://dd64iyelwg5c2" path="res://scripts/racer.gd" id="1_n251x"]
-[ext_resource type="PackedScene" uid="uid://bocg6mtnl572u" path="res://Items/ItemPackedScenes/Bowling_Ball.tscn" id="2_6p3rt"]
-[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer.png" id="3_6p3rt"]
+[ext_resource type="PackedScene" uid="uid://cj64thwi4s7mi" path="res://Items/RacerItemPackedScenes/MSPR_Friendship.tscn" id="2_6p3rt"]
+[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer/MSPRacer.png" id="3_6p3rt"]
 [ext_resource type="Texture2D" uid="uid://d1sgfymsfdxyu" path="res://ExternalAssets/ref_Racer/Timeline 1_0001.png" id="4_ua8bi"]
 [ext_resource type="Texture2D" uid="uid://dfdykvii0wyrq" path="res://ExternalAssets/ref_Racer/Timeline 1_0005.png" id="5_fmpry"]
 [ext_resource type="Texture2D" uid="uid://cu07tidt8cocu" path="res://ExternalAssets/ref_Racer/Timeline 1_0012.png" id="6_b7l1p"]
@@ -283,6 +283,12 @@ animations = [{
 }]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gq0vh"]
+properties/0/path = NodePath(".:hold_item")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:hurt")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="MSPR" type="Node3D"]
 script = ExtResource("1_n251x")

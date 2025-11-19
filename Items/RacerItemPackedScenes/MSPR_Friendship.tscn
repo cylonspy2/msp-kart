@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://cj64thwi4s7mi"]
+
+[ext_resource type="Script" uid="uid://4ch5qxld3wda" path="res://Items/ItemAssets/item_brain.gd" id="1_4n6lm"]
+[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer/MSPRacer.png" id="2_qm7jb"]
+[ext_resource type="Script" uid="uid://m5hq167q5xwn" path="res://Items/ItemAssets/Friendship_effect.gd" id="3_ljh00"]
+[ext_resource type="ArrayMesh" uid="uid://djufxhgnigmo2" path="res://ExternalAssets/kenney_car-kit/Models/OBJ format/debris-bolt.obj" id="4_qm7jb"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wwut3"]
+properties/0/path = NodePath(".:job_done")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oh33p"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="Curve" id="Curve_qm7jb"]
+_data = [Vector2(0.8606558, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gydqc"]
+curve = SubResource("Curve_qm7jb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gydqc"]
+particle_flag_align_y = true
+emission_shape_offset = Vector3(0, 0.2, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, -1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 50.58
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 5.5
+initial_velocity_max = 7.3999996
+scale_curve = SubResource("CurveTexture_gydqc")
+turbulence_noise_strength = 0.72
+turbulence_noise_scale = 10.0
+turbulence_influence_min = 0.025
+turbulence_influence_max = 0.07
+
+[node name="Friendship" type="Node3D" node_paths=PackedStringArray("ItemEffect")]
+script = ExtResource("1_4n6lm")
+leaderboard_max = 1.0
+inventory_icon = ExtResource("2_qm7jb")
+ItemEffect = NodePath("ItemEffect")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wwut3")
+
+[node name="ItemEffect" type="Node3D" parent="." node_paths=PackedStringArray("parent", "partSys", "boostTime")]
+script = ExtResource("3_ljh00")
+parent = NodePath("..")
+partSys = NodePath("FriendConfetti")
+boostTime = NodePath("BoostTime")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="ItemEffect"]
+replication_config = SubResource("SceneReplicationConfig_oh33p")
+
+[node name="FriendConfetti" type="GPUParticles3D" parent="ItemEffect"]
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 0.5
+randomness = 0.31
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_gydqc")
+draw_pass_1 = ExtResource("4_qm7jb")
+
+[node name="BoostTime" type="Timer" parent="ItemEffect"]
+one_shot = true
+
+[connection signal="timeout" from="ItemEffect/BoostTime" to="ItemEffect" method="_on_boost_time_timeout"]

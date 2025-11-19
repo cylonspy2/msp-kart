@@ -10,12 +10,17 @@ var relativeRotation : Vector3
 var angleDot : float
 var act_cam : Camera3D
 
+@export var hold_item = false
+@export var hurt = false
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 	if not is_multiplayer_authority(): haveAuthority = false
 	else : haveAuthority = true
 
 func _ready() -> void:
+	hold_item = false
+	hurt = false
 	RacerSprites.frame = 0
 	#position = Vector3(0.0, 0.0, 0.0)
 	#rotation = Vector3(0.0, 0.0, 0.0)
@@ -33,6 +38,13 @@ func _physics_process(_delta):
 		relRot_y = 8 + relRot_y
 	angleDot = RacerSkin.global_transform.basis.y.dot(global_transform.basis.y)
 	#print(str(angleDot) + " " + str(relRot_y))
+	
+	if hurt:
+		RacerSprites.play("full_panic", 0.0)
+	else: if hold_item:
+		RacerSprites.play("full_hold", 0.0)
+	else:
+		RacerSprites.play("full_nelson", 0.0)
 	
 	if angleDot < 1 and angleDot >= 0.1:
 		if angleDot <= 1.0 and angleDot >= 0.8:

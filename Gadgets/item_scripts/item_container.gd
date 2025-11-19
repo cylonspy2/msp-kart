@@ -1,10 +1,16 @@
 extends Node3D
 
 @onready var collideShape = $Collider/CollisionShape3D
+@onready var containerShape = $Container
 
 @export var fullUp = true
 @export var has_popped = false
 @export var readyToRespawn = false
+
+func _ready() -> void:
+	var randd = wrapf(randf() * 50, -PI, PI)
+	print(randd)
+	containerShape.global_basis = containerShape.global_basis.rotated(containerShape.global_basis.y.normalized(), randd)
 
 func _process(_delta: float) -> void:
 	if readyToRespawn:
@@ -40,9 +46,10 @@ func _on_collider_body_entered(body: Node3D) -> void:
 		pass
 	else:
 		if body.has_node("Car_Marker"):
-			has_popped = true
-			var item = HighLevelNetwork._grab_item(body.parentCar.leaderboard_placement)
-			update_item_lobbywide.rpc(body, item)
+			if not body.parentCar.hasItem:
+				has_popped = true
+				var item = HighLevelNetwork._grab_item(body.parentCar.leaderboard_placement)
+				update_item_lobbywide.rpc(body, item)
 
 @rpc("call_local")
 func update_item_lobbywide(body: Node3D, item : PackedScene):
