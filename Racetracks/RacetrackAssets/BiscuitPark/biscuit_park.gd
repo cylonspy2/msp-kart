@@ -20,12 +20,17 @@ extends Node3D
 @onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon
 @onready var victorTime = $Finish_Line/finishline_delay
 @onready var startLineAnim = $"Minimap/321Go/ReadySteadyGo"
+@export var start_cam_pos = Vector3(0.0, 0.0, 0.0)
+@export var start_cam_Rot = Vector3(0.0, 0.0, 0.0)
 
 var firstFrame = true
 var doneRacers : Dictionary[int, int]
 
 var yourAuthority : int
 var youCar : Node3D
+
+var lapit : bool = false
+var lapCar : Node3D
 
 func _ready() -> void:
 	$Minimap/Minimap_road/Line2D.clear_points()
@@ -43,6 +48,9 @@ func _ready() -> void:
 
 func setup(car : Node3D):
 	car.hasControl = false
+	car.camLocked = true
+	car.lockedCamPos = start_cam_pos
+	car.lockedCamRot = Basis.from_euler(start_cam_Rot)
 	car.antigrav_allowed = antigrav_default
 	Cars.append(car)
 	print("kart attached to racetrack: "+ car.name)
@@ -57,6 +65,7 @@ func setup(car : Node3D):
 	$Minimap/Minimap_road/Path2D.call_deferred("add_child", racer)
 	RacerIcons.append(racer)
 	if yourAuthority == car.player_id: 
+		youCar = car
 		var rep = racee.RacerItem.instantiate()
 		$Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon.texture = rep.inventory_icon
 		rep.queue_free()
@@ -127,6 +136,30 @@ func _process(_delta: float) -> void:
 				$Minimap/Placement/Denotion.text = "rd"
 			_:
 				$Minimap/Placement/Denotion.text = "th"
+	
+	if lapit:
+		playLap(0, lapCar)
+		lapit = false
+
+func playLap(updatd_lap_count : int, body : Node3D):
+	print(updatd_lap_count)
+	if updatd_lap_count == -1:
+		print("%s missed a lap" % body.name)
+		return
+	else:
+		if body.player_id != yourAuthority:
+			return
+		else:
+			youCar = body
+		
+		if body.laps_made >= MAX_LAPS:
+			animplayer.play("VICTORY")
+		else:
+			if body.laps_made == MAX_LAPS - 1:
+				animplayer.play("Final Lap")
+			else:
+				animplayer.play("New Lap")
+		print("%s lapped" % body.name)
 
 func update_lapcount(checkpointers : Array[Area3D], lap_count : int) -> int:
 	if (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
@@ -158,37 +191,32 @@ func _on_checkpoint_crossed(checkpoint : Area3D, kart : Node3D):
 	pass
 
 func _on_finish_line_body_entered(boddy: Node3D) -> void:
-	if (multiplayer.is_server() or HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled: 
+	if HighLevelNetwork.multiplayer_enabled: 
 		var body = boddy.get_parent()
 		if body.has_node("CarParent_Logic"):
 			
 			var updatd_lap_count = update_lapcount(body.crossed_checkpoints, body.laps_made)
-			print(updatd_lap_count)
-			if updatd_lap_count == -1:
-				finish_line.missed_lap(body)
-				print("%s missed a lap" % body.name)
-				return
-			else:
-				body.crossed_checkpoints.clear()
-				for checkp in checkpoints:
-					checkp.passed_cars.erase(body)
-				body.laps_made = updatd_lap_count
-				
-				if body.player_id != yourAuthority:
-					if body.laps_made >= MAX_LAPS:
-						finish_line.finished_race(body)
+			if HighLevelNetwork.get_hosting():
+				print(updatd_lap_count)
+				if updatd_lap_count == -1:
+					finish_line.missed_lap.rpc(body)
+					print("%s missed a lap" % body.name)
 					return
 				else:
-					youCar = body
+					body.crossed_checkpoints.clear()
+					for checkp in checkpoints:
+						checkp.passed_cars.erase(body)
+					body.laps_made = updatd_lap_count
+					
+					if body.player_id != yourAuthority:
+						if body.laps_made >= MAX_LAPS:
+							finish_line.finished_race.rpc(body)
+					
+					print("%s lapped" % body.name)
 				
-				if body.laps_made >= MAX_LAPS:
-					animplayer.play("VICTORY")
-				else:
-					if body.laps_made == MAX_LAPS - 1:
-						animplayer.play("Final Lap")
-					else:
-						animplayer.play("New Lap")
-				print("%s lapped" % body.name)
+			if body.player_id == yourAuthority:
+				lapCar = body
+				lapit = true
 
 func _on_all_done(id : int, score : int):
 	if HighLevelNetwork.get_hosting():
@@ -218,3 +246,7 @@ func _release_racers():
 	if HighLevelNetwork.get_hosting():
 		for car in Cars:
 			car.hasControl = true
+
+func _release_cameras():
+	for car in Cars:
+		car.camLocked = false

@@ -1,16 +1,16 @@
-[gd_scene load_steps=49 format=3 uid="uid://kif2ptjo2qt1"]
+[gd_scene load_steps=51 format=3 uid="uid://kif2ptjo2qt1"]
 
-[ext_resource type="Script" uid="uid://cgofr0rrngnbe" path="res://Racetracks/RacetrackAssets/biscuit_park.gd" id="1_unlcg"]
+[ext_resource type="Script" uid="uid://cgofr0rrngnbe" path="res://Racetracks/RacetrackAssets/BiscuitPark/biscuit_park.gd" id="1_unlcg"]
 [ext_resource type="Texture2D" uid="uid://c63ltgulxkp4p" path="res://ExternalAssets/Screenshot 2025-11-11 095949.png" id="2_dh4jp"]
-[ext_resource type="LabelSettings" uid="uid://bxtirqcglt8on" path="res://Racetracks/RacetrackAssets/BP_Rank_Label_Settings.tres" id="3_w7pp3"]
+[ext_resource type="LabelSettings" uid="uid://bxtirqcglt8on" path="res://Racetracks/RacetrackAssets/BiscuitPark/BP_Rank_Label_Settings.tres" id="3_w7pp3"]
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="4_5o45a"]
 [ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="5_cygye"]
-[ext_resource type="Texture2D" uid="uid://8t770yexjykl" path="res://ExternalAssets/citrus_orchard_road_puresky_4k.exr" id="6_8a5b3"]
 [ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer/MSPRacer.png" id="6_ncw4q"]
 [ext_resource type="Texture2D" uid="uid://dsqk560p2xc7t" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="7_43y5v"]
-[ext_resource type="Curve3D" uid="uid://cp1buban01ehq" path="res://Racetracks/RacetrackAssets/BP_Path.tres" id="8_dh4jp"]
+[ext_resource type="Script" uid="uid://bb4ttv4fx0j55" path="res://Racetracks/RacetrackAssets/BiscuitPark/BP_Light.gd" id="7_bm3a1"]
+[ext_resource type="Curve3D" uid="uid://cp1buban01ehq" path="res://Racetracks/RacetrackAssets/BiscuitPark/BP_Path.tres" id="8_dh4jp"]
 [ext_resource type="Texture2D" uid="uid://m8vd73l65dh5" path="res://ExternalAssets/istockphoto-1042084638-612x612.jpg" id="8_x10nv"]
-[ext_resource type="Script" uid="uid://ne0nmeu3qgj3" path="res://Racetracks/RacetrackAssets/BP_finish_line.gd" id="10_dh4jp"]
+[ext_resource type="Script" uid="uid://ne0nmeu3qgj3" path="res://Racetracks/RacetrackAssets/BiscuitPark/BP_finish_line.gd" id="10_dh4jp"]
 [ext_resource type="Script" uid="uid://bmgxu6yv7p8cr" path="res://scripts/Checkpoint.gd" id="10_w7pp3"]
 [ext_resource type="Script" uid="uid://db8bvuvp8bq1c" path="res://Racetracks/RacetrackAssets/killbox.gd" id="11_dh4jp"]
 [ext_resource type="PackedScene" uid="uid://cm8urxlia3qu6" path="res://Gadgets/items/item_container.tscn" id="13_bm3a1"]
@@ -333,6 +333,105 @@ outline_color = Color(0.97700685, 0.5205113, 0, 1)
 shadow_size = 31
 shadow_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_d1k1m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center/3:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Center/2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Center/1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Center/GO:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Center/3:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Center/2:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Center/1:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Center/GO:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_y48j7"]
 resource_name = "Start_Game"
 length = 6.0
@@ -446,104 +545,19 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_d1k1m"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Center/3:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../..")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(1.2666667),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Center/2:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Center/1:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Center/GO:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Center/3:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Center/2:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Center/1:modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Center/GO:modulate")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [{
+"args": [],
+"method": &"_release_cameras"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d1k1m"]
@@ -552,11 +566,14 @@ _data = {
 &"Start_Game": SubResource("Animation_y48j7")
 }
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_bm3a1"]
-panorama = ExtResource("6_8a5b3")
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ncw4q"]
+sky_top_color = Color(1.504086e-07, 0, 0.15702274, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_6kym2"]
-sky_material = SubResource("PanoramaSkyMaterial_bm3a1")
+sky_material = SubResource("ProceduralSkyMaterial_ncw4q")
 
 [sub_resource type="Environment" id="Environment_4epg7"]
 background_mode = 2
@@ -564,8 +581,8 @@ background_color = Color(1.2032688e-08, 0.2432876, 2.4065375e-08, 1)
 background_canvas_max_layer = 1
 sky = SubResource("Sky_6kym2")
 ambient_light_source = 3
-ambient_light_color = Color(0, 0.1882353, 0, 1)
-ambient_light_sky_contribution = 0.0
+ambient_light_color = Color(0.00049254607, 0.03721401, 0.28077433, 1)
+ambient_light_sky_contribution = 0.12
 reflected_light_source = 1
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_p5e3n"]
@@ -582,7 +599,12 @@ uv1_offset = Vector3(0, 2.135, 0)
 texture_filter = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unlcg"]
-albedo_color = Color(0.88235295, 0.6784314, 0, 1)
+albedo_color = Color(0.6827062, 0.6482377, 9.62615e-07, 1)
+emission_enabled = true
+emission = Color(0.7137255, 0.69411767, 0, 1)
+emission_energy_multiplier = 0.01
+rim_enabled = true
+rim_tint = 1.0
 uv1_scale = Vector3(0.5, 7.038, 0)
 uv1_offset = Vector3(0, 0.475, 0)
 texture_filter = 0
@@ -607,6 +629,12 @@ length = 5.8505406
 [sub_resource type="BoxShape3D" id="BoxShape3D_unlcg"]
 size = Vector3(3195.1882, 66.705, 4215.8047)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ncw4q"]
+size = Vector3(980.66846, 105.35033, 605.3192)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y48j7"]
+radius = 395.74
+
 [node name="BiscuitPark" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath", "checkpoints")]
 script = ExtResource("1_unlcg")
 map_icon = ExtResource("2_dh4jp")
@@ -615,6 +643,8 @@ antigrav_default = true
 Car_Root = [NodePath("Car_Container")]
 TrackPath = NodePath("Environment/master_path")
 checkpoints = [NodePath("Checkpoints/Checkpoint_1"), NodePath("Checkpoints/Checkpoint_2")]
+start_cam_pos = Vector3(302.01056, 181.22331, 351.05417)
+start_cam_Rot = Vector3(-0.4956735, 0.71944225, 0.090757065)
 
 [node name="Minimap" type="Control" parent="."]
 layout_mode = 3
@@ -924,44 +954,131 @@ environment = SubResource("Environment_4epg7")
 camera_attributes = SubResource("CameraAttributesPhysical_p5e3n")
 compositor = SubResource("Compositor_f7uto")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(0.83483183, -0.18711022, 0.5177313, -0.44853753, 0.31406936, 0.8367645, -0.31917065, -0.93077934, 0.17826918, -12.151199, 7.562768, 7.985528)
-light_color = Color(0.8581861, 0.9999998, 0.83085215, 1)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" node_paths=PackedStringArray("parr")]
+transform = Transform3D(0.91727984, -0.3058415, 0.25506625, -0.13906354, 0.3541727, 0.9247827, -0.37317446, -0.8837549, 0.28234407, -98.11072, 181.2721, 7.985528)
+light_color = Color(0.024854744, 7.219613e-08, 0.32183257, 1)
 shadow_enabled = true
+shadow_caster_mask = 4294967293
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.218
 directional_shadow_blend_splits = true
+directional_shadow_max_distance = 28.3
+directional_shadow_pancake_size = 5.1
+sky_mode = 1
+script = ExtResource("7_bm3a1")
+parr = NodePath("../..")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Environment/DirectionalLight3D"]
+transform = Transform3D(1.0000007, 0, 0, 0, -4.371141e-08, 1.000001, 0, -1.0000005, -4.371143e-08, 0, -33.067574, -7.6293945e-06)
+visible = false
+radius = 29.686
+height = 42.727886
+cone = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 124.28183, 224.2179, -6.8206787)
+light_energy = 4.288
+shadow_bias = 0.1
+shadow_normal_bias = 2.0
+shadow_reverse_cull_face = true
+distance_fade_begin = 4096.0
+distance_fade_shadow = 4096.0
+distance_fade_length = 4096.0
+spot_range = 523.48474
+spot_attenuation = 0.61
+spot_angle = 54.984756
+spot_angle_attenuation = 0.01991495
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(-0.30109316, -0.5502605, -0.77881736, 0.09516307, 0.79530203, -0.59869766, 0.94883454, -0.2543784, -0.18709552, -293.37842, 70.588196, -44.19523)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 16.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_caster_mask = 4294967294
+spot_range = 40.08837
+spot_attenuation = 1.39
+spot_angle = 78.06
+spot_angle_attenuation = 1.8025018
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(0.9687557, -0.22040544, 0.113727055, 0.01370372, 0.50541276, 0.86276895, -0.24763806, -0.83425385, 0.49264187, -200.71078, 200.88684, -86.33302)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 16.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_caster_mask = 4294967294
+spot_range = 104.630005
+spot_angle = 56.59711
+spot_angle_attenuation = 0.24148452
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(0.28557703, 0.9385691, -0.19373666, 0.930873, -0.22359522, 0.28893027, 0.22786243, -0.26285607, -0.93754226, -15.462494, 174.13184, -284.72415)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 16.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_caster_mask = 4294967294
+spot_range = 72.8806
+spot_attenuation = 1.38
+spot_angle = 52.96413
+spot_angle_attenuation = 0.24148452
+
+[node name="SpotLight3D5" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(-0.1001749, 0.85056907, 0.51623344, 0.98888075, 0.142425, -0.042773783, -0.1099066, 0.50620854, -0.85537905, 276.4112, 160.02641, -295.144)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 16.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 0.161
+shadow_caster_mask = 4294967294
+spot_range = 152.78528
+spot_angle = 41.008114
+spot_angle_attenuation = 0.10881905
+
+[node name="SpotLight3D6" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(0.027394533, -0.025794746, 0.99929184, 0.8015699, -0.5967317, -0.037377644, 0.5972733, 0.80202615, 0.0043291035, 438.02673, 132.92827, 26.135252)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 16.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 0.226
+shadow_caster_mask = 4294967294
+spot_range = 94.655334
+spot_angle = 60.99166
+spot_angle_attenuation = 0.050765954
+
+[node name="SpotLight3D7" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(-0.7985037, -0.5490306, 0.24689536, 0.5863707, -0.80218035, 0.112588294, 0.1362402, 0.23467436, 0.96247935, 244.29495, 73.691574, 462.53143)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 16.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 0.487
+shadow_caster_mask = 4294967294
+spot_range = 128.9479
+spot_angle = 39.13838
+spot_angle_attenuation = 0.034674104
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -194.61061, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -198.77368, -815.26495, -6.8598633)
+layers = 2
 use_collision = true
-size = Vector3(4000, 0.523, 4000)
+size = Vector3(6883.529, 0.523, 6459.536)
 material = SubResource("ORMMaterial3D_p5e3n")
 
 [node name="master_path" type="Path3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4469452, 222.00648, 14.278748)
 curve = ExtResource("8_dh4jp")
 
-[node name="_Road" type="CSGPolygon3D" parent="Environment"]
-visible = false
-cast_shadow = 2
-use_collision = true
-collision_layer = 0
-collision_mask = 0
-polygon = PackedVector2Array(-20.5, 1, -20, 1, -19.5, 1, -10, 1, -8, 1, 0, 1, 8, 1, 10, 1, 19.5, 1, 20, 1, 20.5, 1, 20.8, 0.5, 21, 0, 20.8, -0.5, 20.5, -1, 20, -1, 19.5, -1, 10, -1, 8, -1, 0, -1, -8, -1, -10, -1, -19.5, -1, -20, -1, -20.5, -1, -20.8, -0.5, -21, 0, -20.8, 0.5)
-mode = 2
-path_node = NodePath("../master_path")
-path_interval_type = 1
-path_interval = 0.01
-path_simplify_angle = 0.1
-path_rotation = 2
-path_rotation_accurate = true
-path_local = false
-path_continuous_u = true
-path_u_distance = 10.0
-path_joined = false
-smooth_faces = true
-material = SubResource("StandardMaterial3D_qgo1d")
-
 [node name="Road" type="CSGPolygon3D" parent="Environment"]
+layers = 2
 cast_shadow = 2
 use_collision = true
 polygon = PackedVector2Array(-20.5, 1, -20, 1.6, -19.5, 1.3, -10, 1, -8, 1.1, 0, 1.2, 8, 1.1, 10, 1, 19.5, 1.3, 20, 1.6, 20.5, 1, 20.8, 0.5, 21, 0, 20.8, -0.5, 20.5, -1, 20, -1.6, 19.5, -1.3, 10, -1, 8, -1.1, 0, -1.2, -8, -1.1, -10, -1, -19.5, -1.3, -20, -1.6, -20.5, -1, -20.8, -0.5, -21, 0, -20.8, 0.5)
@@ -980,10 +1097,12 @@ smooth_faces = true
 material = SubResource("StandardMaterial3D_qgo1d")
 
 [node name="Rim" type="CSGPolygon3D" parent="Environment"]
+layers = 2
+cast_shadow = 2
 use_collision = true
 collision_layer = 2
 collision_mask = 2
-polygon = PackedVector2Array(-22, -10, -22, 8, -20, 8, -20, -10)
+polygon = PackedVector2Array(-22, -10, -26, 0, -22, 10, -20, 10, -20, -10)
 mode = 2
 path_node = NodePath("../master_path")
 path_interval_type = 1
@@ -1002,15 +1121,80 @@ transform = Transform3D(0.23235223, 0, 0.92588365, 0, 0.99999994, 0, -0.5694185,
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Environment/FinishLine"]
 transform = Transform3D(0.9763641, 0, -0.21613294, 0, 1, 0, 0.21613294, 0, 0.9763641, -25.677704, 10.734573, 14.418373)
+layers = 2
 size = Vector3(1, 18.66, 1)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Environment/FinishLine"]
 transform = Transform3D(0.9977679, 0, -0.06677908, 0, 1, 0, 0.06677908, 0, 0.9977679, 14.917603, 10.735001, 18.713272)
+layers = 2
 size = Vector3(1, 18.66, 1)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Environment/FinishLine"]
 transform = Transform3D(0.99409825, 0, -0.10848519, 0, 1, 0, 0.10848519, 0, 0.99409825, -5.1796875, 18.035301, 16.60839)
+layers = 2
 size = Vector3(40.882008, 3.97, 1)
+
+[node name="Terrain" type="Node3D" parent="Environment"]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Environment/Terrain"]
+transform = Transform3D(0.03132351, -0.9995093, 0, 0.9995093, 0.03132351, 0, 0, 0, 1, 779.27136, -406.97192, -47.830566)
+layers = 2
+radius = 307.2671
+height = 847.85693
+sides = 11
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Environment/Terrain"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 120.293526, -342.54236, 0)
+layers = 2
+radius = 38.365
+
+[node name="Label3D" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-110.33, -43.351143, 107.81844, 100.5804, -110.08862, 58.659397, 58.204166, 108.06491, 103.010185, -319.3161, 45.272552, -47.80094)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D2" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(129.73016, 93.821594, 6.6652617, 31.832954, -33.110382, -153.51614, -88.50749, 125.6107, -45.44454, -200.71078, 200.88684, -86.33302)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D3" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(146.76657, -56.92154, -29.939177, 64.218506, 133.78375, 60.45443, 3.5210762, -67.36985, 145.34702, -15.462494, 205.99907, -331.82864)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D4" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(123.3596, -56.582527, -85.191956, 67.52296, 145.31311, 1.260973, 76.810776, -36.86951, 135.7114, 276.4112, 160.02641, -295.144)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D5" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-10.593681, 56.752296, -149.47842, 4.53331, 149.85255, 56.573036, 159.82512, -0.48878098, -11.512573, 511.17065, 132.92822, 26.135254)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D6" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-147.27809, -15.497704, -61.203262, 22.637968, 132.04517, -87.9116, 58.93669, -89.44689, -119.1745, 285.28415, 270.60986, 236.74951)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D7" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-147.27809, -15.4977045, -61.203266, -32.541313, 151.74771, 39.8816, 54.102448, 49.084656, -142.62001, 244.29495, 73.691574, 462.53143)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D8" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-138.62488, -46.884514, 65.28264, -75.544235, 120.44225, -73.916084, -27.441814, -94.722534, -126.29901, -252.42682, 171.84306, 261.305)
+layers = 2
+text = "STARS
+"
 
 [node name="Checkpoints" type="Node3D" parent="."]
 
@@ -1019,7 +1203,7 @@ monitorable = false
 script = ExtResource("10_w7pp3")
 
 [node name="Checkpoint1" type="CollisionShape3D" parent="Checkpoints/Checkpoint_1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -186.289, 113.15283, -140.26064)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -186.289, 113.15283, -145.58803)
 shape = SubResource("SphereShape3D_ncw4q")
 
 [node name="Checkpoint_2" type="Area3D" parent="Checkpoints"]
@@ -1027,7 +1211,7 @@ monitorable = false
 script = ExtResource("10_w7pp3")
 
 [node name="Checkpoint2" type="CollisionShape3D" parent="Checkpoints/Checkpoint_2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 330.3829, 141.03003, -27.902489)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 336.94003, 150.00848, -27.902489)
 shape = SubResource("SphereShape3D_bm3a1")
 
 [node name="Finish_Line" type="Area3D" parent="."]
@@ -1334,6 +1518,16 @@ shape = SubResource("SeparationRayShape3D_unlcg")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_rkyhk")
 
+[node name="Cam_start" type="Node3D" parent="."]
+transform = Transform3D(0.7206718, -0.38030127, 0.57965773, 0.079724774, 0.87602824, 0.4756241, -0.68867713, -0.2965558, 0.66164815, 302.01056, 181.22331, 351.05417)
+visible = false
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Cam_start"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 10.16)
+radius = 1.841
+height = 7.363
+cone = true
+
 [node name="Gadgets" type="Node3D" parent="."]
 
 [node name="Node3D" type="Node3D" parent="Gadgets"]
@@ -1388,6 +1582,14 @@ drop_height = 6.0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="KillBox/Area3D"]
 shape = SubResource("BoxShape3D_unlcg")
 debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="KillBox/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 740.9929, 58.771362, -9.167419)
+shape = SubResource("BoxShape3D_ncw4q")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="KillBox/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118.50641, -181.03337, -9.167419)
+shape = SubResource("SphereShape3D_y48j7")
 
 [connection signal="animation_finished" from="Minimap/NewLap" to="." method="_on_new_lap_animation_finished"]
 [connection signal="body_entered" from="Finish_Line" to="." method="_on_finish_line_body_entered"]

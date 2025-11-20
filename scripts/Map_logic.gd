@@ -25,6 +25,8 @@ extends Node3D
 @onready var ItemIcon = $Minimap/Item_Visualizer/VBoxContainer/Item/ItemIcon
 @onready var AltItemIcon = $Minimap/Item_Visualizer/VBoxContainer/AltItem/AltItemIcon
 @onready var victorTime = $Finish_Line/finishline_delay
+@export var start_cam_pos = Vector3(0.0, 0.0, 0.0)
+@export var start_cam_Rot = Vector3(0.0, 0.0, 0.0)
 
 var doneRacers : Dictionary[int, int]
 
@@ -46,6 +48,8 @@ func _ready() -> void:
 		pass
 
 func setup(car : Node3D):
+	car.lockedCamPos = start_cam_pos
+	car.lockedCamRot = Basis.from_euler(start_cam_Rot)
 	car.antigrav_allowed = antigrav_default
 	Cars.append(car)
 	print("kart attached to racetrack: "+ car.name)

@@ -69,7 +69,8 @@ func spawn_kart(ind : int, kartpath : Node3D) -> void :
 	
 	var camcam : Camera3D = player.get_child(2).get_child(0).get_child(0)
 	camcam.make_current()
-	HighLevelNetwork.attach_icon.emit(player)
+	
+	
 
 func despawn_kart(id : int) -> void :
 	if not parent.name.to_int() == id: return

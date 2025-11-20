@@ -22,11 +22,11 @@ shadow_size = 26
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(2.48, 2.89)
 
-[sub_resource type="Animation" id="Animation_1nnrc"]
-resource_name = "New Lap"
-
 [sub_resource type="Animation" id="Animation_0boms"]
 resource_name = "Final Lap"
+
+[sub_resource type="Animation" id="Animation_1nnrc"]
+resource_name = "New Lap"
 
 [sub_resource type="Animation" id="Animation_35t4j"]
 resource_name = "VICTORY"

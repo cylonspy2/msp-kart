@@ -491,17 +491,22 @@ size = Vector3(4.218811, 0.12487793, 8.99408)
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(-0.04753907, -0.14873089, 0.9877344, 0.0022984345, -0.98886603, -0.14879069, 0.99886674, -0.0048031276, 0.047351625, 5.987486, -0.42112637, 0.2727983)
+light_energy = 0.791
 spot_range = 8.390631
 
 [node name="SpotLight3D" type="SpotLight3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.7324075, 0.67984164, 0.03734675, -0.41385287, 0.40095505, 0.81728894, 0.5406525, -0.61404455, 0.57501674, 0.24810934, 5.6913104, 3.493219)
-light_energy = 2.302
+light_energy = 1.465
 light_indirect_energy = 1.186
 spot_range = 8.294317
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(-0.5250421, 0.1254391, -0.8417814, 0.0022984347, -0.98886603, -0.14879073, -0.85107315, -0.080056176, 0.518908, -5.9947567, -0.4211266, 2.1317492)
 spot_range = 8.390631
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.63219154, -0.22641677, 0.7409921, -6.733684e-09, 0.9563507, 0.2922215, -0.77481216, -0.18473995, 0.6045968, 4.857434, 3.2212522, 3.7801914)
+spot_range = 9.54695
 
 [node name="Control" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData"]
 custom_minimum_size = Vector2(114.275, 0)

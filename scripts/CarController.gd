@@ -43,17 +43,17 @@ extends Node3D
 @export var hurt_particles : GPUParticles3D
 
 @export_group("Car Stats")
-@export var maxSpeed = 15000.0
-@export var hurtSpeed = 100.0
-@export var acceleration = 900.0
-@export var steering = 50.0
-@export var steeringDrift = 0.5
-@export var steeringAccelMod = 0.4
-@export var turnspeed = 0.01
-@export var weight = 15.0
-@export var driftBoost = 1.75
-@export var airControl = 0.1
-@export var wallBounce = 0.8
+@export_range(0.0, 6000.0) var maxSpeed = 6000.0
+@export_range(0.0, 10.0) var hurtSpeed = 100.0
+@export_range(0.0, 3000.0) var acceleration = 900.0
+@export_range(0.0, 150.0) var steering = 50.0
+@export_range(0.0, 1.0) var steeringDrift = 0.5
+@export_range(0.0, 1.0) var steeringAccelMod = 0.4
+@export_range(0.0, 1.0) var turnspeed = 0.01
+@export_range(0.0, 50.0) var weight = 15.0
+@export_range(0.0, 1.0) var driftBoost = 0.64
+@export_range(0.0, 1.1) var airControl = 0.1
+@export_range(0.3, 1.0) var wallBounce = 0.8
 
 var speedInput = 0.0
 var rotateInput = 0.0
@@ -95,7 +95,8 @@ signal gainItem(item : PackedScene)
 
 @export_group("Server Data")
 @export var velocity_smooth = 1.0
-@export var angular_smooth = 3.64
+@export_range(0.0, 1.0) var angular_smooth = 0.5
+@export_range(0.0, 180.0) var angular_ramp = 180.0
 @export var start_drift = false
 @export var end_drift = false
 @export var firedItem = false
@@ -137,6 +138,14 @@ func _enter_tree():
 func _ready():
 	print("%s ready, with controller %s" % [name, player_id])
 	
+	camStartPos = Cam.position
+	camStartRot = Cam.basis
+	
+	Cam.position = lockedCamPos
+	Cam.basis = lockedCamRot
+	
+	hurtAccel = acceleration
+	
 	$Car/CarLogic/CarHitbox.name = str(player_id)
 	#weight = Ball.mass
 	hurt_particles.emitting = false
@@ -160,14 +169,12 @@ func _ready():
 	groundRay3.add_exception(Ball)
 	groundRay4.add_exception(Ball)
 	
-	hurtAccel = acceleration
-	camStartPos = Cam.position
-	camStartRot = Cam.basis
-	
 	for part in drift_particles_right:
 		part.emitting = false
 	for part in drift_particles_left:
 		part.emitting = false
+	
+	HighLevelNetwork.attach_icon.emit(self)
 
 func _physics_process(_delta):
 	if is_queued_for_deletion():
@@ -182,12 +189,6 @@ func _physics_process(_delta):
 	if Ball.linear_velocity.length() > maxSpeed and boost <= 1:
 		var cappa = (Ball.linear_velocity / maxSpeed).normalized()
 		Ball.linear_velocity = cappa * maxSpeed
-	
-	var bla = (Car.transform.origin - Ball.transform.origin).length()
-	if bla > velocity_smooth:
-		Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin, bla - (velocity_smooth * 0.5))
-	else:
-		Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin, (velocity_smooth * 0.5))
 	
 	var forceForce = (Car.global_transform.basis.z * speedInput)
 	gravDir = gravForce * 9.810 * weight
@@ -270,6 +271,14 @@ func _physics_process(_delta):
 		server_Rot = Car.global_transform.basis
 		pass
 	
+	var bla = (Car.transform.origin - Ball.transform.origin).length()
+	var alb = (velocity_smooth)
+	alb *= (clampf(bla * 0.5, 0.0, velocity_smooth) / velocity_smooth)
+	if bla > velocity_smooth:
+		Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin, bla - alb)
+	else:
+		Car.transform.origin = Car.transform.origin.move_toward(Ball.transform.origin, bla - alb)
+	
 	#print(Ball.angular_velocity.length())
 
 func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> Vector3:
@@ -283,13 +292,18 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	_avgHitShellPos /= b
 	avgHitNorm /= b
 	
-	var boo = hitter.get_remainder().normalized() * Ball.linear_velocity.length()
-	var boonce = (boo.bounce(avgHitNorm) * bounce)
+	var forc = (hitter.get_travel() + hitter.get_remainder()).normalized()
+	var boo = forc * Ball.linear_velocity.length()
+	var boonce = (boo.bounce(avgHitNorm))
 	var foonce = (Ball.linear_velocity.bounce(avgHitNorm))
-	Ball.linear_velocity = foonce
-	Ball.apply_central_force(avgHitNorm * Ball.linear_velocity.length())
-	Ball.apply_central_force(boonce)
+	var blu = avgHitNorm * clampf(Ball.linear_velocity.length() + speedInput, 1.0, hurtAccel)
+	Ball.linear_velocity = boonce + foonce + (blu * 0.02)
+	#Ball.apply_central_force(blu)
+	#Ball.apply_central_force(boonce)
 	prevForce = boonce
+	acceleration = hurtSpeed
+	speedInput = (MS.inputDir) * acceleration
+	hurtTimer.start(bounce)
 	return boonce
 
 func _process(delta):
@@ -425,33 +439,38 @@ func RotateCar(delta):
 	var rotari = rotateInput
 	var speedModif = clampf(0.01 * Ball.linear_velocity.length(), 0.0, 1.0) 
 	
-	var carBasis = Car.global_transform.basis.orthonormalized()
+	#var _carBasis = Car.global_transform.basis.orthonormalized()
 	if not turnable :
 		rotari = 0.0
 	var newBasis = Car.transform.basis.rotated(Car.transform.basis.y, rotari).get_rotation_quaternion()
 	Car.transform.basis = Car.transform.basis.orthonormalized().slerp(newBasis, speedModif * delta)
 	Car.transform.basis = Car.transform.basis.orthonormalized()
-	carBasis = Car.global_transform.basis.orthonormalized()
+	#_carBasis = Car.global_transform.basis.orthonormalized()
 	#var veloc_modif = clampf(Ball.linear_velocity.length(), 0.0, 100.0) * 0.01
 	
 	if Vector3(0.0, 1.0, 0.0) != antiGrav:
-		#var gravCross = antiGrav.cross(Vector3(0.0, 1.0, 0.0)).normalized()
-		#var gravDot = antiGrav.dot(Vector3(0.0, 1.0, 0.0))
 		var gravDiffCross = Car.global_transform.basis.y.cross(antiGrav).normalized()
 		var gravDiffDot = Car.global_transform.basis.y.dot(antiGrav)
-		if acos(gravDiffDot) != 0.0:
-			var rotatedBasis = carBasis.rotated(gravDiffCross, acos(gravDiffDot))
+		var gravACos = acos(gravDiffDot)
+		if gravACos != 0.0:
+			#var rotatedBasis = carBasis.rotated(gravDiffCross, gravACos)
 			#var rotat_For = veloc_modif * angular_smooth * delta
-			var rotat_For = angular_smooth * delta
-			Car.global_transform.basis = lerp(Car.global_transform.basis, rotatedBasis, rotat_For)
+			var rotat_For = (1 - angular_smooth)
+			var blu_ramp = rotat_For * angular_ramp
+			rotat_For *= (clampf(rad_to_deg(gravACos), 0.0, blu_ramp) / blu_ramp)
+			var carGloBa = Car.global_transform.basis.rotated(gravDiffCross, gravACos)
+			Car.global_transform.basis = lerp(Car.global_transform.basis, carGloBa, rotat_For)
+			#Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, rotat_For)
 	else:
 		var gravDiffCross = Car.global_transform.basis.y.cross(Vector3(0.0, 1.0, 0.0)).normalized()
 		var gravDiffDot = Car.global_transform.basis.y.dot(Vector3(0.0, 1.0, 0.0))
-		if acos(gravDiffDot) != 0.0:
-			var rotatedBasis = carBasis.rotated(gravDiffCross, acos(gravDiffDot))
-			#var rotat_For = veloc_modif * angular_smooth * delta
-			var rotat_For = angular_smooth * delta
-			Car.global_transform.basis = Car.global_transform.basis.slerp(rotatedBasis, rotat_For)
+		var gravACos = acos(gravDiffDot)
+		if gravACos != 0.0:
+			var rotat_For = (1 - angular_smooth)
+			var blu_ramp = rotat_For * angular_ramp
+			rotat_For *= (clampf(rad_to_deg(gravACos), 0.0, blu_ramp) / blu_ramp)
+			var carGloBa = Car.global_transform.basis.rotated(gravDiffCross, gravACos)
+			Car.global_transform.basis = lerp(Car.global_transform.basis, carGloBa, rotat_For)
 	
 	var t = clampf(-rotari * (Ball.linear_velocity.length()/maxSpeed) * bodytilt, -maxCarTwist, maxCarTwist)
 	CarBody.rotation.z = lerp(CarBody.rotation.z, t, 10 * delta)

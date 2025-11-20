@@ -833,7 +833,6 @@ steering = 34.89
 steeringDrift = 2.12
 steeringAccelMod = 1.0
 turnspeed = 0.72
-driftBoost = 0.64
 airControl = 0.965
 kart_icon = ExtResource("3_us48a")
 bodytilt = 5.01
@@ -845,7 +844,8 @@ tier_1_color = Color(1, 0.5176471, 0, 1)
 tier_2_color = Color(1, 0, 1, 1)
 tier_3_color = Color(0, 1, 0, 1)
 tier_4_color = Color(1, 1, 1, 1)
-angular_smooth = 3.98
+velocity_smooth = 1.245
+angular_smooth = 0.781
 
 [node name="CarParent_Logic" type="Node" parent="."]
 

@@ -300,6 +300,7 @@ RacerIcon = ExtResource("3_mmj1g")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="RacerSkin"]
 transform = Transform3D(0.235, 0, 0, 0, 0.235, 0, 0, 0, 0.235, 0, 0, 0)
 offset = Vector2(30.21, 200.675)
+shaded = true
 alpha_cut = 1
 sprite_frames = SubResource("SpriteFrames_dd78r")
 animation = &"full_hold"
