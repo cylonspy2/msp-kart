@@ -1,7 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://ce4l45pg5pfxb"]
+[gd_scene load_steps=23 format=3 uid="uid://ce4l45pg5pfxb"]
 
 [ext_resource type="Script" uid="uid://dbg6betg4ssvw" path="res://scripts/hl_mult_ui.gd" id="1_a1sbk"]
-[ext_resource type="Texture2D" uid="uid://b83bf7374dcil" path="res://ExternalAssets/kenney_car-kit/Previews/box.png" id="2_g6gwi"]
 [ext_resource type="PackedScene" uid="uid://dvhqn57ltpn1t" path="res://scenes/server_button.tscn" id="2_puhv1"]
 [ext_resource type="PackedScene" uid="uid://gfcgbjrr8f5x" path="res://scenes/SelectButton.tscn" id="3_rk2t1"]
 [ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="3_tu0x2"]
@@ -12,7 +11,9 @@
 [ext_resource type="Script" uid="uid://8gwrx4qjo6mw" path="res://scripts/LobbySetupWiggle.gd" id="5_nfuve"]
 [ext_resource type="LabelSettings" uid="uid://bc51l2bv20pkb" path="res://addons/MakeLobbyFont.tres" id="6_1qyww"]
 [ext_resource type="Script" uid="uid://mh8dpmqy82jl" path="res://scripts/chosen_racer_kart_data.gd" id="6_8cjkf"]
+[ext_resource type="Texture2D" uid="uid://dlswxsk5dwgq6" path="res://Racers/RacerAssets/MSPRacer/MSPRacer.png" id="6_gcy7a"]
 [ext_resource type="Texture2D" uid="uid://b5vyso4v3le6u" path="res://ExternalAssets/Stack.webp" id="6_h86ac"]
+[ext_resource type="LabelSettings" uid="uid://bxtirqcglt8on" path="res://Racetracks/RacetrackAssets/BiscuitPark/BP_Rank_Label_Settings.tres" id="7_s5m6j"]
 [ext_resource type="Script" uid="uid://tmsxc8iqpvb5" path="res://scripts/player_roster.gd" id="7_y3agl"]
 [ext_resource type="PackedScene" uid="uid://rdfs1h0nn3vf" path="res://Racers/RacerPackedScenes/MSPReader.tscn" id="9_367ir"]
 [ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="10_4aw4b"]
@@ -52,8 +53,19 @@ default_racer = ExtResource("9_367ir")
 default_kart = ExtResource("10_4aw4b")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(221, 90)
-texture = ExtResource("2_g6gwi")
+position = Vector2(120.99999, 99.99999)
+scale = Vector2(0.7194093, 0.7194093)
+texture = ExtResource("6_gcy7a")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 54.0
+offset_right = 625.0
+offset_bottom = 187.0
+rotation = 0.035374034
+text = "MSPKart"
+label_settings = ExtResource("7_s5m6j")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 visible = false
@@ -346,16 +358,6 @@ texture = ExtResource("4_wuvjb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Control" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ChooseCourse"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -46.5
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="ColorRect" type="ColorRect" parent="ServerLobby/ColorRect/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -475,7 +477,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(389, 153)
 render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport"]

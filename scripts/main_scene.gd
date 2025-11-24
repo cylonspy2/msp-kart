@@ -68,11 +68,15 @@ func _choose_level() -> void :
 		chosenTrack = ResourceLoader.load(HighLevelNetwork.TrackPath + "/" + dir[trackListPos], "PackedScene")
 	levelChooserAnim.play("CHOOSE")
 
-
-func _on_level_chooser_animation_finished(_anim_name: StringName) -> void:
+func _on_level_ready_to_spawn():
 	var dir = ResourceLoader.list_directory(HighLevelNetwork.TrackPath)
 	chosenTrack = ResourceLoader.load(HighLevelNetwork.TrackPath + "/" + dir[trackListPos])
 	start_level()
+
+#func _on_level_chooser_animation_finished(_anim_name: StringName) -> void:
+	#var dir = ResourceLoader.list_directory(HighLevelNetwork.TrackPath)
+	#chosenTrack = ResourceLoader.load(HighLevelNetwork.TrackPath + "/" + dir[trackListPos])
+	#start_level()
 
 func start_level() -> void:
 	print("Starting Level")

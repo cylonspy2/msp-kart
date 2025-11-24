@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4lf6mqid4l3"]
+[gd_scene load_steps=16 format=3 uid="uid://c4lf6mqid4l3"]
 
 [ext_resource type="Script" uid="uid://daygg40j43bio" path="res://scripts/main_scene.gd" id="1_k24pf"]
 [ext_resource type="PackedScene" uid="uid://ce4l45pg5pfxb" path="res://scenes/hl_mult_ui.tscn" id="1_x4av3"]
@@ -6,7 +6,23 @@
 [ext_resource type="Script" uid="uid://bc5ff5nyrprfc" path="res://scripts/multiplayer/networks/network_manager.gd" id="2_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://bq4bbfhb2b6wx" path="res://ExternalAssets/kenney_car-kit/Models/GLB format/ambulance.glb" id="3_c6dvc"]
 [ext_resource type="PackedScene" uid="uid://ci7uqeytx4o21" path="res://scenes/spectator.tscn" id="4_611at"]
+[ext_resource type="Shader" uid="uid://dyky30j8flxuc" path="res://materials/Main_Menu_BG.tres" id="4_u1u68"]
 [ext_resource type="Script" uid="uid://dcrb4cyyffx8r" path="res://scripts/MainLobbySync.gd" id="7_1wiy7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1wiy7"]
+size = Vector3(1900, 1900, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1u68"]
+render_priority = 0
+shader = ExtResource("4_u1u68")
+shader_parameter/checkerBend = 13.49
+shader_parameter/passSpeed = 100.0
+shader_parameter/checkersHor = 20.0
+shader_parameter/checkersVert2 = 20.0
+shader_parameter/Checker1 = Color(0.7744797, 0.5987325, 0, 1)
+shader_parameter/Checker2 = Color(0.9127573, 0.27244237, 0, 1)
+
+[sub_resource type="Environment" id="Environment_1wiy7"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ygjfp"]
 properties/0/path = NodePath(".:trackListPos")
@@ -21,6 +37,7 @@ properties/2/replication_mode = 2
 
 [sub_resource type="Animation" id="Animation_ygjfp"]
 resource_name = "CHOOSE"
+length = 2.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -28,14 +45,117 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_level_ready_to_spawn"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelChooser/ChooseTrackAnim/DOWN/ColorRect2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LevelChooser/ChooseTrackAnim/DOWN:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8666667, 1.1, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 450), Vector2(0, 0), Vector2(0, 0), Vector2(0, 450)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LevelChooser/ChooseTrackAnim/UP/ColorRect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LevelChooser/ChooseTrackAnim/UP:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.8666667, 1.1, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -470), Vector2(0, 0), Vector2(0, 0), Vector2(0, -470)]
+}
+
+[sub_resource type="Animation" id="Animation_u1u68"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LevelChooser/ChooseTrackAnim/DOWN/ColorRect2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LevelChooser/ChooseTrackAnim/DOWN:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 800)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LevelChooser/ChooseTrackAnim/UP/ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LevelChooser/ChooseTrackAnim/UP:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -800)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1wiy7"]
 _data = {
-&"CHOOSE": SubResource("Animation_ygjfp")
+&"CHOOSE": SubResource("Animation_ygjfp"),
+&"RESET": SubResource("Animation_u1u68")
 }
 
 [node name="MainScene" type="Node3D"]
@@ -49,6 +169,15 @@ _players_spawn_node = NodePath("../SpectatorLobby")
 [node name="SpectatorLobby" type="Node3D" parent="."]
 
 [node name="Environment3D" type="Node3D" parent="."]
+
+[node name="BG_Img" type="Node3D" parent="Environment3D"]
+transform = Transform3D(-0.96296054, 0.11224705, -0.24516873, 8.920547e-09, 0.90923613, 0.41628087, 0.26964256, 0.40086204, -0.87555844, 81.803, -164.553, 342.611)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Environment3D/BG_Img"]
+transform = Transform3D(0.96967584, -0.1593804, 0.18527447, 0.1324797, 0.97984093, 0.14953534, -0.20537251, -0.12045571, 0.9712427, 0, 0, 0)
+calculate_tangents = false
+mesh = SubResource("BoxMesh_1wiy7")
+material = SubResource("ShaderMaterial_u1u68")
 
 [node name="ambulance" parent="Environment3D" instance=ExtResource("3_c6dvc")]
 transform = Transform3D(-0.72778475, 0, -0.6858056, 0, 1, 0, 0.6858056, 0, -0.72778475, 0.87135696, -0.52823687, 12.693047)
@@ -64,26 +193,138 @@ spot_range = 9.113957
 
 [node name="MainMenuCam" type="Camera3D" parent="."]
 transform = Transform3D(-0.96296054, 0.11224705, -0.24516873, 8.920547e-09, 0.90923613, 0.41628087, 0.26964256, 0.40086204, -0.87555844, -0.88435745, 1.959545, 7.18235)
+environment = SubResource("Environment_1wiy7")
 
 [node name="HLMultUI" parent="MainMenuCam" instance=ExtResource("1_x4av3")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("trackSlot")]
 _spawnable_scenes = PackedStringArray("uid://ci7uqeytx4o21")
-spawn_path = NodePath("../RaceSlot")
+spawn_path = NodePath("../LevelChooser/RaceSlot")
 script = ExtResource("2_rpqi1")
 networkPlayer = ExtResource("4_611at")
 SpectatorSpawnpath = NodePath("../SpectatorLobby")
-trackSlot = NodePath("../RaceSlot")
+trackSlot = NodePath("../LevelChooser/RaceSlot")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ygjfp")
 script = ExtResource("7_1wiy7")
 
-[node name="RaceSlot" type="Node3D" parent="."]
-
 [node name="LevelChooser" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_1wiy7")
 }
+
+[node name="RaceSlot" type="Node3D" parent="LevelChooser"]
+
+[node name="ChooseTrackAnim" type="Control" parent="LevelChooser"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DOWN" type="Control" parent="LevelChooser/ChooseTrackAnim"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 800.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/DOWN"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -406.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.27752772, 0.27752772, 0.27752772, 1)
+
+[node name="UP" type="Control" parent="LevelChooser/ChooseTrackAnim"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -800.0
+offset_bottom = -800.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 375.0
+grow_horizontal = 2
+color = Color(0.20152658, 0.20152658, 0.20152658, 1)
+
+[node name="Control" type="Control" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.2
+offset_top = 11.645
+offset_right = -3.5693207
+offset_bottom = 196.85826
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.52883476
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 30.395
+offset_top = 105.715
+offset_right = 217.02568
+offset_bottom = 290.9285
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.52883476
+color = Color(0.20152658, 0.20152658, 0.20152658, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -122.99999
+offset_top = 79.5
+offset_right = 125.0
+offset_bottom = 264.71338
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.2, 0.2, 1)
 
 [connection signal="animation_finished" from="LevelChooser" to="." method="_on_level_chooser_animation_finished"]

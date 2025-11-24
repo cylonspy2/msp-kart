@@ -292,19 +292,31 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	_avgHitShellPos /= b
 	avgHitNorm /= b
 	
-	var forc = (hitter.get_travel() + hitter.get_remainder()).normalized()
-	var boo = forc * Ball.linear_velocity.length()
-	var boonce = (boo.bounce(avgHitNorm))
-	var foonce = (Ball.linear_velocity.bounce(avgHitNorm))
-	var blu = avgHitNorm * clampf(Ball.linear_velocity.length() + speedInput, 1.0, hurtAccel)
-	Ball.linear_velocity = boonce + foonce + (blu * 0.02)
-	#Ball.apply_central_force(blu)
-	#Ball.apply_central_force(boonce)
-	prevForce = boonce
-	acceleration = hurtSpeed
+	#var forc = (hitter.get_travel() + hitter.get_remainder())
+	var foonce = (Ball.linear_velocity.normalized().bounce(avgHitNorm))#.normalized()
+	
+	Ball.linear_velocity = (avgHitNorm * 2 + foonce - gravDir.normalized()) * (10 * bounce)
+	
+	if start_drift or startedDrifting or drifting:
+		#print("driftHit")
+		if Car.global_basis.z.dot(Ball.linear_velocity.normalized()) >= 0.0:
+			#print("willCont")
+			acceleration = 1.0
+			Ball.apply_central_force(Car.global_basis.z * 10 + avgHitNorm * 100)
+		else:
+			#print("willNont")
+			acceleration = 0.0
+			Ball.apply_central_force((foonce + avgHitNorm) * 100)
+	else:
+		Anim.play("HopCenter")
+		acceleration = 0.0
+		Ball.apply_central_force(avgHitNorm * 10)
+	
+	Ball.apply_central_force(avgHitNorm * 10)
 	speedInput = (MS.inputDir) * acceleration
+	prevForce = avgHitNorm
 	hurtTimer.start(bounce)
-	return boonce
+	return Ball.linear_velocity
 
 func _process(delta):
 	
@@ -522,12 +534,12 @@ func StopDrift():
 
 func GetHit(strength : float):
 	if not HighLevelNetwork.get_hosting(): 
-		Anim.play("Hop")
+		Anim.play("HopCenter")
 		hurt_particles.emitting = true
 		fireDisabled = true
 		pass
 	else:
-		Anim.play("Hop")
+		Anim.play("HopCenter")
 		RacerSpawnLoc.get_child(0).hurt = true
 		hurt_particles.emitting = true
 		fireDisabled = true
