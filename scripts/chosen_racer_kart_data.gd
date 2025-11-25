@@ -8,6 +8,8 @@ extends HBoxContainer
 @onready var stat_accel = $Stats/STATS/Acceleration
 @onready var stat_steer = $Stats/STATS/Steering
 @onready var stat_drift = $"Stats/STATS/Drift Control"
+@onready var stat_drift_accel = $Stats/STATS/Drift
+@onready var stat_drift_steer = $"Stats/STATS/Drift Steer"
 @onready var stat_boost = $Stats/STATS/Boost
 @onready var stat_air_control = $Stats/STATS/AirControl
 @onready var skill_item = $Control/VBoxContainer/ColorRect/Item
@@ -61,7 +63,9 @@ func update_kart(track : PackedScene):
 	var driftAmount = bluh * kartChosen.steeringDrift
 	stat_steer.value = bluh + lerp(bluh, driftAmount, kartChosen.turnspeed)
 	stat_drift.value = kartChosen.steeringAccelMod
-	stat_boost.value = kartChosen.driftBoost
+	stat_drift_steer.value = stat_steer.value - kartChosen.drift_steering
+	stat_boost.value = kartChosen.driftBoost + kartChosen.initial_driftBoost
+	stat_drift_accel.value = kartChosen.drift_acceleration
 	stat_air_control.value = kartChosen.airControl
 	stat_maxspeed.value = kartChosen.maxSpeed
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ce4l45pg5pfxb"]
+[gd_scene load_steps=24 format=3 uid="uid://ce4l45pg5pfxb"]
 
 [ext_resource type="Script" uid="uid://dbg6betg4ssvw" path="res://scripts/hl_mult_ui.gd" id="1_a1sbk"]
 [ext_resource type="PackedScene" uid="uid://dvhqn57ltpn1t" path="res://scenes/server_button.tscn" id="2_puhv1"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://tmsxc8iqpvb5" path="res://scripts/player_roster.gd" id="7_y3agl"]
 [ext_resource type="PackedScene" uid="uid://rdfs1h0nn3vf" path="res://Racers/RacerPackedScenes/MSPReader.tscn" id="9_367ir"]
 [ext_resource type="PackedScene" uid="uid://c3ywrjpbr02ay" path="res://Karts/KartPackedScenes/BakerDozen.tscn" id="10_4aw4b"]
+[ext_resource type="PackedScene" uid="uid://cbgvvov1m1582" path="res://Karts/KartPackedScenes/KernelKart.tscn" id="12_s5m6j"]
 [ext_resource type="StyleBox" uid="uid://dv36suawvifec" path="res://materials/prog_bar_Back.tres" id="13_0rm60"]
 [ext_resource type="LabelSettings" uid="uid://c0ywo84wtq6di" path="res://materials/ProgBarFont.tres" id="13_56wbp"]
 [ext_resource type="StyleBox" uid="uid://c57q8wgdpbg5l" path="res://materials/prog_bar_Fore.tres" id="14_56wbp"]
@@ -258,7 +259,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -1.0
+offset_top = -52.0
+offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.3515629, 0.3515629, 0.35156286, 1)
@@ -425,9 +427,10 @@ text = "Chosen Racer & Kart:"
 [node name="ChosenRacerKartData" type="HBoxContainer" parent="ServerLobby/ColorRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.27
 script = ExtResource("6_8cjkf")
 placeholderRacer = ExtResource("9_367ir")
-placeholderKart = ExtResource("10_4aw4b")
+placeholderKart = ExtResource("12_s5m6j")
 
 [node name="Kart" type="Control" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData"]
 layout_mode = 2
@@ -477,7 +480,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(389, 153)
+size = Vector2i(389, 232)
 render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport"]
@@ -588,6 +591,7 @@ size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
 max_value = 50.0
+value = 25.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Weight"]
@@ -603,6 +607,7 @@ size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
 max_value = 6000.0
+value = 3500.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/MaxSpd"]
@@ -618,6 +623,7 @@ size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
 max_value = 3000.0
+value = 1000.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Acceleration"]
@@ -633,6 +639,7 @@ size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
 max_value = 150.0
+value = 26.47
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Steering"]
@@ -642,13 +649,29 @@ offset_bottom = 23.0
 text = "Steering"
 label_settings = ExtResource("13_56wbp")
 
+[node name="Drift" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = ExtResource("13_0rm60")
+theme_override_styles/fill = ExtResource("14_56wbp")
+max_value = 3000.0
+value = 1000.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Drift"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Drift"
+label_settings = ExtResource("13_56wbp")
+
 [node name="Drift Control" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = ExtResource("14_56wbp")
 theme_override_styles/fill = ExtResource("13_0rm60")
 max_value = 1.0
-value = 1.0
+value = 0.92
 fill_mode = 1
 show_percentage = false
 
@@ -659,13 +682,30 @@ offset_bottom = 23.0
 text = "Drift Friction"
 label_settings = ExtResource("13_56wbp")
 
+[node name="Drift Steer" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = ExtResource("13_0rm60")
+theme_override_styles/fill = ExtResource("14_56wbp")
+min_value = -150.0
+max_value = 300.0
+value = 34.879999999999995
+show_percentage = false
+
+[node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Drift Steer"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Drift Steering"
+label_settings = ExtResource("13_56wbp")
+
 [node name="Boost" type="ProgressBar" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/background = ExtResource("13_0rm60")
 theme_override_styles/fill = ExtResource("14_56wbp")
-max_value = 1.0
-value = 1.0
+max_value = 3.0
+value = 1.31
 show_percentage = false
 
 [node name="Label" type="Label" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Stats/STATS/Boost"]

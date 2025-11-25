@@ -46,12 +46,15 @@ extends Node3D
 @export_range(0.0, 6000.0) var maxSpeed = 6000.0
 @export_range(0.0, 10.0) var hurtSpeed = 100.0
 @export_range(0.0, 3000.0) var acceleration = 900.0
+@export_range(0.0, 3000.0) var drift_acceleration = 900.0
 @export_range(0.0, 150.0) var steering = 50.0
+@export_range(0.0, 150.0) var drift_steering = 50.0
 @export_range(0.0, 1.0) var steeringDrift = 0.5
 @export_range(0.0, 1.0) var steeringAccelMod = 0.4
 @export_range(0.0, 1.0) var turnspeed = 0.01
 @export_range(0.0, 50.0) var weight = 15.0
 @export_range(0.0, 1.0) var driftBoost = 0.64
+@export_range(0.0, 2.0) var initial_driftBoost = 1
 @export_range(0.0, 1.1) var airControl = 0.1
 @export_range(0.3, 1.0) var wallBounce = 0.8
 
@@ -116,6 +119,7 @@ signal gainItem(item : PackedScene)
 var lockedCamPos = Vector3(0.0, 0.0, 0.0)
 var lockedCamRot : Basis
 
+var camLerp : Vector3 = Vector3(0.0, 0.0, 0.0)
 var gravDir : Vector3
 var hurtAccel : float
 var camStartPos : Vector3
@@ -297,9 +301,9 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	
 	Ball.linear_velocity = (avgHitNorm * 2 + foonce - gravDir.normalized()) * (10 * bounce)
 	
-	if start_drift or startedDrifting or drifting:
+	if start_drift or startedDrifting or drifting or boostTiering > -0.1:
 		#print("driftHit")
-		if Car.global_basis.z.dot(Ball.linear_velocity.normalized()) >= 0.0:
+		if Car.global_basis.z.dot(Ball.linear_velocity.normalized()) >= -0.0:
 			#print("willCont")
 			acceleration = 1.0
 			Ball.apply_central_force(Car.global_basis.z * 10 + avgHitNorm * 100)
@@ -325,11 +329,17 @@ func _process(delta):
 			return
 		else:
 			speedInput = (MS.inputDir) * acceleration
-			rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+			if drifting:
+				rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
+			else:
+				rotateInput = deg_to_rad(steering) * (MS.inputRot)#drift_steering
 			if speedInput < 0.0:
 				rotateInput *= -1
 			lockedCamPos = null
+			var ball_vel = Ball.linear_velocity.normalized() * (clampf(Ball.linear_velocity.length(), 0.0, 5.0) * 0.2)
+			camLerp = lerp(camLerp, ball_vel, delta)
 			Cam.position = camStartPos
+			Cam.global_position -= camLerp
 			Cam.basis = camStartRot
 			camLocked = true
 	else:
@@ -390,7 +400,7 @@ func _process(delta):
 	
 	if drifting:
 		#var driftAmount = lerp(rotateInput,(deg_to_rad(steering * (1 + steeringDrift)) * startDriftDirection), steeringDrift)
-		var driftAmount = rotateInput + ((deg_to_rad(steering) * (startDriftDirection)) * steeringDrift)
+		var driftAmount = rotateInput + ((deg_to_rad(drift_steering) * (startDriftDirection)) * steeringDrift)
 		rotateInput = lerp(rotateInput, driftAmount, turnspeed)
 		#rotateInput += driftDirection + driftAmount
 		match boostTiering:
@@ -493,6 +503,7 @@ func RotateCar(delta):
 
 func StartDrift():
 	drifting = true
+	acceleration = drift_acceleration
 	if rotateInput > 0:
 		Anim.play("Hop")
 		if haveAuthority:
@@ -516,8 +527,9 @@ func StartDrift():
 	driftTimer.start()
 
 func StopDrift():
+	acceleration = hurtAccel
 	if minimumDrift and is_touching_ground:
-		boost = 1 + (driftBoost * boostTiering)
+		boost = initial_driftBoost + (driftBoost * boostTiering)
 		boostTimer.start()
 		can_look_back = false
 		camAnim.play("ZoomOut")

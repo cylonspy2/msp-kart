@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_8ri5e"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_hwo32"]
-[ext_resource type="Texture2D" uid="uid://bmywf1wvntxij" path="res://ExternalAssets/kenney_car-kit/Previews/sedan.png" id="3_us48a"]
+[ext_resource type="Texture2D" uid="uid://c5gry65uull04" path="res://ExternalAssets/5a5f6ba5efbf295b1018b0875024c37b521ecbce_hq.jpg" id="3_227g8"]
 [ext_resource type="Script" uid="uid://cbi6mvpvsltnq" path="res://scripts/multiplayer_synchronizer.gd" id="3_xxkov"]
 [ext_resource type="Script" uid="uid://bwkkh8kt1o3t7" path="res://Karts/KartAssets/BakerDozen/bd_flame.gd" id="4_0x8ti"]
 [ext_resource type="Script" uid="uid://davg66gub6wgh" path="res://scripts/car_ui.gd" id="4_duwg8"]
@@ -830,11 +830,12 @@ hurt_particles = NodePath("Car/ModelParent/Model/Hurt_Particles/GPUParticles3D")
 maxSpeed = 3000.0
 acceleration = 1000.0
 steering = 34.89
+drift_steering = 39.215
 steeringDrift = 2.12
 steeringAccelMod = 1.0
 turnspeed = 0.72
 airControl = 0.965
-kart_icon = ExtResource("3_us48a")
+kart_icon = ExtResource("3_227g8")
 bodytilt = 5.01
 wheelTwist = 0.08
 maxCarTwist = 10.775

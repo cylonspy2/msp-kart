@@ -733,7 +733,7 @@ size = Vector3(980.66846, 105.35033, 605.3192)
 [sub_resource type="SphereShape3D" id="SphereShape3D_y48j7"]
 radius = 395.74
 
-[node name="BiscuitPark" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath", "checkpoints")]
+[node name="Biscuit Park" type="Node3D" node_paths=PackedStringArray("Car_Root", "TrackPath", "checkpoints")]
 script = ExtResource("1_unlcg")
 map_icon = ExtResource("2_dh4jp")
 MAX_LAPS = 5
@@ -1110,7 +1110,7 @@ compositor = SubResource("Compositor_f7uto")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" node_paths=PackedStringArray("parr")]
 transform = Transform3D(0.91727984, -0.3058415, 0.25506625, -0.13906354, 0.3541727, 0.9247827, -0.37317446, -0.8837549, 0.28234407, -98.11072, 181.2721, 7.985528)
-light_color = Color(0.024854744, 7.219613e-08, 0.32183257, 1)
+light_color = Color(0.1248, 0.10800001, 0.36, 1)
 light_energy = 2.987
 light_indirect_energy = 0.373
 shadow_enabled = true
@@ -1149,10 +1149,9 @@ spot_angle_attenuation = 0.01991495
 transform = Transform3D(-0.30109316, -0.5502605, -0.77881736, 0.09516307, 0.79530203, -0.59869766, 0.94883454, -0.2543784, -0.18709552, -293.37842, 70.588196, -44.19523)
 layers = 3
 light_color = Color(1, 1, 0, 1)
-light_energy = 16.0
+light_energy = 120.0
 light_bake_mode = 0
 shadow_enabled = true
-shadow_caster_mask = 4294967294
 spot_range = 40.08837
 spot_attenuation = 1.39
 spot_angle = 78.06
@@ -1162,36 +1161,48 @@ spot_angle_attenuation = 1.8025018
 transform = Transform3D(0.9687557, -0.22040544, 0.113727055, 0.01370372, 0.50541276, 0.86276895, -0.24763806, -0.83425385, 0.49264187, -200.71078, 200.88684, -86.33302)
 layers = 3
 light_color = Color(1, 1, 0, 1)
-light_energy = 16.0
+light_energy = 120.0
 light_bake_mode = 0
 shadow_enabled = true
-shadow_caster_mask = 4294967294
+shadow_bias = 0.095
 spot_range = 104.630005
 spot_angle = 56.59711
-spot_angle_attenuation = 0.24148452
+spot_angle_attenuation = 0.13397212
 
 [node name="SpotLight3D4" type="SpotLight3D" parent="Environment"]
 transform = Transform3D(0.28557703, 0.9385691, -0.19373666, 0.930873, -0.22359522, 0.28893027, 0.22786243, -0.26285607, -0.93754226, -15.462494, 174.13184, -284.72415)
 layers = 3
 light_color = Color(1, 1, 0, 1)
-light_energy = 16.0
+light_energy = 120.0
 light_bake_mode = 0
 shadow_enabled = true
-shadow_caster_mask = 4294967294
+shadow_bias = 0.095
 spot_range = 72.8806
 spot_attenuation = 1.38
 spot_angle = 52.96413
 spot_angle_attenuation = 0.24148452
 
+[node name="SpotLight3D8" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(-0.096566044, -0.96894586, -0.22763848, 0.96096176, -0.03118246, -0.27491897, 0.2592832, -0.24529965, 0.9341307, 71.21738, 159.60628, -198.87099)
+layers = 3
+light_color = Color(1, 1, 0, 1)
+light_energy = 120.0
+light_bake_mode = 0
+shadow_enabled = true
+shadow_bias = 0.095
+spot_range = 45.33316
+spot_attenuation = 1.38
+spot_angle = 70.95692
+spot_angle_attenuation = 0.14358768
+
 [node name="SpotLight3D5" type="SpotLight3D" parent="Environment"]
 transform = Transform3D(-0.1001749, 0.85056907, 0.51623344, 0.98888075, 0.142425, -0.042773783, -0.1099066, 0.50620854, -0.85537905, 276.4112, 160.02641, -295.144)
 layers = 3
 light_color = Color(1, 1, 0, 1)
-light_energy = 16.0
+light_energy = 120.0
 light_bake_mode = 0
 shadow_enabled = true
 shadow_bias = 0.161
-shadow_caster_mask = 4294967294
 spot_range = 152.78528
 spot_angle = 41.008114
 spot_angle_attenuation = 0.10881905
@@ -1200,12 +1211,11 @@ spot_angle_attenuation = 0.10881905
 transform = Transform3D(0.027394533, -0.025794746, 0.99929184, 0.8015699, -0.5967317, -0.037377644, 0.5972733, 0.80202615, 0.0043291035, 438.02673, 132.92827, 26.135252)
 layers = 3
 light_color = Color(1, 1, 0, 1)
-light_energy = 16.0
+light_energy = 120.0
 light_bake_mode = 0
 shadow_enabled = true
 shadow_bias = 0.226
-shadow_caster_mask = 4294967294
-spot_range = 94.655334
+spot_range = 104.863846
 spot_angle = 60.99166
 spot_angle_attenuation = 0.050765954
 
@@ -1213,14 +1223,33 @@ spot_angle_attenuation = 0.050765954
 transform = Transform3D(-0.7985037, -0.5490306, 0.24689536, 0.5863707, -0.80218035, 0.112588294, 0.1362402, 0.23467436, 0.96247935, 244.29495, 73.691574, 462.53143)
 layers = 3
 light_color = Color(1, 1, 0, 1)
-light_energy = 16.0
+light_energy = 120.0
 light_bake_mode = 0
 shadow_enabled = true
 shadow_bias = 0.487
-shadow_caster_mask = 4294967294
 spot_range = 128.9479
 spot_angle = 39.13838
 spot_angle_attenuation = 0.034674104
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment"]
+transform = Transform3D(0.8374406, -0.11723215, -0.5338069, 0.043327298, 0.98789, -0.1489835, 0.54480815, 0.10163643, 0.83237857, 201.40392, 176.54158, -183.6994)
+omni_range = 9.92808
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment/OmniLight3D"]
+transform = Transform3D(1, 0, -2.9802322e-08, 3.7252903e-09, 1, -7.450581e-09, 2.9802322e-08, -1.4901161e-08, 1, -10.431755, 3.3205566, 2.4025269)
+omni_range = 9.92808
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Environment/OmniLight3D"]
+transform = Transform3D(1, -3.7252903e-09, -2.9802322e-08, 3.7252903e-09, 1, -7.450581e-09, 2.9802322e-08, -2.9802322e-08, 1, 18.818481, 0.9244232, 2.6663208)
+omni_range = 9.92808
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Environment/OmniLight3D"]
+transform = Transform3D(1, -3.7252903e-09, -2.9802322e-08, 3.7252903e-09, 1, -7.450581e-09, 2.9802322e-08, -2.9802322e-08, 1, 15.123421, 8.759171, 4.816223)
+omni_range = 9.92808
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Environment/OmniLight3D"]
+transform = Transform3D(1, -3.7252903e-09, -2.9802322e-08, 3.7252903e-09, 1, -7.450581e-09, 2.9802322e-08, -2.9802322e-08, 1, -6.171402, -5.8250732, -2.9022522)
+omni_range = 9.92808
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -198.77368, -815.26495, -6.8598633)
@@ -1237,7 +1266,7 @@ curve = ExtResource("8_dh4jp")
 layers = 2
 cast_shadow = 2
 use_collision = true
-polygon = PackedVector2Array(-20.5, 1, -20, 1.6, -19.5, 1.3, -10, 1, -8, 1.1, 0, 1.2, 8, 1.1, 10, 1, 19.5, 1.3, 20, 1.6, 20.5, 1, 20.8, 0.5, 21, 0, 20.8, -0.5, 20.5, -1, 20, -1.6, 19.5, -1.3, 10, -1, 8, -1.1, 0, -1.2, -8, -1.1, -10, -1, -19.5, -1.3, -20, -1.6, -20.5, -1, -20.8, -0.5, -21, 0, -20.8, 0.5)
+polygon = PackedVector2Array(-20.5, 2, -20, 2.6, -19.5, 2.3, -10, 2, -8, 2.1, 0, 2.2, 8, 2.1, 10, 2, 19.5, 2.3, 20, 2.6, 20.5, 2, 20.8, 1.5, 21, 0, 20.8, -1.5, 20.5, -2, 20, -2.6, 19.5, -2.3, 10, -2, 8, -2.1, 0, -2.2, -8, -2.1, -10, -2, -19.5, -2.3, -20, -2.6, -20.5, -2, -20.8, -1.5, -21, 0, -20.8, 1.5)
 mode = 2
 path_node = NodePath("../master_path")
 path_interval_type = 1
@@ -1322,6 +1351,12 @@ layers = 2
 text = "STARS
 "
 
+[node name="Label3D9" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-153.70583, -45.216408, 2.614624, -45.260372, 152.99744, -14.837348, 1.6903305, -14.970802, -159.53015, 71.1992, 157.60712, -177.91718)
+layers = 2
+text = "STARS
+"
+
 [node name="Label3D4" type="Label3D" parent="Environment/Terrain"]
 transform = Transform3D(123.3596, -56.582527, -85.191956, 67.52296, 145.31311, 1.260973, 76.810776, -36.86951, 135.7114, 276.4112, 160.02641, -295.144)
 layers = 2
@@ -1349,6 +1384,17 @@ text = "STARS
 [node name="Label3D8" type="Label3D" parent="Environment/Terrain"]
 transform = Transform3D(-138.62488, -46.884514, 65.28264, -75.544235, 120.44225, -73.916084, -27.441814, -94.722534, -126.29901, -252.42682, 171.84306, 261.305)
 layers = 2
+text = "STARS
+"
+
+[node name="Label3D10" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(-62.24638, -86.24194, 119.85228, -60.40683, 133.55801, 64.73126, -134.734, -20.03626, -84.39281, 330.3313, 126.75717, 45.998405)
+layers = 2
+text = "STARS
+"
+
+[node name="Label3D11" type="Label3D" parent="Environment/Terrain"]
+transform = Transform3D(134.19145, -18.785292, -85.53719, 6.9427643, 158.29951, -23.8731, 87.30003, 16.286217, 133.38031, 201.40392, 176.54158, -183.6994)
 text = "STARS
 "
 
@@ -1689,41 +1735,44 @@ cone = true
 [node name="Node3D" type="Node3D" parent="Gadgets"]
 transform = Transform3D(0.73090357, 0.5783479, 0.3623449, -0.5197127, 0.81578547, -0.25375798, -0.44235605, -0.0028426053, 0.89683515, -267.11023, 76.6035, 13.240536)
 
-[node name="ItemContainer" parent="Gadgets/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, 0, 1, 0)
+[node name="Node3D" type="Node3D" parent="Gadgets/Node3D"]
+transform = Transform3D(0.9918944, 0.0066500483, -0.12689048, 0, 0.9986295, 0.05233596, 0.12706462, -0.051911745, 0.990535, 0, 1, 0)
 
-[node name="ItemContainer2" parent="Gadgets/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, 7, 1, 0)
+[node name="ItemContainer" parent="Gadgets/Node3D/Node3D" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.9999999, 2.3283064e-08, 5.9604645e-08, -6.2864274e-09, 0.99999964, 3.282912e-08, 2.9802322e-08, 4.8195943e-08, 0.9999999, 0, 2.0000153, 7.6293945e-06)
 
-[node name="ItemContainer3" parent="Gadgets/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, 14, 1.38, 0)
+[node name="ItemContainer2" parent="Gadgets/Node3D/Node3D" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.9999999, 2.3283064e-08, 5.9604645e-08, -6.2864274e-09, 0.99999964, 3.282912e-08, 2.9802322e-08, 4.8195943e-08, 0.9999999, 6.9999847, 2.0000076, -7.6293945e-06)
 
-[node name="ItemContainer4" parent="Gadgets/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, -7, 1, 0)
+[node name="ItemContainer3" parent="Gadgets/Node3D/Node3D" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.9999999, 2.3283064e-08, 5.9604645e-08, -6.2864274e-09, 0.99999964, 3.282912e-08, 2.9802322e-08, 4.8195943e-08, 0.9999999, 13.999985, 2.3799973, 0)
 
-[node name="ItemContainer5" parent="Gadgets/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, -14, 1.38, 0)
+[node name="ItemContainer4" parent="Gadgets/Node3D/Node3D" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.9999999, 2.3283064e-08, 5.9604645e-08, -6.2864274e-09, 0.99999964, 3.282912e-08, 2.9802322e-08, 4.8195943e-08, 0.9999999, -7, 2, -7.6293945e-06)
+
+[node name="ItemContainer5" parent="Gadgets/Node3D/Node3D" instance=ExtResource("13_bm3a1")]
+transform = Transform3D(0.9999999, 2.3283064e-08, 5.9604645e-08, -6.2864274e-09, 0.99999964, 3.282912e-08, 2.9802322e-08, 4.8195943e-08, 0.9999999, -14, 2.3800125, 0)
 
 [node name="Node3D2" type="Node3D" parent="Gadgets"]
 transform = Transform3D(0.73090357, 0.5783479, 0.36234492, -0.5197127, 0.81578547, -0.253758, -0.44235608, -0.0028426053, 0.89683515, -267.11023, 76.6035, 13.240536)
 
 [node name="Node3D" type="Node3D" parent="Gadgets/Node3D2"]
-transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1.0000001, 0, -2.825, 0)
+transform = Transform3D(-0.9918944, -0.011074496, -0.12658112, 8.709011e-08, -0.9961947, 0.087155744, -0.12706463, 0.08644928, 0.9881201, 0, -2, 0)
 
 [node name="ItemContainer" parent="Gadgets/Node3D2/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.9999999, -2.514571e-08, 2.9802322e-08, -3.0733645e-08, 0.9999997, -2.0489097e-08, 0, -3.7252903e-09, 0.9999999, 0, 1, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, 0, 2, 0)
 
 [node name="ItemContainer2" parent="Gadgets/Node3D2/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.9999999, -2.514571e-08, 2.9802322e-08, -3.0733645e-08, 0.9999997, -2.0489097e-08, 0, -3.7252903e-09, 0.9999999, 7, 0.9999924, -7.6293945e-06)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, 7, 2, 0)
 
 [node name="ItemContainer3" parent="Gadgets/Node3D2/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.9999999, -2.514571e-08, 2.9802322e-08, -3.0733645e-08, 0.9999997, -2.0489097e-08, 0, -3.7252903e-09, 0.9999999, 13.999985, 1.3799973, -7.6293945e-06)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, 14, 2.38, 0)
 
 [node name="ItemContainer4" parent="Gadgets/Node3D2/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.9999999, -2.514571e-08, 2.9802322e-08, -3.0733645e-08, 0.9999997, -2.0489097e-08, 0, -3.7252903e-09, 0.9999999, -7.0000153, 1.0000076, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, -7, 2, 0)
 
 [node name="ItemContainer5" parent="Gadgets/Node3D2/Node3D" instance=ExtResource("13_bm3a1")]
-transform = Transform3D(0.9999999, -2.514571e-08, 2.9802322e-08, -3.0733645e-08, 0.9999997, -2.0489097e-08, 0, -3.7252903e-09, 0.9999999, -14, 1.3800049, -7.6293945e-06)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999964, 0, 0, 0, 0.99999994, -14, 2.38, 0)
 
 [node name="KillBox" type="Node3D" parent="."]
 
