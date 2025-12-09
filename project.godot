@@ -24,6 +24,10 @@ SteamManager="*res://scripts/multiplayer/steam/steam_manager.gd"
 
 window/size/always_on_top=true
 
+[editor]
+
+movie_writer/movie_file="C:/Users/rowan/OneDrive/Desktop/ArtStuff/GameProjects/msp-kart/showOff_1.ogv"
+
 [input]
 
 Accelerate={

@@ -127,6 +127,7 @@ var camStartRot : Basis
 var camLocked = false
 var is_touching_ground = true
 var can_look_back = true
+var in_bounce_recovery = false;
 
 @export var player_id := 1:
 	set(id):
@@ -297,28 +298,30 @@ func _process_kart_collision(hitter : KinematicCollision3D, bounce : float) -> V
 	avgHitNorm /= b
 	
 	#var forc = (hitter.get_travel() + hitter.get_remainder())
-	var foonce = (Ball.linear_velocity.normalized().bounce(avgHitNorm))#.normalized()
+	#var foonce = (Ball.linear_velocity.normalized().bounce(avgHitNorm))#.normalized()
+		
+	Ball.linear_velocity = (avgHitNorm * 2 - gravDir.normalized()) * (10 * bounce)
 	
-	Ball.linear_velocity = (avgHitNorm * 2 + foonce - gravDir.normalized()) * (10 * bounce)
-	
-	if start_drift or startedDrifting or drifting or boostTiering > -0.1:
-		#print("driftHit")
-		if Car.global_basis.z.dot(Ball.linear_velocity.normalized()) >= -0.0:
-			#print("willCont")
-			acceleration = 1.0
-			Ball.apply_central_force(Car.global_basis.z * 10 + avgHitNorm * 100)
+	if start_drift or startedDrifting or drifting or boostTiering > -0.0:
+		acceleration = 0.0
+		speedInput = 0.0
+		if Car.global_basis.z.dot(Ball.linear_velocity.normalized()) > -0.0:
+			Ball.apply_central_force((avgHitNorm * 2 - gravDir.normalized()))
 		else:
-			#print("willNont")
-			acceleration = 0.0
-			Ball.apply_central_force((foonce + avgHitNorm) * 100)
+			Ball.apply_central_force((avgHitNorm * 2 - gravDir.normalized()) * (10 * bounce))
 	else:
 		Anim.play("HopCenter")
 		acceleration = 0.0
-		Ball.apply_central_force(avgHitNorm * 10)
+		speedInput = 0.0
+		if Car.global_basis.z.dot(Ball.linear_velocity.normalized()) > -0.0:
+			Ball.apply_central_force((avgHitNorm * 2 - gravDir.normalized()))
+		else:
+			Ball.apply_central_force((avgHitNorm * 2 - gravDir.normalized()) * (10 * bounce))
 	
-	Ball.apply_central_force(avgHitNorm * 10)
+	Ball.apply_central_force(avgHitNorm * 100)
 	speedInput = (MS.inputDir) * acceleration
 	prevForce = avgHitNorm
+	in_bounce_recovery = true;
 	hurtTimer.start(bounce)
 	return Ball.linear_velocity
 
@@ -328,7 +331,10 @@ func _process(delta):
 		if Cam == null:
 			return
 		else:
-			speedInput = (MS.inputDir) * acceleration
+			if not in_bounce_recovery:
+				speedInput = (MS.inputDir) * acceleration
+			else:
+				speedInput = 0.0
 			if drifting:
 				rotateInput = deg_to_rad(steering) * (MS.inputRot) ## * (Ball.linear_velocity.length() / maxSpeed)
 			else:
@@ -420,7 +426,7 @@ func _process(delta):
 				sparkMat.albedo_color = base_color
 				sparkMat.emission = base_color
 	
-	if end_drift or ((speedInput <= 0.1) or not is_touching_ground or Ball.linear_velocity.length() <= 1):
+	if end_drift or (not is_touching_ground or Ball.linear_velocity.length() <= 1): #or (speedInput <= 0.1)):
 		end_drift = false
 		if drifting:
 			start_drift = false
@@ -621,6 +627,8 @@ func _on_hurt_timer_timeout() -> void:
 	#Ball.axis_lock_linear_y = false
 	#Ball.axis_lock_linear_z = false
 	hurt_particles.emitting = false
+	if in_bounce_recovery:
+		in_bounce_recovery = false
 	acceleration = hurtAccel
 	fireDisabled = false
 	RacerSpawnLoc.get_child(0).hurt = false
