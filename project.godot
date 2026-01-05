@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 HighLevelNetwork="*res://scripts/multiplayer/HighLevelNetwork.gd"
 SteamManager="*res://scripts/multiplayer/steam/steam_manager.gd"
 
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="C:\\logs\\mspkart\\mspkart.log"
+
 [display]
 
 window/size/always_on_top=true

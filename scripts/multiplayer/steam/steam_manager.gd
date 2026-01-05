@@ -2,6 +2,7 @@ extends Node
 
 var is_owned: bool = false
 var steam_app_id: int = 4178390   #480
+var steam_depot_id: int = 4178391
 var steam_id: int = 0
 var steam_username: String = ""
 
@@ -21,8 +22,9 @@ func _initialize_steam():
 	print("Steam Initialized? %s " % initialize_response)
 	
 	if initialize_response['status'] > 0:
-		print("Steam Initialization failed. Did you make sure to open Steam? Shutting Down. %s " % initialize_response)
+		print("Steam Initialization failed. Shutting Down. %s " % initialize_response)
 		get_tree().quit()
+		return
 	
 	is_owned = Steam.isSubscribed()
 	steam_id = Steam.getSteamID()
