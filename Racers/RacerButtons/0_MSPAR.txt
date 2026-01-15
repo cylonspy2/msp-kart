@@ -1,0 +1,1 @@
+MSPAR,res://Racers/RacerAssets/MSPRacer/MSPRacer.png,res://Racers/RacerPackedScenes/MSPReader.tscn,

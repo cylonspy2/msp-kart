@@ -346,36 +346,33 @@ func populate_choose_menu(type : int):
 	
 	var path : PackedStringArray
 	var hostDir : String
+	
 	match(type):
 		0:
-			path = ResourceLoader.list_directory(HighLevelNetwork.TrackPath)
-			hostDir = HighLevelNetwork.TrackPath
+			path = DirAccess.get_files_at("res://Racetracks/RacetrackButtons")
+			hostDir = "res://Racetracks/RacetrackButtons"
 		1:
-			path = ResourceLoader.list_directory(HighLevelNetwork.KartPath)
-			hostDir = HighLevelNetwork.KartPath
+			path = DirAccess.get_files_at("res://Karts/KartButtons")
+			hostDir = "res://Karts/KartButtons"
 		2:
-			path = ResourceLoader.list_directory(HighLevelNetwork.RacerPath)
-			hostDir = HighLevelNetwork.RacerPath
-	#var length = path.size()
-	
+			path = DirAccess.get_files_at("res://Racers/RacerButtons")
+			hostDir = "res://Racers/RacerButtons"
+	#print(path)
 	var holdz : HBoxContainer
 	for element in path:
 		var count = path.find(element)
 		if count % select_menu_width_count == 0:
 			holdz = HBoxContainer.new()
 			selectMenuHolder.add_child(holdz)
-		var mucho = ResourceLoader.load(hostDir + "/" + path[count])
+			holdz.get_parent_control().size_flags_vertical = Control.SIZE_EXPAND_FILL
+			holdz.get_parent_control().size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var mucho = FileAccess.open(hostDir + "/" + element, FileAccess.READ)
+		#print(hostDir + "/" + element)
+		#print(FileAccess.get_open_error())
+		var content : PackedStringArray = mucho.get_as_text().split(",", false)
 		var ele = select_button.instantiate()
-		var much = mucho.instantiate()
-		ele.get_child(0).get_child(0).get_child(1).text = much.name
-		match(type):
-			0:
-				ele.get_child(0).get_child(0).get_child(0).texture = much.map_icon
-			1:
-				ele.get_child(0).get_child(0).get_child(0).texture = much.kart_icon
-			2:
-				ele.get_child(0).get_child(0).get_child(0).texture = much.RacerIcon
-		much.queue_free()
+		ele.get_child(0).get_child(0).get_child(1).text = content[0]
+		ele.get_child(0).get_child(0).get_child(0).texture = load(content[1])
 		ele.type = type
-		ele.object = mucho
+		ele.object = load(content[2])
 		holdz.call_deferred("add_child", ele)

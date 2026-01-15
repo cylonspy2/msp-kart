@@ -18,7 +18,7 @@ func _ready() -> void:
 	for sparky : GPUParticles3D in sparks:
 		sparky.emitting = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if renderable:
 		return
 	if parrent.start_drift:

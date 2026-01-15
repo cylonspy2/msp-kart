@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://hadpixq1u3xk"
 path.s3tc="res://.godot/imported/Timeline 1_0003.png-266d9bfb5884fe13c96f7eeb9c730675.s3tc.ctex"
+path.etc2="res://.godot/imported/Timeline 1_0003.png-266d9bfb5884fe13c96f7eeb9c730675.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://ExternalAssets/ref_Racer/Timeline 1_0003.png"
-dest_files=["res://.godot/imported/Timeline 1_0003.png-266d9bfb5884fe13c96f7eeb9c730675.s3tc.ctex"]
+dest_files=["res://.godot/imported/Timeline 1_0003.png-266d9bfb5884fe13c96f7eeb9c730675.s3tc.ctex", "res://.godot/imported/Timeline 1_0003.png-266d9bfb5884fe13c96f7eeb9c730675.etc2.ctex"]
 
 [params]
 

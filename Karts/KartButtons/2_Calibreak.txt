@@ -1,0 +1,1 @@
+Calibreak,res://Karts/KartAssets/Calibreak/Untitled.jpg,res://Karts/KartPackedScenes/Calibreak.tscn,

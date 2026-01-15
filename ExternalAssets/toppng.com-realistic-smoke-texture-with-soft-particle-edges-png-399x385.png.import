@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bb4vsogl4uxa0"
 path.s3tc="res://.godot/imported/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png-e42c36d2c8cadd531b984c28841e1174.s3tc.ctex"
+path.etc2="res://.godot/imported/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png-e42c36d2c8cadd531b984c28841e1174.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://ExternalAssets/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png"
-dest_files=["res://.godot/imported/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png-e42c36d2c8cadd531b984c28841e1174.s3tc.ctex"]
+dest_files=["res://.godot/imported/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png-e42c36d2c8cadd531b984c28841e1174.s3tc.ctex", "res://.godot/imported/toppng.com-realistic-smoke-texture-with-soft-particle-edges-png-399x385.png-e42c36d2c8cadd531b984c28841e1174.etc2.ctex"]
 
 [params]
 

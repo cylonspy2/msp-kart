@@ -28,7 +28,7 @@ func become_host() -> void :
 	multiplayer.multiplayer_peer = peer
 	host_mode_enabled = true
 
-func become_client(id : int) -> void :
+func become_client(_id : int) -> void :
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(IP_ADDRESS, PORT)
 	multiplayer.multiplayer_peer = peer

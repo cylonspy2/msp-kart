@@ -1,0 +1,1 @@
+Popomatic Ghoulieroo,res://Karts/KartAssets/PopomaticGhoulieroo/Screenshot 2025-11-18 115624.png,res://Karts/KartPackedScenes/PopomaticGhoulieroo.tscn,

@@ -1,0 +1,1 @@
+Kernel Kart,res://Karts/KartAssets/KernelKart/f6453b42cd309a429273b8b4e05ac735.webp,res://Karts/KartPackedScenes/KernelKart.tscn,

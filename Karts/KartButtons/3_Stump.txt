@@ -1,0 +1,1 @@
+Stump,res://Karts/KartAssets/Stump/16d2749a759415c98b051ac07702fff05e7a790ev2_hq.jpg,res://Karts/KartPackedScenes/Stump.tscn,

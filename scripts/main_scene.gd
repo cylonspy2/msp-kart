@@ -96,7 +96,7 @@ func start_level() -> void:
 		pass
 	pass
 
-func _ending_race(id : int, score : int):
+func _ending_race(_id : int, _score : int):
 	##TODO: make a system to keep track of the cumulative score of lobby members
 	pass
 

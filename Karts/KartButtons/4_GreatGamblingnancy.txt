@@ -1,0 +1,1 @@
+Great Gamblingnancy,res://Karts/KartAssets/GreatGamblingnancy/c052e0f6e897e65ef019d19c9de6b4cfeec98f05_hq.jpg,res://Karts/KartPackedScenes/GreatGamblingnancy.tscn,

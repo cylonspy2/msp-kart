@@ -19,7 +19,7 @@ func _ready() -> void:
 	inputDir = Input.get_action_strength("Accelerate") - Input.get_action_strength("Brake")
 	inputRot = Input.get_action_strength("SteerLeft") - Input.get_action_strength("SteerRight")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not haveAuthority or not racing: return
 	inputDir = Input.get_action_strength("Accelerate") - Input.get_action_strength("Brake")
 	inputRot = Input.get_action_strength("SteerLeft") - Input.get_action_strength("SteerRight")

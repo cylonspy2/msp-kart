@@ -1,0 +1,1 @@
+Baker Dozen,res://ExternalAssets/5a5f6ba5efbf295b1018b0875024c37b521ecbce_hq.jpg,res://Karts/KartPackedScenes/BakerDozen.tscn,

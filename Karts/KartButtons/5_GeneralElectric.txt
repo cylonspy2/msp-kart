@@ -1,0 +1,1 @@
+General Electric,res://Karts/KartAssets/GeneralElectric/8a5dcc561406ee0368024d3dfaacf0593efee6af_hq.jpg,res://Karts/KartPackedScenes/GeneralElectric.tscn,
