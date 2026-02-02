@@ -8,6 +8,7 @@ var lobbyName = "BADDIE343"
 
 var lobby_search = ""
 
+signal update_lobby_data(name : String)
 signal enter_lobby(id : int)
 signal leave_lobby
 signal hosted_lobby(id : int)

@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=10 format=3 uid="uid://l0fxthhoj1hk"]
+[gd_resource type="VisualShader" format=3 uid="uid://l0fxthhoj1hk"]
 
 [sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_1kxpf"]
 
@@ -36,65 +36,6 @@ default_value = 1.0
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_ufa0u"]
 
 [resource]
-code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_toon, specular_toon;
-
-uniform vec4 Color : source_color = vec4(0.000000, 0.000000, 0.000000, 1.000000);
-uniform float Fresnel = 0.99000000953674;
-uniform float EdgeStrength = 0.5;
-uniform float Clearcoat = 0.10000000149012;
-uniform float Clearcoat_Roughness = 1.0;
-
-
-
-void fragment() {
-// ColorParameter:2
-	vec4 n_out2p0 = Color;
-
-
-// FloatParameter:5
-	float n_out5p0 = Fresnel;
-
-
-// FloatFunc:4
-	float n_out4p0 = 1.0 - n_out5p0;
-
-
-// Fresnel:3
-	float n_out3p0 = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), n_out4p0);
-
-
-// FloatParameter:11
-	float n_out11p0 = EdgeStrength;
-
-
-// FloatOp:9
-	float n_out9p0 = n_out3p0 + n_out11p0;
-
-
-// Clamp:10
-	float n_in10p1 = 0.00000;
-	float n_in10p2 = 1.00000;
-	float n_out10p0 = clamp(n_out9p0, n_in10p1, n_in10p2);
-
-
-// FloatParameter:6
-	float n_out6p0 = Clearcoat;
-
-
-// FloatParameter:7
-	float n_out7p0 = Clearcoat_Roughness;
-
-
-// Output:0
-	ALBEDO = vec3(n_out2p0.xyz);
-	ALPHA = n_out10p0;
-	CLEARCOAT = n_out6p0;
-	CLEARCOAT_ROUGHNESS = n_out7p0;
-
-
-}
-"
 modes/diffuse = 3
 modes/specular = 1
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_1kxpf")

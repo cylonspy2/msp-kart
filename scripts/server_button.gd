@@ -15,10 +15,13 @@ func _setupInfo(nam : String, IPa : String, por : int, playCount : int, NetworkM
 	IPNAME = IPa
 	PORTNAME = por
 	if NetworkManager.network_is_steam:
-		pass
-	$HBoxContainer/name.text = LOBBYNAME
-	$HBoxContainer/IP_address.text = IPNAME
-	$HBoxContainer/player_count.text = str(playCount)
+		$HBoxContainer/name.text = LOBBYNAME
+		$HBoxContainer/IP_address.text = IPNAME
+		$HBoxContainer/player_count.text = str(Steam.getNumLobbyMembers(PORTNAME)) + " / " + str(playCount)
+	else:
+		$HBoxContainer/name.text = LOBBYNAME
+		$HBoxContainer/IP_address.text = IPNAME
+		$HBoxContainer/player_count.text = str(playCount)
 
 func _trigger_lobby(lobby_id = 0) -> void :
 	print("going to " + LOBBYNAME)
@@ -27,6 +30,7 @@ func _trigger_lobby(lobby_id = 0) -> void :
 
 func _on_button_pressed() -> void:
 	if networkBrain.network_is_steam:
+		HighLevelNetwork.update_lobby_data.emit(LOBBYNAME)
 		HighLevelNetwork.enter_lobby.emit(PORTNAME)
 	else:
 		HighLevelNetwork.enter_lobby.emit()

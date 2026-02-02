@@ -8,13 +8,13 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(func(id) : add_name(id))
 	multiplayer.peer_disconnected.connect(func(id) : lose_name(id))
 
-func add_name(id : int = 0):
+func add_name(id : int):
 	var trust = Label.new()
 	cont.add_child(trust)
 	if HighLevelNetwork.multiplayer_enabled and HighLevelNetwork.steam_active == true:
-		#var userID = Steam.getSteamID()
+		var userID = Steam.getSteamID()
 		var userInd = multiplayer.get_peers().find(id)
-		if userInd > 0:
+		if userInd != userID:
 			#Steam.getNumLobbyMembers(SteamManager.lobby_id)
 			#userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd)
 			trust.text = Steam.getFriendPersonaName(id)

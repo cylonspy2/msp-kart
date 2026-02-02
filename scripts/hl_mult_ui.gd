@@ -11,6 +11,7 @@ extends Control
 @onready var lobby_search_bar = $ServerBrowser/Container/SearchHeader/TextEdit
 @onready var startGameButton = $ServerLobby/ColorRect/VBoxContainer/HBoxContainer/VBoxContainer/StartGameControl
 @onready var lobbyName = $ServerLobby/ColorRect/VBoxContainer/lobby_name
+@onready var playerRoster = $ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ColorRect/PlayerRoster
 @onready var selectMenu = $SelectionMenu
 @onready var selectMenuName = $SelectionMenu/ServBrow_Color/VBoxContainer/Label
 @onready var selectMenuHolder = $SelectionMenu/ServBrow_Color/VBoxContainer/ScrollContainer/ServerBrowser
@@ -24,8 +25,10 @@ var buttonArray : Array
 @export var default_kart : PackedScene
 var chosen_items : Array[PackedScene]
 var lobby_idd : int
+var connctd = false
 
 func _ready() -> void:
+	#HighLevelNetwork.update_lobby_data.connect(func(_id): _update_lobby_data(_id))
 	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
 	HighLevelNetwork.enter_race.connect(_starting_game)
 	HighLevelNetwork.select_track.connect(_back_to_lobby)
@@ -67,20 +70,27 @@ func list_lobbies():
 	if %NetworkManager.network_is_steam == true:
 		SteamManager._initialize_steam()
 		HighLevelNetwork._set_username(Steam.getPersonaName())
-		Steam.lobby_match_list.connect(func(lobbies): _populate_lobbies(lobbies))
+		if not connctd:
+			Steam.lobby_match_list.connect(func(lobbies): _populate_lobbies(lobbies))
+			connctd = true
 	else:
 		HighLevelNetwork.reset_username()
 		Steam.lobby_match_list.disconnect(func(lobbies): _populate_lobbies(lobbies))
+	
 	%NetworkManager.list_lobbies()
 
 func _populate_lobbies(lobbies : Array) -> void:
 	#return
-	buttonArray.clear()
+	print(lobbies.size())
+	
 	var sBBC = get_node(serverBrowserBoxContainer)
 	if sBBC.get_child_count() > 0:
 		for n in sBBC.get_children():
+			print("destroyingLobbyButton")
 			n.queue_free()
-
+	
+	buttonArray.clear()
+	
 	for lobby in lobbies:
 		var lobby_name: String = Steam.getLobbyData(lobby, "name")
 		print("lobby found: " + lobby_name)
@@ -121,7 +131,7 @@ func _serverr_joined(targ_lobby_id = 0) -> void:
 func _lobby_joined(targ_lobby_id = 0) -> void:
 	print("joined lobby %s" % targ_lobby_id)
 	#%NetworkManager.become_client(targ_lobby_id)
-	#lobby_idd = targ_lobby_id
+	lobby_idd = targ_lobby_id
 	
 	buttonArray.clear()
 	var sBBC = get_node(serverBrowserBoxContainer)
@@ -135,6 +145,7 @@ func _lobby_joined(targ_lobby_id = 0) -> void:
 	if HighLevelNetwork.trackPosChosen != -1:
 		pass
 	
+	_update_lobby_data(Steam.getLobbyData(targ_lobby_id, "name"))
 	
 	ServerLobby.visible = true
 	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
@@ -212,6 +223,11 @@ func _on_find_server_pressed() -> void:
 
 
 func leave_lobby():
+	
+	if useSteam:
+		if SteamManager.lobby_id == 0:
+			return
+	
 	print("Leaving Lobby")
 	ServerLobby.visible = false
 	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
@@ -232,10 +248,20 @@ func leave_lobby():
 			#Steam.deleteLobbyData(%NetworkManager.targ_id)
 			#multiplayer.set_multiplayer_peer(SteamMultiplayerPeer.new())
 			pass
-		Steam.leaveLobby(%NetworkManager.targ_id)
 	else:
-		Steam.leaveLobby(%NetworkManager.targ_id)
+		pass
 	
+	if useSteam:
+		Steam.leaveLobby(SteamManager.lobby_id)
+		SteamManager.lobby_id = 0
+		SteamManager.get_lobby_members()
+		for mem in SteamManager.lobby_members:
+			if mem["steam_id"] != SteamManager.steam_id:
+				Steam.closeP2PSessionWithUser(mem["steam_id"])
+	else:
+		pass
+	
+	SteamManager.lobby_members.clear()
 	HighLevelNetwork.leave_lobby.emit()
 
 
@@ -297,6 +323,22 @@ func enter_race():
 
 
 
+
+func _update_lobby_data(_id : String):
+	print("updating data for %s" % _id)
+	HighLevelNetwork.lobbyName = _id
+	lobbyName.text = _id
+	if useSteam:
+		SteamManager.get_lobby_members()
+		
+		var sbubl = $ServerLobby/ColorRect/VBoxContainer/HBoxContainer/ColorRect/PlayerRoster/VBoxContainer
+		
+		if sbubl.get_child_count() > 0:
+			for n in sbubl.get_children():
+				n.queue_free()
+		
+		for mem in SteamManager.lobby_members:
+			playerRoster.add_name(mem)
 
 func _on_choose_course_pressed() -> void:
 	ServerLobby.visible = false

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvhqn57ltpn1t"]
+[gd_scene format=3 uid="uid://dvhqn57ltpn1t"]
 
 [ext_resource type="Script" uid="uid://dncxchho1yqut" path="res://scripts/server_button.gd" id="1_6kaqe"]
 
-[node name="ServerButton" type="Control"]
+[node name="ServerButton" type="Control" unique_id=506678752]
 custom_minimum_size = Vector2(0, 33.66)
 layout_mode = 3
 anchors_preset = 10
@@ -10,7 +10,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 script = ExtResource("1_6kaqe")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1836641969]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,27 +18,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="name" type="Label" parent="HBoxContainer"]
+[node name="name" type="Label" parent="HBoxContainer" unique_id=1883551848]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "NAME"
 
-[node name="IP_address" type="Label" parent="HBoxContainer"]
+[node name="IP_address" type="Label" parent="HBoxContainer" unique_id=177930694]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "IP_ADDRESS"
 
-[node name="player_count" type="Label" parent="HBoxContainer"]
+[node name="player_count" type="Label" parent="HBoxContainer" unique_id=1697330562]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Player Count"
 
-[node name="join?" type="Label" parent="HBoxContainer"]
+[node name="join?" type="Label" parent="HBoxContainer" unique_id=34302561]
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Join:"
 
-[node name="join!" type="Button" parent="HBoxContainer"]
+[node name="join!" type="Button" parent="HBoxContainer" unique_id=1247589832]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.66

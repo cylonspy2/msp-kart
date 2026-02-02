@@ -59,6 +59,9 @@ func _on_lobby_created(connectt : int, lobby_id):
 		
 		print("set lobby at: " + str(_hosted_lobby_id))
 		
+		var set_relay : bool = Steam.allowP2PPacketRelay(true)
+		print("Allowing Steam to act as P2P fallback... %s" % set_relay)
+		
 		_create_host(Steam.getLobbyOwner(_hosted_lobby_id))
 
 func _create_host(id : int = 0):
@@ -74,36 +77,45 @@ func _create_host(id : int = 0):
 
 func become_client(id : int) -> void :
 	targ_id = id
-	Steam.lobby_joined.connect(_on_lobby_joined.bind())
+	if not Steam.lobby_joined.is_connected(_on_lobby_joined.bind()):
+		Steam.lobby_joined.connect(_on_lobby_joined.bind())
+	
+	SteamManager.lobby_members.clear()
+	
 	Steam.joinLobby(targ_id)
 
 func _on_lobby_joined(lobby_id : int, _permissions : int, _locked : bool, response : int):
 	print("joined lobby with ID %s" % str(lobby_id))
 	
-	_hosted_lobby_id = lobby_id
-	SteamManager.lobby_id = lobby_id
-	
 	#HighLevelNetwork.hosted_lobby.emit()
 	print(response)
 	if response == 1:
+		
+		_hosted_lobby_id = lobby_id
+		SteamManager.lobby_id = lobby_id
+		
+		SteamManager.get_lobby_members()
+		
+		SteamManager.make_P2P_handshake()
+		
 		var id = Steam.getLobbyOwner(lobby_id)
 		if id != Steam.getSteamID():
 			print("connecting client to socket...")
 			connect_socket(id)
-		else:
-			var FAIL_REASON : String
-			match(response):
-				2: FAIL_REASON = "This lobby no longer exists"
-				3: FAIL_REASON = "You lack permission to join this lobby"
-				4: FAIL_REASON = "The lobby is full"
-				5: FAIL_REASON = "Uh... Huh. I got nothing. *Something* broke..."
-				6: FAIL_REASON = "Wow, you're banned! What did you *do*, lol"
-				7: FAIL_REASON = "You can't join, your account is \"limited\", whever that means"
-				8: FAIL_REASON = "This lobby is locked or disabled"
-				9: FAIL_REASON = "This lobby is community locked"
-				10: FAIL_REASON = "Someone in there blocked you, so I'm just gonna. Not."
-				11: FAIL_REASON = "Nah fam, you don't wanna be in there. A user you blocked is in there."
-			print(FAIL_REASON)
+	else:
+		var FAIL_REASON : String
+		match(response):
+			2: FAIL_REASON = "This lobby no longer exists"
+			3: FAIL_REASON = "You lack permission to join this lobby"
+			4: FAIL_REASON = "The lobby is full"
+			5: FAIL_REASON = "Uh... Huh. I got nothing. *Something* broke..."
+			6: FAIL_REASON = "Wow, you're banned! What did you *do*, lol"
+			7: FAIL_REASON = "You can't join, your account is \"limited\", whever that means"
+			8: FAIL_REASON = "This lobby is locked or disabled"
+			9: FAIL_REASON = "This lobby is community locked"
+			10: FAIL_REASON = "Someone in there blocked you, so I'm just gonna. Not."
+			11: FAIL_REASON = "Nah fam, you don't wanna be in there. A user you blocked is in there."
+		print(FAIL_REASON)
 
 func connect_socket(steam_id : int):
 	var error = peer.create_client(steam_id, 0)
