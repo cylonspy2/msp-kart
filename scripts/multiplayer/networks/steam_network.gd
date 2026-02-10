@@ -102,6 +102,8 @@ func _on_lobby_joined(lobby_id : int, _permissions : int, _locked : bool, respon
 		if id != Steam.getSteamID():
 			print("connecting client to socket...")
 			connect_socket(id)
+		else:
+			print("I am the host, hehehe")
 	else:
 		var FAIL_REASON : String
 		match(response):

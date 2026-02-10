@@ -14,6 +14,7 @@ func add_name(id : int):
 	if HighLevelNetwork.multiplayer_enabled and HighLevelNetwork.steam_active == true:
 		var userID = Steam.getSteamID()
 		var userInd = multiplayer.get_peers().find(id)
+		print("you:%s          the girl she tells you to not worry about:%s" % [userID, userInd])
 		if userInd != userID:
 			#Steam.getNumLobbyMembers(SteamManager.lobby_id)
 			#userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd)

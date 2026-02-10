@@ -480,7 +480,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer" unique_id=1813308215]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(389, 232)
+size = Vector2i(2, 2)
 render_target_update_mode = 0
 
 [node name="Camera3D" type="Camera3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport" unique_id=514205255]
@@ -810,6 +810,8 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Set Lobby Name Here..."
+wrap_mode = 1
+scroll_fit_content_height = true
 
 [node name="ColorRect" type="ColorRect" parent="LobbyCreation/ColorRect/VBoxContainer/LobbyName&Exit/HBoxContainer" unique_id=348054244]
 custom_minimum_size = Vector2(48.845, 0)

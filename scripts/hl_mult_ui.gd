@@ -235,33 +235,49 @@ func leave_lobby():
 	MainMenu.mouse_filter = MOUSE_FILTER_PASS
 	
 	chosen_items.clear()
-	
-	if %NetworkManager.is_host:
-		var userInd = multiplayer.get_peers()
-		Steam.getNumLobbyMembers(SteamManager.lobby_id)
-		var userID = 0
-		if userInd.size() > 1:
-			userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd.get(randi() % userInd.size()))
-			Steam.setLobbyOwner(%NetworkManager.targ_id, userID)
-			print(userID)
-		else:
-			#Steam.deleteLobbyData(%NetworkManager.targ_id)
-			#multiplayer.set_multiplayer_peer(SteamMultiplayerPeer.new())
-			pass
-	else:
-		pass
-	
 	if useSteam:
+		if %NetworkManager.is_host:
+			print("You're leaving, *and* you're host. Damn okay")
+			var userInd = multiplayer.get_peers()
+			Steam.getNumLobbyMembers(SteamManager.lobby_id)
+			var userID = 0
+			if userInd.size() > 1:
+				userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd.get(randi() % userInd.size()))
+				Steam.setLobbyOwner(%NetworkManager.targ_id, userID)
+				print(userID)
+			else:
+				#Steam.deleteLobbyData(%NetworkManager.targ_id)
+				#multiplayer.set_multiplayer_peer(SteamMultiplayerPeer.new())
+				pass
+		else:
+			pass
+		
 		Steam.leaveLobby(SteamManager.lobby_id)
 		SteamManager.lobby_id = 0
 		SteamManager.get_lobby_members()
 		for mem in SteamManager.lobby_members:
 			if mem["steam_id"] != SteamManager.steam_id:
 				Steam.closeP2PSessionWithUser(mem["steam_id"])
+		
+		SteamManager.lobby_members.clear()
 	else:
+		#if %NetworkManager.is_host:
+			#print("You're leaving, *and* you're host. Damn okay")
+			#var userInd = multiplayer.get_peers()
+			#Steam.getNumLobbyMembers(SteamManager.lobby_id)
+			#var userID = 0
+			#if userInd.size() > 1:
+				#userID = Steam.getLobbyMemberByIndex(SteamManager.lobby_id, userInd.get(randi() % userInd.size()))
+				#Steam.setLobbyOwner(%NetworkManager.targ_id, userID)
+				#print(userID)
+			#else:
+				##Steam.deleteLobbyData(%NetworkManager.targ_id)
+				##multiplayer.set_multiplayer_peer(SteamMultiplayerPeer.new())
+				#pass
+		#else:
+			#pass
 		pass
 	
-	SteamManager.lobby_members.clear()
 	HighLevelNetwork.leave_lobby.emit()
 
 
