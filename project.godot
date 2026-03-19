@@ -31,7 +31,7 @@ file_logging/log_path="C:\\logs\\mspkart\\mspkart.log"
 
 [display]
 
-window/size/always_on_top=true
+window/size/resizable=false
 
 [editor]
 

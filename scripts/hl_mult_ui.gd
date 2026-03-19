@@ -24,6 +24,7 @@ var buttonArray : Array
 @export var default_racer : PackedScene
 @export var default_kart : PackedScene
 var chosen_items : Array[PackedScene]
+var itemIndexArray : Array[int]
 var lobby_idd : int
 var connctd = false
 
@@ -53,6 +54,9 @@ func _process(_delta: float) -> void:
 	if lobby_search_bar.visible:
 		HighLevelNetwork.lobby_search = lobby_search_bar.text
 	if ServerLobby.visible:
+		if not HighLevelNetwork.multiplayer_enabled:
+			print("multiplayer isnt online yet")
+			return
 		###alternate inverse formula for this: (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled
 		if HighLevelNetwork.get_hosting():
 			startGameButton.visible = true

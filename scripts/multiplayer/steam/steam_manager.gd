@@ -31,6 +31,8 @@ func _initialize_steam():
 		get_tree().quit()
 		return
 	
+	
+	
 	is_owned = Steam.isSubscribed()
 	steam_id = Steam.getSteamID()
 	steam_username = Steam.getPersonaName()

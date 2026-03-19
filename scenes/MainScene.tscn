@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c4lf6mqid4l3"]
+[gd_scene format=3 uid="uid://c4lf6mqid4l3"]
 
 [ext_resource type="Script" uid="uid://daygg40j43bio" path="res://scripts/main_scene.gd" id="1_k24pf"]
 [ext_resource type="PackedScene" uid="uid://ce4l45pg5pfxb" path="res://scenes/hl_mult_ui.tscn" id="1_x4av3"]
@@ -159,47 +159,47 @@ _data = {
 &"RESET": SubResource("Animation_u1u68")
 }
 
-[node name="MainScene" type="Node3D"]
+[node name="MainScene" type="Node3D" unique_id=1533355556]
 script = ExtResource("1_k24pf")
 
-[node name="NetworkManager" type="Node" parent="." node_paths=PackedStringArray("_players_spawn_node")]
+[node name="NetworkManager" type="Node" parent="." unique_id=942280639 node_paths=PackedStringArray("_players_spawn_node")]
 unique_name_in_owner = true
 script = ExtResource("2_ygjfp")
 _players_spawn_node = NodePath("../SpectatorLobby")
 
-[node name="SpectatorLobby" type="Node3D" parent="."]
+[node name="SpectatorLobby" type="Node3D" parent="." unique_id=687333605]
 
-[node name="Environment3D" type="Node3D" parent="."]
+[node name="Environment3D" type="Node3D" parent="." unique_id=859240330]
 
-[node name="BG_Img" type="Node3D" parent="Environment3D"]
+[node name="BG_Img" type="Node3D" parent="Environment3D" unique_id=2081271337]
 transform = Transform3D(-0.96296054, 0.11224705, -0.24516873, 8.920547e-09, 0.90923613, 0.41628087, 0.26964256, 0.40086204, -0.87555844, 81.803, -164.553, 342.611)
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Environment3D/BG_Img"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Environment3D/BG_Img" unique_id=2097481600]
 transform = Transform3D(0.96967584, -0.1593804, 0.18527447, 0.1324797, 0.97984093, 0.14953534, -0.20537251, -0.12045571, 0.9712427, 0, 0, 0)
 calculate_tangents = false
 mesh = SubResource("BoxMesh_1wiy7")
 material = SubResource("ShaderMaterial_u1u68")
 
-[node name="ambulance" parent="Environment3D" instance=ExtResource("3_c6dvc")]
+[node name="ambulance" parent="Environment3D" unique_id=374326152 instance=ExtResource("3_c6dvc")]
 transform = Transform3D(-0.72778475, 0, -0.6858056, 0, 1, 0, 0.6858056, 0, -0.72778475, 0.87135696, -0.52823687, 12.693047)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment3D"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment3D" unique_id=1372083432]
 transform = Transform3D(0.9417119, -0.04050074, 0.33397374, -0.30174276, 0.33728987, 0.8917325, -0.1487618, -0.9405292, 0.30540907, 1.9606417, -5.9604645e-08, -3.2162223)
 visible = false
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Environment3D"]
+[node name="SpotLight3D" type="SpotLight3D" parent="Environment3D" unique_id=1465110793]
 transform = Transform3D(1, 0, 0, 0, -0.5245656, 0.85137004, 0, -0.85137004, -0.5245656, 0.6870756, 4.274386, 9.161609)
 light_energy = 2.674
 spot_range = 9.113957
 
-[node name="MainMenuCam" type="Camera3D" parent="."]
+[node name="MainMenuCam" type="Camera3D" parent="." unique_id=675146667]
 transform = Transform3D(-0.96296054, 0.11224705, -0.24516873, 8.920547e-09, 0.90923613, 0.41628087, 0.26964256, 0.40086204, -0.87555844, -0.88435745, 1.959545, 7.18235)
 environment = SubResource("Environment_1wiy7")
 
-[node name="HLMultUI" parent="MainMenuCam" instance=ExtResource("1_x4av3")]
+[node name="HLMultUI" parent="MainMenuCam" unique_id=617057782 instance=ExtResource("1_x4av3")]
 default_kart = ExtResource("6_x537r")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("trackSlot")]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1027650073 node_paths=PackedStringArray("trackSlot")]
 _spawnable_scenes = PackedStringArray("uid://ci7uqeytx4o21")
 spawn_path = NodePath("../LevelChooser/RaceSlot")
 script = ExtResource("2_rpqi1")
@@ -207,18 +207,16 @@ networkPlayer = ExtResource("4_611at")
 SpectatorSpawnpath = NodePath("../SpectatorLobby")
 trackSlot = NodePath("../LevelChooser/RaceSlot")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1430453661]
 replication_config = SubResource("SceneReplicationConfig_ygjfp")
 script = ExtResource("7_1wiy7")
 
-[node name="LevelChooser" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_1wiy7")
-}
+[node name="LevelChooser" type="AnimationPlayer" parent="." unique_id=1394666689]
+libraries/ = SubResource("AnimationLibrary_1wiy7")
 
-[node name="RaceSlot" type="Node3D" parent="LevelChooser"]
+[node name="RaceSlot" type="Node3D" parent="LevelChooser" unique_id=942651142]
 
-[node name="ChooseTrackAnim" type="Control" parent="LevelChooser"]
+[node name="ChooseTrackAnim" type="Control" parent="LevelChooser" unique_id=1448739796]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -227,7 +225,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="DOWN" type="Control" parent="LevelChooser/ChooseTrackAnim"]
+[node name="DOWN" type="Control" parent="LevelChooser/ChooseTrackAnim" unique_id=1344953747]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -237,7 +235,7 @@ offset_bottom = 800.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect2" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/DOWN"]
+[node name="ColorRect2" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/DOWN" unique_id=936284919]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -249,7 +247,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.27752772, 0.27752772, 0.27752772, 1)
 
-[node name="UP" type="Control" parent="LevelChooser/ChooseTrackAnim"]
+[node name="UP" type="Control" parent="LevelChooser/ChooseTrackAnim" unique_id=845711738]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -259,7 +257,7 @@ offset_bottom = -800.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP"]
+[node name="ColorRect" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP" unique_id=615013242]
 visible = false
 layout_mode = 1
 anchors_preset = 10
@@ -268,7 +266,7 @@ offset_bottom = 375.0
 grow_horizontal = 2
 color = Color(0.20152658, 0.20152658, 0.20152658, 1)
 
-[node name="Control" type="Control" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect"]
+[node name="Control" type="Control" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect" unique_id=666643432]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -282,7 +280,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control"]
+[node name="ColorRect" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control" unique_id=1382493068]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -298,7 +296,7 @@ grow_vertical = 2
 rotation = 0.52883476
 color = Color(0.2, 0.2, 0.2, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control"]
+[node name="ColorRect2" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control" unique_id=1889903809]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -314,7 +312,7 @@ grow_vertical = 2
 rotation = -0.52883476
 color = Color(0.20152658, 0.20152658, 0.20152658, 1)
 
-[node name="ColorRect3" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control"]
+[node name="ColorRect3" type="ColorRect" parent="LevelChooser/ChooseTrackAnim/UP/ColorRect/Control" unique_id=1860111720]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
