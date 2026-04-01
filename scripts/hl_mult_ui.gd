@@ -30,7 +30,7 @@ var connctd = false
 
 func _ready() -> void:
 	#HighLevelNetwork.update_lobby_data.connect(func(_id): _update_lobby_data(_id))
-	HighLevelNetwork.enter_lobby.connect(_lobby_joined)
+	HighLevelNetwork.entered_lobby.connect(_lobby_joined)
 	HighLevelNetwork.enter_race.connect(_starting_game)
 	HighLevelNetwork.select_track.connect(_back_to_lobby)
 	HighLevelNetwork.select_kart.connect(_kart_chosen)
@@ -150,6 +150,9 @@ func _lobby_joined(targ_lobby_id = 0) -> void:
 		pass
 	
 	_update_lobby_data(Steam.getLobbyData(targ_lobby_id, "name"))
+	
+	HighLevelNetwork.select_kart.emit(default_kart)
+	HighLevelNetwork.select_racer.emit(default_racer)
 	
 	ServerLobby.visible = true
 	ServerLobby.mouse_filter = MOUSE_FILTER_PASS

@@ -77,12 +77,24 @@ func _create_host(id : int = 0):
 
 func become_client(id : int) -> void :
 	targ_id = id
-	if not Steam.lobby_joined.is_connected(_on_lobby_joined.bind()):
-		Steam.lobby_joined.connect(_on_lobby_joined.bind())
 	
-	SteamManager.lobby_members.clear()
-	
-	Steam.joinLobby(targ_id)
+	#peer = SteamMultiplayerPeer.new()
+	#var error = peer.create_client(0)
+	if true:
+		
+		if not Steam.lobby_joined.is_connected(_on_lobby_joined.bind()):
+			Steam.lobby_joined.connect(_on_lobby_joined.bind())
+		
+		SteamManager.lobby_members.clear()
+		
+		Steam.joinLobby(targ_id)
+		
+		#multiplayer.set_multiplayer_peer(peer)
+		
+		#print(error)
+	else:
+		#print("error creating client: %s" % error)
+		pass
 
 func _on_lobby_joined(lobby_id : int, _permissions : int, _locked : bool, response : int):
 	print("joined lobby with ID %s" % str(lobby_id))
@@ -125,6 +137,7 @@ func connect_socket(steam_id : int):
 		print("connecting peer to host...")
 		multiplayer.set_multiplayer_peer(peer)
 		HighLevelNetwork.lobbyName = Steam.getLobbyData(steam_id, "name")
+		HighLevelNetwork.entered_lobby.emit(steam_id)
 	else:
 		print("Error creating client: %s" % str(error))
 
