@@ -239,7 +239,6 @@ layout_mode = 2
 text = "Close"
 
 [node name="ServerLobby" type="Control" parent="." unique_id=1696207447]
-visible = false
 custom_minimum_size = Vector2(600, 400)
 layout_mode = 1
 anchors_preset = 8
@@ -480,8 +479,8 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer" unique_id=1813308215]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(2, 2)
-render_target_update_mode = 0
+size = Vector2i(389, 232)
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="ServerLobby/ColorRect/VBoxContainer/ChosenRacerKartData/Kart/VBoxContainer/SubViewportContainer/SubViewport" unique_id=514205255]
 transform = Transform3D(0.63219154, -0.22641674, 0.7409922, -6.733684e-09, 0.9563507, 0.2922215, -0.7748122, -0.18473993, 0.6045968, 4.857434, 3.2212522, 3.7801914)

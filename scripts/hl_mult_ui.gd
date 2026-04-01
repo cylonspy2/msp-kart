@@ -57,7 +57,7 @@ func _process(_delta: float) -> void:
 		if not HighLevelNetwork.multiplayer_enabled:
 			print("multiplayer isnt online yet")
 			return
-		###alternate inverse formula for this: (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled
+		###alternately, the inverse formula for this: (not multiplayer.is_server() and not HighLevelNetwork.host_mode_enabled) and HighLevelNetwork.multiplayer_enabled
 		if HighLevelNetwork.get_hosting():
 			startGameButton.visible = true
 		else:
@@ -324,10 +324,8 @@ func _on_start_game_pressed() -> void:
 	if HighLevelNetwork.get_hosting():
 		enter_race.rpc()
 
-@rpc("call_local")
+@rpc("authority", "call_local", "unreliable")
 func enter_race():
-	
-	HighLevelNetwork.enter_race.emit()
 	if not chosen_items.is_empty():
 		HighLevelNetwork._set_available_items(chosen_items)
 	else:
@@ -340,6 +338,8 @@ func enter_race():
 			chosen_items.append(mucho)
 		
 		HighLevelNetwork._set_available_items(chosen_items)
+	
+	HighLevelNetwork.enter_race.emit()
 
 
 
