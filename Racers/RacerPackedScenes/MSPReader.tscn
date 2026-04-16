@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://rdfs1h0nn3vf"]
+[gd_scene format=3 uid="uid://rdfs1h0nn3vf"]
 
 [ext_resource type="Script" uid="uid://dd64iyelwg5c2" path="res://scripts/racer.gd" id="1_n251x"]
 [ext_resource type="PackedScene" uid="uid://cj64thwi4s7mi" path="res://Items/RacerItemPackedScenes/MSPR_Friendship.tscn" id="2_6p3rt"]
@@ -290,14 +290,14 @@ properties/1/path = NodePath(".:hurt")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="MSPAR" type="Node3D"]
+[node name="MSPAR" type="Node3D" unique_id=1208899656]
 script = ExtResource("1_n251x")
 RacerItem = ExtResource("2_6p3rt")
 RacerIcon = ExtResource("3_6p3rt")
 
-[node name="RacerSkin" type="Node3D" parent="."]
+[node name="RacerSkin" type="Node3D" parent="." unique_id=1503576508]
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="RacerSkin"]
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="RacerSkin" unique_id=1990444823]
 transform = Transform3D(0.235, 0, 0, 0, 0.235, 0, 0, 0, 0.235, 0, 0, 0)
 offset = Vector2(30.21, 200.675)
 shaded = true
@@ -306,5 +306,5 @@ sprite_frames = SubResource("SpriteFrames_6p3rt")
 animation = &"full_nelson"
 speed_scale = 0.0
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1984049915]
 replication_config = SubResource("SceneReplicationConfig_gq0vh")

@@ -70,6 +70,7 @@ func _create_host(id : int = 0):
 	if error == OK:
 		if not OS.has_feature("dedicated_server"):
 			print("Hosting Lobby")
+			#peer.open()
 			multiplayer.set_multiplayer_peer(peer)
 			HighLevelNetwork.hosted_lobby.emit(id)
 	else:
@@ -153,7 +154,7 @@ func leave_lobby():
 	Steam.lobby_joined.disconnect(_on_lobby_joined.bind())
 	peer.close()
 	peer.clear_all_configs()
-	peer = SteamMultiplayerPeer.new()
+	#peer = SteamMultiplayerPeer.new()
 
 func get_client_target() -> int:
 	return _hosted_lobby_id

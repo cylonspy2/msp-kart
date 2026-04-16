@@ -45,8 +45,8 @@ func update_kart(track : PackedScene):
 	if kartChosen != null:
 		kartChosen.queue_free()
 	var trac = track.instantiate()
-	trac.get_child(2).get_child(0).get_child(0).queue_free()
 	trac.get_child(2).get_child(0).get_child(6).queue_free()
+	trac.get_child(2).get_child(0).get_child(0).queue_free()
 	trac.get_child(0).get_child(1).racing = false
 	
 	if racerChosen == null:

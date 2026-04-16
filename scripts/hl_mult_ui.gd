@@ -41,6 +41,8 @@ func _ready() -> void:
 	ServerBroswer.mouse_filter = MOUSE_FILTER_IGNORE
 	ServerLobby.visible = false
 	ServerLobby.mouse_filter = MOUSE_FILTER_IGNORE
+	multiplayer.peer_connected.connect(func() : _update_lobby_data.rpc())
+	multiplayer.peer_disconnected.connect(func() : _update_lobby_data.rpc())
 	if not is_multiplayer_authority() or OS.has_feature("dedicated_server"): haveAuthority = false
 	else:
 		haveAuthority = true
@@ -106,7 +108,7 @@ func _populate_lobbies(lobbies : Array) -> void:
 			
 			servButton._setupInfo(lobby_name, lobby_mode, lobby, lobby_player_cap.to_int(), %NetworkManager)
 			buttonArray.append(servButton)
-			_connect_join_button(servButton)
+			#_connect_join_button(servButton)
 			get_node(serverBrowserBoxContainer).call_deferred("add_child", servButton)
 		
 	
@@ -149,13 +151,12 @@ func _lobby_joined(targ_lobby_id = 0) -> void:
 	if HighLevelNetwork.trackPosChosen != -1:
 		pass
 	
-	_update_lobby_data(Steam.getLobbyData(targ_lobby_id, "name"))
-	
+	ServerLobby.visible = true
+	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
 	HighLevelNetwork.select_kart.emit(default_kart)
 	HighLevelNetwork.select_racer.emit(default_racer)
 	
-	ServerLobby.visible = true
-	ServerLobby.mouse_filter = MOUSE_FILTER_PASS
+	_update_lobby_data(Steam.getLobbyData(targ_lobby_id, "name"))
 
 func _starting_game() -> void:
 	
@@ -346,8 +347,8 @@ func enter_race():
 
 
 
-
-func _update_lobby_data(_id : String):
+@rpc("authority", "call_local", "unreliable")
+func _update_lobby_data(_id : String = HighLevelNetwork.lobbyName):
 	print("updating data for %s" % _id)
 	HighLevelNetwork.lobbyName = _id
 	lobbyName.text = _id

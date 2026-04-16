@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=4 uid="uid://cbgvvov1m1582"]
+[gd_scene format=4 uid="uid://cbgvvov1m1582"]
 
 [ext_resource type="Script" uid="uid://dkr0go0cfc02a" path="res://scripts/CarController.gd" id="1_2m4qf"]
 [ext_resource type="PackedScene" uid="uid://b25331hubbvp6" path="res://Racers/racer.tscn" id="2_eo0cd"]
@@ -715,7 +715,7 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_2hfgr"]
 material = SubResource("StandardMaterial3D_kvdoa")
 
-[node name="Kernel Kart" type="Node3D" node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "hurt_particles")]
+[node name="Kernel Kart" type="Node3D" unique_id=1584741172 node_paths=PackedStringArray("RacerSpawnLoc", "Car", "Wheelie", "CarBody", "CarModel", "drift_particles_right", "drift_particles_left", "hurt_particles")]
 script = ExtResource("1_2m4qf")
 username = "USERNAME"
 Racer = ExtResource("2_eo0cd")
@@ -746,45 +746,42 @@ tier_2_color = Color(1, 0, 0, 1)
 tier_3_color = Color(1, 0, 0.47058824, 1)
 tier_4_color = Color(0.35686275, 0, 1, 1)
 
-[node name="CarParent_Logic" type="Node" parent="."]
+[node name="CarParent_Logic" type="Node" parent="." unique_id=901308345]
 
-[node name="ID_SYNC" type="MultiplayerSynchronizer" parent="CarParent_Logic"]
+[node name="ID_SYNC" type="MultiplayerSynchronizer" parent="CarParent_Logic" unique_id=1742347452]
+unique_name_in_owner = true
 root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_50v30")
 
-[node name="ControlSynchronizer" type="MultiplayerSynchronizer" parent="CarParent_Logic"]
+[node name="ControlSynchronizer" type="MultiplayerSynchronizer" parent="CarParent_Logic" unique_id=1467804595]
 unique_name_in_owner = true
 root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_uoj53")
 script = ExtResource("4_6aw4u")
 
-[node name="hurtTimer" type="Timer" parent="CarParent_Logic"]
+[node name="hurtTimer" type="Timer" parent="CarParent_Logic" unique_id=1927710423]
 one_shot = true
 
-[node name="driftTimer" type="Timer" parent="CarParent_Logic"]
+[node name="driftTimer" type="Timer" parent="CarParent_Logic" unique_id=1175720057]
 wait_time = 2.0
 one_shot = true
 
-[node name="boostTimer" type="Timer" parent="CarParent_Logic"]
+[node name="boostTimer" type="Timer" parent="CarParent_Logic" unique_id=237470861]
 one_shot = true
 
-[node name="itemTimer" type="Timer" parent="CarParent_Logic"]
+[node name="itemTimer" type="Timer" parent="CarParent_Logic" unique_id=357973916]
 wait_time = 0.1
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CarParent_Logic"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CarParent_Logic" unique_id=2125100432]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_06lh1")
-}
+libraries/ = SubResource("AnimationLibrary_06lh1")
 
-[node name="CamAnimationPlayer" type="AnimationPlayer" parent="CarParent_Logic"]
+[node name="CamAnimationPlayer" type="AnimationPlayer" parent="CarParent_Logic" unique_id=1838567055]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_u5era")
-}
+libraries/ = SubResource("AnimationLibrary_u5era")
 
-[node name="Ball" type="RigidBody3D" parent="."]
+[node name="Ball" type="RigidBody3D" parent="." unique_id=803765697]
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_24jkt")
 gravity_scale = 0.0
@@ -794,25 +791,25 @@ linear_damp_mode = 1
 linear_damp = 1.5
 angular_damp = 5.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=1343342471]
 shape = SubResource("SphereShape3D_7822p")
 
-[node name="Car" type="Node3D" parent="."]
+[node name="Car" type="Node3D" parent="." unique_id=1340732897]
 
-[node name="CarLogic" type="Node3D" parent="Car"]
+[node name="CarLogic" type="Node3D" parent="Car" unique_id=2008449563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45765293, 0)
 
-[node name="Camera" type="Camera3D" parent="Car/CarLogic"]
+[node name="Camera" type="Camera3D" parent="Car/CarLogic" unique_id=613600217]
 transform = Transform3D(-1, 2.1327509e-08, -1.3987516e-07, -3.2928735e-08, 0.92635125, 0.37666088, 1.3760675e-07, 0.37666088, -0.92635125, 0, 2.627013, -2.9686177)
 
-[node name="Car_UI" type="Control" parent="Car/CarLogic/Camera"]
+[node name="Car_UI" type="Control" parent="Car/CarLogic/Camera" unique_id=253658815]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_4ncv3")
 
-[node name="CarHitbox" type="RigidBody3D" parent="Car/CarLogic" node_paths=PackedStringArray("parentCar")]
+[node name="CarHitbox" type="RigidBody3D" parent="Car/CarLogic" unique_id=1670301444 node_paths=PackedStringArray("parentCar")]
 collision_layer = 2
 collision_mask = 2
 mass = 10.0
@@ -823,82 +820,82 @@ max_contacts_reported = 1
 script = ExtResource("6_gsgkw")
 parentCar = NodePath("../../..")
 
-[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox"]
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Car/CarLogic/CarHitbox" unique_id=1237792622]
 depth = 2.525
 polygon = PackedVector2Array(1, 0, 1, 1.5, -1, 1.5, -1, 0)
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox" unique_id=1134440708]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0014648438, 0.4725647, 0.05670166)
 size = Vector3(1.2998047, 0.56048584, 2.1134033)
 
-[node name="GPUParticlesCollisionBox3D2" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
+[node name="GPUParticlesCollisionBox3D2" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox" unique_id=1803905958]
 transform = Transform3D(1, 0, 0, 0, 0.7730215, -0.6343798, 0, 0.6343798, 0.7730215, 0.0018310547, 0.7620878, 0.2833648)
 size = Vector3(1.0500488, 0.37345886, 0.7046814)
 
-[node name="GPUParticlesCollisionBox3D3" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox"]
+[node name="GPUParticlesCollisionBox3D3" type="GPUParticlesCollisionBox3D" parent="Car/CarLogic/CarHitbox" unique_id=2084434669]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0.0003315974, 0, -0.0003315974, 0.99999994, 0.0018310547, 0.9162394, -0.23225282)
 size = Vector3(1.0500488, 0.37345886, 0.7046814)
 
-[node name="Car_Marker" type="Node" parent="Car/CarLogic/CarHitbox"]
+[node name="Car_Marker" type="Node" parent="Car/CarLogic/CarHitbox" unique_id=1094668049]
 
-[node name="RayCast3D1" type="RayCast3D" parent="Car/CarLogic"]
+[node name="RayCast3D1" type="RayCast3D" parent="Car/CarLogic" unique_id=1658620159]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.517, 1, 0.719)
 
-[node name="RayCast3D2" type="RayCast3D" parent="Car/CarLogic"]
+[node name="RayCast3D2" type="RayCast3D" parent="Car/CarLogic" unique_id=1373311561]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517, 1, 0.719)
 
-[node name="RayCast3D3" type="RayCast3D" parent="Car/CarLogic"]
+[node name="RayCast3D3" type="RayCast3D" parent="Car/CarLogic" unique_id=1363247978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.517, 1, -0.719)
 
-[node name="RayCast3D4" type="RayCast3D" parent="Car/CarLogic"]
+[node name="RayCast3D4" type="RayCast3D" parent="Car/CarLogic" unique_id=2096990974]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.517, 1, -0.719)
 
-[node name="UsernameHolder" type="Node3D" parent="Car/CarLogic"]
+[node name="UsernameHolder" type="Node3D" parent="Car/CarLogic" unique_id=2095463929]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6855315, -0.34393528)
 script = ExtResource("7_oo7cm")
 
-[node name="Username" type="Label3D" parent="Car/CarLogic/UsernameHolder"]
+[node name="Username" type="Label3D" parent="Car/CarLogic/UsernameHolder" unique_id=869774572]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 text = "USERNAME"
 
-[node name="ModelParent" type="Node3D" parent="Car"]
+[node name="ModelParent" type="Node3D" parent="Car" unique_id=1523556983]
 
-[node name="Model" type="Node3D" parent="Car/ModelParent"]
+[node name="Model" type="Node3D" parent="Car/ModelParent" unique_id=1847664370]
 
-[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model"]
+[node name="RacerSpawn" type="Node3D" parent="Car/ModelParent/Model" unique_id=1041170928]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6040671, -0.20200408)
 
-[node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model"]
+[node name="body" type="MeshInstance3D" parent="Car/ModelParent/Model" unique_id=407873627]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30765292, -0.025)
 mesh = SubResource("ArrayMesh_uoj53")
 skeleton = NodePath("")
 
-[node name="spoiler" type="MeshInstance3D" parent="Car/ModelParent/Model/body"]
+[node name="spoiler" type="MeshInstance3D" parent="Car/ModelParent/Model/body" unique_id=518472984]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, -1.0436862)
 mesh = SubResource("ArrayMesh_k61xc")
 skeleton = NodePath("")
 
-[node name="wheel-back-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
+[node name="wheel-back-left" type="MeshInstance3D" parent="Car/ModelParent/Model" unique_id=70991606]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.15765291, -0.65999997)
 mesh = SubResource("ArrayMesh_06lh1")
 skeleton = NodePath("")
 
-[node name="wheel-back-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
+[node name="wheel-back-right" type="MeshInstance3D" parent="Car/ModelParent/Model" unique_id=106631865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.15765291, -0.65999997)
 mesh = SubResource("ArrayMesh_td361")
 skeleton = NodePath("")
 
-[node name="wheel-front-left" type="MeshInstance3D" parent="Car/ModelParent/Model"]
+[node name="wheel-front-left" type="MeshInstance3D" parent="Car/ModelParent/Model" unique_id=77561098]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.15765291, 0.65999997)
 mesh = SubResource("ArrayMesh_72krn")
 skeleton = NodePath("")
 
-[node name="wheel-front-right" type="MeshInstance3D" parent="Car/ModelParent/Model"]
+[node name="wheel-front-right" type="MeshInstance3D" parent="Car/ModelParent/Model" unique_id=1913370963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.15765291, 0.65999997)
 mesh = SubResource("ArrayMesh_v0hk8")
 skeleton = NodePath("")
 
-[node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model" node_paths=PackedStringArray("sparks")]
+[node name="Drift_Particles" type="Node3D" parent="Car/ModelParent/Model" unique_id=971060615 node_paths=PackedStringArray("sparks")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45765293, 0)
 script = ExtResource("9_waaa1")
 sparkMat = ExtResource("10_gy02b")
@@ -909,7 +906,7 @@ tier_3_color = Color(0.98134226, 0, 0.49822664, 1)
 tier_4_color = Color(1.8289685e-06, 0.5617465, 0.8190756, 1)
 sparks = [NodePath("groundSparks"), NodePath("groundSparks2")]
 
-[node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles"]
+[node name="groundSparks" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles" unique_id=290820154]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, 0.69408774, 0.108854555, -0.51734716)
 amount = 16
 local_coords = true
@@ -918,7 +915,7 @@ draw_passes = 2
 draw_pass_1 = SubResource("PlaneMesh_lb1tj")
 draw_pass_2 = SubResource("PlaneMesh_btiea")
 
-[node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles"]
+[node name="groundSparks2" type="GPUParticles3D" parent="Car/ModelParent/Model/Drift_Particles" unique_id=1775410191]
 transform = Transform3D(1.8214936, 0, 0, 0, 1.9083971, 0, 0, 0, 1.8214936, -0.694, 0.109, -0.5174992)
 amount = 16
 local_coords = true
@@ -927,19 +924,19 @@ draw_passes = 2
 draw_pass_1 = SubResource("PlaneMesh_lb1tj")
 draw_pass_2 = SubResource("PlaneMesh_btiea")
 
-[node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model"]
+[node name="Hurt_Particles" type="Node3D" parent="Car/ModelParent/Model" unique_id=230646836]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45765293, 0)
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles"]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Car/ModelParent/Model/Hurt_Particles" unique_id=2012196645]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21524662, -1.4670709)
 amount = 28
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_4yu8s")
 draw_pass_1 = SubResource("QuadMesh_2hfgr")
 
-[node name="Items" type="Node3D" parent="."]
+[node name="Items" type="Node3D" parent="." unique_id=550523085]
 
-[node name="ItemSpawner" type="MultiplayerSpawner" parent="Items" node_paths=PackedStringArray("CarParent")]
+[node name="ItemSpawner" type="MultiplayerSpawner" parent="Items" unique_id=841329410 node_paths=PackedStringArray("CarParent")]
 spawn_path = NodePath("..")
 script = ExtResource("12_qtbas")
 CarParent = NodePath("../..")

@@ -6,7 +6,7 @@ extends MultiplayerSynchronizer
 @export var inputRot : float
 
 var haveAuthority = false
-var racing = true
+@export var racing = true
 
 func _ready() -> void:
 	if get_multiplayer_authority() != Car.player_id: 
